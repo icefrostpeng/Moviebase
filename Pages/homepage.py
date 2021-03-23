@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar 23 12:58:13 2021
+
+@author: Admin
+"""
+
 import sys
-from PIL import ImageTk, Image
-import PIL
-global co
-co=0
-global d,to
-d={0:['1.jpeg',5,'horror'],1:['2.jpeg',4,'horror'],2:['3.jpeg',3,'horror'],3:['4.jpeg',5,'horror'],4:['5.jpeg',2,'horror']}
+
 try:
     import Tkinter as tk
 except ImportError:
@@ -18,55 +20,32 @@ except ImportError:
     py3 = True
 
 
-
-def vp_start_gui1(name='XYZ',mem='a',email='singh@fg.c'):
+def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Toplevel1 (name,mem,email,root)
+    top = Home (root)
     root.mainloop()
 
+
 w = None
-def create_Toplevel1(rt,*args, **kwargs):
+def create_Home(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Toplevel1(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Home(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Toplevel1 (w)
+    top = Home (w)
     return (w, top)
 
-def destroy_Toplevel1():
+def destroy_Home():
     global w
     w.destroy()
     w = None
 
-class Toplevel1:
-    global to
-    def ahead(self,top):
-        global co
-        co=(co+1)%5
-        print(co)
-        print(d[co][0])
-        img = ImageTk.PhotoImage(Image.open(d[co][0]).resize((560, 277), Image.ANTIALIAS))
-        self.Movie_image = tk.Label(top,image = img)
-        self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
-        self.Movie_image=img
-        return
-    def bac(self,top):
-        global co
-        if(co==0):
-        	print(co)
-        else:
-        	co-=1
-        	print(co)
-        img = ImageTk.PhotoImage(Image.open(d[co][0]).resize((560, 277), Image.ANTIALIAS))
-        self.Movie_image = tk.Label(top,image = img)
-        self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
-        self.Movie_image=img
-        return
-    def __init__(self,name,mem,email, top=None):
+class Home:
+    def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -91,12 +70,7 @@ class Toplevel1:
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
-
-
-        img = ImageTk.PhotoImage(file="bg.png")
-        self.Background = tk.Label(top,image = img)        
-        self.Background.place(relx=0, rely=0, height=900, width=1200)
-        self.Background=img
+        root.resizable(False, False)
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
@@ -207,10 +181,8 @@ class Toplevel1:
         self.Home_b.configure(pady="0")
         self.Home_b.configure(text='''Home''')
 
-
-
         self.Member_l = tk.Label(self.home_inner_f)
-        self.Member_l.place(relx=0.262, rely=0.137, height=34, width=400)
+        self.Member_l.place(relx=0.262, rely=0.150, height=35, width=262)
         self.Member_l.configure(activebackground="#b3eaff")
         self.Member_l.configure(activeforeground="black")
         self.Member_l.configure(background="#b3eaff")
@@ -219,24 +191,16 @@ class Toplevel1:
         self.Member_l.configure(foreground="#000000")
         self.Member_l.configure(highlightbackground="#d9d9d9")
         self.Member_l.configure(highlightcolor="black")
-        st=str(name+",your membership status is : "+mem)
-        self.Member_l.configure(text=st)
-        
-        global d
-        global to
-        to=top
-        img = ImageTk.PhotoImage(Image.open(d[0][0]).resize((560, 277), Image.ANTIALIAS))
-        self.Movie_image = tk.Label(top,image = img)        
-        self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
-        self.Movie_image=img
+        self.Member_l.configure(text='''Membership status''')
 
-        self.Previous_b = tk.Button(top,command=lambda: self.bac(top))
+        self.Previous_b = tk.Button(top)
         self.Previous_b.place(relx=0.172, rely=0.277, height=284, width=27)
         self.Previous_b.configure(activebackground="#000040")
         self.Previous_b.configure(activeforeground="white")
         self.Previous_b.configure(activeforeground="#ffffff")
         self.Previous_b.configure(background="#b3eaff")
         self.Previous_b.configure(disabledforeground="#a3a3a3")
+        self.Previous_b.configure(cursor="hand2")
         self.Previous_b.configure(font="-family {Segoe UI} -size 20 -weight bold")
         self.Previous_b.configure(foreground="#000000")
         self.Previous_b.configure(highlightbackground="#d9d9d9")
@@ -244,13 +208,14 @@ class Toplevel1:
         self.Previous_b.configure(pady="0")
         self.Previous_b.configure(text='''<''')
 
-        self.Next_b = tk.Button(top,command=lambda: self.ahead(top))
+        self.Next_b = tk.Button(top)
         self.Next_b.place(relx=0.648, rely=0.277, height=284, width=27)
         self.Next_b.configure(activebackground="#000040")
         self.Next_b.configure(activeforeground="white")
         self.Next_b.configure(activeforeground="#ffffff")
         self.Next_b.configure(background="#b3eaff")
         self.Next_b.configure(disabledforeground="#a3a3a3")
+        self.Next_b.configure(cursor="hand2")
         self.Next_b.configure(font="-family {Segoe UI} -size 20 -weight bold")
         self.Next_b.configure(foreground="#000000")
         self.Next_b.configure(highlightbackground="#d9d9d9")
@@ -266,7 +231,6 @@ class Toplevel1:
         self.Labelframe3.configure(background="#e8e8ff")
         self.Labelframe3.configure(highlightbackground="#d9d9d9")
         self.Labelframe3.configure(highlightcolor="black")
-        
 
         self.Search_b = tk.Button(self.Labelframe3)
         self.Search_b.place(relx=0.0, rely=0.0, height=44, width=100
@@ -545,7 +509,6 @@ class Toplevel1:
         self.Movie_image.configure(foreground="#000000")
         self.Movie_image.configure(highlightbackground="#d9d9d9")
         self.Movie_image.configure(highlightcolor="black")
-        
 
 if __name__ == '__main__':
-    vp_start_gui1()
+    vp_start_gui()
