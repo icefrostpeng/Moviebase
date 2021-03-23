@@ -19,14 +19,12 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-import reg_support
 
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
     top = RegOTP (root)
-    reg_support.init(root, top)
     root.mainloop()
 
 w = None
@@ -38,7 +36,6 @@ def create_RegOTP(rt, *args, **kwargs):
     root = rt
     w = tk.Toplevel (root)
     top = RegOTP (w)
-    reg_support.init(w, top, *args, **kwargs)
     return (w, top)
 
 def destroy_RegOTP():

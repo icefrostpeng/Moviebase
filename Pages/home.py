@@ -76,6 +76,16 @@ class Toplevel1:
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
         
+
+        self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
+        top.configure(menu = self.menubar)
+        
+        self.Label2 = tk.Label(top)
+        self.Label2.place(relx=0.0, rely=-0.015, height=1000, width=1400)
+        global _img0
+        _img0 = tk.PhotoImage(file="E:/Python/Project/Pages/bg.png")
+        self.Label2.configure(image=_img0)
+
         self.Label2 = tk.Label(top)
         self.Label2.place(relx=0.0, rely=-0.015, height=701, width=1266)
         self.Label2.configure(activebackground="#f9f9f9")
