@@ -25,28 +25,28 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = RegOTP (root)
+    top = Toplevel1 (root)
     reg_support.init(root, top)
     root.mainloop()
 
 w = None
-def create_RegOTP(rt, *args, **kwargs):
+def create_Toplevel1(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_RegOTP(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Toplevel1(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = RegOTP (w)
+    top = Toplevel1 (w)
     reg_support.init(w, top, *args, **kwargs)
     return (w, top)
 
-def destroy_RegOTP():
+def destroy_Toplevel1():
     global w
     w.destroy()
     w = None
 
-class RegOTP:
+class Toplevel1:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -78,19 +78,19 @@ class RegOTP:
         self.Label1.configure(text='''Please check your email to Confirm your registration''')
         self.Label1.configure(wraplength="300")
 
-        self.Submit = tk.Button(top)
-        self.Submit.place(relx=0.302, rely=0.705, height=54, width=207)
-        self.Submit.configure(activebackground="#ececec")
-        self.Submit.configure(activeforeground="#000000")
-        self.Submit.configure(background="#2ba5ff")
-        self.Submit.configure(borderwidth="4")
-        self.Submit.configure(disabledforeground="#a3a3a3")
-        self.Submit.configure(font="-family {Segoe UI} -size 14")
-        self.Submit.configure(foreground="#000000")
-        self.Submit.configure(highlightbackground="#d9d9d9")
-        self.Submit.configure(highlightcolor="black")
-        self.Submit.configure(pady="0")
-        self.Submit.configure(text='''Confirm Registration''')
+        self.Button1 = tk.Button(top)
+        self.Button1.place(relx=0.302, rely=0.705, height=54, width=207)
+        self.Button1.configure(activebackground="#ececec")
+        self.Button1.configure(activeforeground="#000000")
+        self.Button1.configure(background="#2ba5ff")
+        self.Button1.configure(borderwidth="4")
+        self.Button1.configure(disabledforeground="#a3a3a3")
+        self.Button1.configure(font="-family {Segoe UI} -size 14")
+        self.Button1.configure(foreground="#000000")
+        self.Button1.configure(highlightbackground="#d9d9d9")
+        self.Button1.configure(highlightcolor="black")
+        self.Button1.configure(pady="0")
+        self.Button1.configure(text='''Confirm Registration''')
 
         self.Label2 = tk.Label(top)
         self.Label2.place(relx=0.302, rely=0.305, height=81, width=194)
