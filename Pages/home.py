@@ -101,6 +101,10 @@ class Home:
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
 
+
+
+############################################################################Membership###############################################################
+
         self.Membership_f = tk.LabelFrame(top)
         self.Membership_f.place(relx=0.013, rely=0.219, relheight=0.516
                 , relwidth=0.14)
@@ -160,20 +164,26 @@ class Home:
         self.Diamond_b.configure(pady="0")
         self.Diamond_b.configure(text='''Diamond''')
 
-        self.Label1 = tk.Label(self.Membership_f)
-        self.Label1.place(relx=0.056, rely=0.028, height=41, width=155
+        self.Join_l = tk.Label(self.Membership_f)
+        self.Join_l.place(relx=0.056, rely=0.028, height=41, width=155
                 , bordermode='ignore')
-        self.Label1.configure(activebackground="#f9f9f9")
-        self.Label1.configure(activeforeground="black")
-        self.Label1.configure(background="#bfe2ff")
-        self.Label1.configure(disabledforeground="#a3a3a3")
-        self.Label1.configure(font="-family {Segoe UI} -size 12")
-        self.Label1.configure(foreground="#000000")
-        self.Label1.configure(highlightbackground="#d9d9d9")
-        self.Label1.configure(highlightcolor="black")
-        self.Label1.configure(text='''Join our Membership plan!''')
-        self.Label1.configure(wraplength="150")
+        self.Join_l.configure(activebackground="#f9f9f9")
+        self.Join_l.configure(activeforeground="black")
+        self.Join_l.configure(background="#bfe2ff")
+        self.Join_l.configure(disabledforeground="#a3a3a3")
+        self.Join_l.configure(font="-family {Segoe UI} -size 12")
+        self.Join_l.configure(foreground="#000000")
+        self.Join_l.configure(highlightbackground="#d9d9d9")
+        self.Join_l.configure(highlightcolor="black")
+        self.Join_l.configure(text='''Join our Membership plan!''')
+        self.Join_l.configure(wraplength="150")
 
+
+#######################################################################################################################################################
+
+
+
+############################################Home#####################################################################
         self.Home_f = tk.LabelFrame(top)
         self.Home_f.place(relx=0.023, rely=0.029, relheight=0.092, relwidth=0.55)
 
@@ -221,7 +231,11 @@ class Home:
         self.Member_l.configure(highlightcolor="black")
         st=str(name+",your membership status is : "+mem)
         self.Member_l.configure(text=st)
+  
         
+  ########################################################################################################################################
+  
+  ####################################################################Movies Slider###################################################################
         global d
         global to
         to=top
@@ -258,17 +272,22 @@ class Home:
         self.Next_b.configure(pady="0")
         self.Next_b.configure(text='''>''')
 
-        self.Labelframe3 = tk.LabelFrame(top)
-        self.Labelframe3.place(relx=0.609, rely=0.044, relheight=0.06
-                , relwidth=0.322)
-        self.Labelframe3.configure(relief='groove')
-        self.Labelframe3.configure(foreground="black")
-        self.Labelframe3.configure(background="#e8e8ff")
-        self.Labelframe3.configure(highlightbackground="#d9d9d9")
-        self.Labelframe3.configure(highlightcolor="black")
-        
 
-        self.Search_b = tk.Button(self.Labelframe3)
+#########################################################################################################################################
+
+#############################################################Search###############################################################
+
+        self.Search_f = tk.LabelFrame(top)
+        self.Search_f.place(relx=0.609, rely=0.044, relheight=0.06
+                , relwidth=0.322)
+        self.Search_f.configure(relief='groove')
+        self.Search_f.configure(foreground="black")
+        self.Search_f.configure(background="#e8e8ff")
+        self.Search_f.configure(highlightbackground="#d9d9d9")
+        self.Search_f.configure(highlightcolor="black")
+
+
+        self.Search_b = tk.Button(self.Search_f)
         self.Search_b.place(relx=0.0, rely=0.0, height=44, width=100
                 , bordermode='ignore')
         self.Search_b.configure(activebackground="#b3eaff")
@@ -283,7 +302,7 @@ class Home:
         self.Search_b.configure(pady="0")
         self.Search_b.configure(text='''Search''')
 
-        self.Search_e = tk.Entry(self.Labelframe3)
+        self.Search_e = tk.Entry(self.Search_f)
         self.Search_e.place(relx=0.25, rely=0.1, height=38, relwidth=0.745
                 , bordermode='ignore')
         self.Search_e.configure(background="white")
@@ -296,6 +315,11 @@ class Home:
         self.Search_e.configure(selectbackground="blue")
         self.Search_e.configure(selectforeground="white")
 
+########################################################################################################################################
+
+
+
+##########################################################Main##########################################################
         self.Label3 = tk.Label(top)
         self.Label3.place(relx=0.172, rely=0.131, height=48, width=193)
         self.Label3.configure(activebackground="#f9f9f9")
@@ -308,6 +332,17 @@ class Home:
         self.Label3.configure(highlightbackground="#d9d9d9")
         self.Label3.configure(highlightcolor="black")
         self.Label3.configure(text='''Recommended!''')
+
+
+        self.Movie_image = tk.Label(top)
+        self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
+        self.Movie_image.configure(activebackground="#f9f9f9")
+        self.Movie_image.configure(activeforeground="black")
+        self.Movie_image.configure(background="#d9d9d9")
+        self.Movie_image.configure(disabledforeground="#a3a3a3")
+        self.Movie_image.configure(foreground="#000000")
+        self.Movie_image.configure(highlightbackground="#d9d9d9")
+        self.Movie_image.configure(highlightcolor="black")
 
         self.Book_b = tk.Button(top)
         self.Book_b.place(relx=0.215, rely=0.752, height=54, width=177)
@@ -373,6 +408,8 @@ class Home:
         self.TSeparator1 = ttk.Separator(self.Info_f)
         self.TSeparator1.place(relx=0.032, rely=0.236, relwidth=1.269
                 , bordermode='ignore')
+#####################################################Stars###########################################################
+
 
         self.Star1 = tk.Label(self.Info_f)
         self.Star1.place(relx=0.173, rely=0.154, height=14, width=16
@@ -428,6 +465,9 @@ class Home:
         self.Star5.configure(foreground="#000000")
         self.Star5.configure(highlightbackground="#d9d9d9")
         self.Star5.configure(highlightcolor="black")
+
+#######################################################################################################################################
+
 
         self.TSeparator2 = ttk.Separator(self.Info_f)
         self.TSeparator2.place(relx=0.006, rely=0.528, relwidth=1.224
@@ -495,6 +535,9 @@ class Home:
         self.TSeparator4.place(relx=0.818, rely=0.168,  relheight=0.835)
         self.TSeparator4.configure(orient="vertical")
 
+
+#################################################################SideBar######################################
+
         self.Listofmovies_f = tk.LabelFrame(top)
         self.Listofmovies_f.place(relx=0.829, rely=0.157, relheight=0.831
                 , relwidth=0.138)
@@ -536,15 +579,7 @@ class Home:
         self.Movie1_b.configure(text='''Movie name \n\nRating: 5/5''')
         self.Movie1_b.configure(wraplength="150")
 
-        self.Movie_image = tk.Label(top)
-        self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
-        self.Movie_image.configure(activebackground="#f9f9f9")
-        self.Movie_image.configure(activeforeground="black")
-        self.Movie_image.configure(background="#d9d9d9")
-        self.Movie_image.configure(disabledforeground="#a3a3a3")
-        self.Movie_image.configure(foreground="#000000")
-        self.Movie_image.configure(highlightbackground="#d9d9d9")
-        self.Movie_image.configure(highlightcolor="black")
+####################################################################################################################
         
 
 if __name__ == '__main__':

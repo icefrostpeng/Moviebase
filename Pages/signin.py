@@ -9,6 +9,9 @@ import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
+from PIL import ImageTk, Image
+import PIL
+
 import sys
 
 from home import *
@@ -23,11 +26,6 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
-import pymysql
-import paramiko
-import pandas as pd
-from paramiko import SSHClient
-from sshtunnel import SSHTunnelForwarder
 
 
 
@@ -124,13 +122,21 @@ class Signin:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
         
-        
         global img
+        img = ImageTk.PhotoImage(file="bg.png")
+        self.Background = tk.Label(top,image = img)        
+        self.Background.place(relx=0, rely=0, height=900, width=1200)
+        self.Background=img
+        
+        
+        
         img = ImageTk.PhotoImage(Image.open("Logo.png").resize((150, 200), Image.ANTIALIAS))
         #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.280, rely=0.025, height=150, width=200)
         self.Logo_image.configure(image=img)
+        
+
         
         em=tk.StringVar()
         self.email_e = tk.Entry(top,textvariable=em)

@@ -1,6 +1,8 @@
 import sys
 from tkcalendar import Calendar,DateEntry
 from datetime import date
+from PIL import ImageTk, Image
+import PIL
 
 import pymysql
 import pymysql.cursors
@@ -137,6 +139,12 @@ class Register:
 		top.resizable(1,  1)
 		top.title("New Toplevel")
 		top.configure(background="#000328")
+		
+		global img
+		img = ImageTk.PhotoImage(file="bg.png")
+		self.Background = tk.Label(top,image = img)        
+		self.Background.place(relx=0, rely=0, height=900, width=1200)
+		self.Background=img
 
 		self.email_l = tk.Label(top)
 		self.email_l.place(relx=0.163, rely=0.100, height=22, width=183)

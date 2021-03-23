@@ -6,7 +6,8 @@
 #    Mar 23, 2021 10:01:06 AM IST  platform: Windows NT
 
 import sys
-
+from PIL import ImageTk, Image
+import PIL
 try:
     import Tkinter as tk
 except ImportError:
@@ -61,6 +62,12 @@ class RegOTP:
         top.configure(background="#000328")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
+        
+        global img
+        img = ImageTk.PhotoImage(file="bg.png")
+        self.Background = tk.Label(top,image = img)        
+        self.Background.place(relx=0, rely=0, height=900, width=1200)
+        self.Background=img
 
         self.Label1 = tk.Label(top)
         self.Label1.place(relx=0.08, rely=-0.019, height=222, width=424)
@@ -100,14 +107,14 @@ class RegOTP:
         self.Label2.configure(foreground="#ffffff")
         self.Label2.configure(text='''Enter OTP from Email''')
 
-        self.Entry1 = tk.Entry(top)
-        self.Entry1.place(relx=0.322, rely=0.476, height=70, relwidth=0.37)
-        self.Entry1.configure(background="white")
-        self.Entry1.configure(cursor="fleur")
-        self.Entry1.configure(disabledforeground="#a3a3a3")
-        self.Entry1.configure(font="-family {Leelawadee UI Semilight} -size 23")
-        self.Entry1.configure(foreground="#000000")
-        self.Entry1.configure(insertbackground="black")
+        self.OTP_e = tk.Entry(top)
+        self.OTP_e.place(relx=0.322, rely=0.476, height=70, relwidth=0.37)
+        self.OTP_e.configure(background="white")
+        self.OTP_e.configure(cursor="fleur")
+        self.OTP_e.configure(disabledforeground="#a3a3a3")
+        self.OTP_e.configure(font="-family {Leelawadee UI Semilight} -size 23")
+        self.OTP_e.configure(foreground="#000000")
+        self.OTP_e.configure(insertbackground="black")
 
 if __name__ == '__main__':
     vp_start_gui()
