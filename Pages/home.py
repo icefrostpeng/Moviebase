@@ -23,26 +23,26 @@ def vp_start_gui1(name='XYZ',mem='a',email='singh@fg.c'):
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Toplevel1 (name,mem,email,root)
+    top = Home (name,mem,email,root)
     root.mainloop()
 
 w = None
-def create_Toplevel1(rt,*args, **kwargs):
+def create_Home(rt,*args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Toplevel1(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Home(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Toplevel1 (w)
+    top = Home (w)
     return (w, top)
 
-def destroy_Toplevel1():
+def destroy_Home():
     global w
     w.destroy()
     w = None
 
-class Toplevel1:
+class Home:
     global to
     def ahead(self,top):
         global co
