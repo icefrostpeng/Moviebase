@@ -24,26 +24,27 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Toplevel1 (root)
+    top = Home (root)
     root.mainloop()
 
+
 w = None
-def create_Toplevel1(rt, *args, **kwargs):
+def create_Home(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Toplevel1(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Home(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Toplevel1 (w)
+    top = Home (w)
     return (w, top)
 
-def destroy_Toplevel1():
+def destroy_Home():
     global w
     w.destroy()
     w = None
 
-class Toplevel1:
+class Home:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -69,6 +70,7 @@ class Toplevel1:
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
+        root.resizable(False, False)
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
