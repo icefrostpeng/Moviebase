@@ -25,26 +25,26 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Toplevel1 (root)
+    top = Register (root)
     root.mainloop()
 
 w = None
-def create_Toplevel1(rt, *args, **kwargs):
+def create_Register(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Toplevel1(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Register(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Toplevel1 (w)
+    top = Register (w)
     return (w, top)
 
-def destroy_Toplevel1():
+def destroy_Register():
     global w
     w.destroy()
     w = None
 
-class Toplevel1:
+class Register:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''

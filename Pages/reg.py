@@ -25,21 +25,21 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Reg_Page (root)
+    top = Regconfirm (root)
     root.mainloop()
 
 w = None
-def create_Reg_Page(rt, *args, **kwargs):
+def create_Regconfirm(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Reg_Page(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Regconfirm(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Reg_Page (w)
+    top = Regconfirm (w)
     return (w, top)
 
-def destroy_Reg_Page():
+def destroy_Regconfirm():
     global w
     w.destroy()
     w = None
@@ -48,7 +48,7 @@ def destroy_Reg_Page():
 
 
 
-class Reg_Page:
+class Regconfirm:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
