@@ -25,26 +25,26 @@ def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Toplevel1 (root)
+    top = Signin (root)
     root.mainloop()
 
 w = None
-def create_Toplevel1(rt, *args, **kwargs):
+def create_Signin(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Toplevel1(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_Signin(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Toplevel1 (w)
+    top = Signin (w)
     return (w, top)
 
-def destroy_Toplevel1():
+def destroy_Signin():
     global w
     w.destroy()
     w = None
 
-class Toplevel1:
+class Signin:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -62,6 +62,7 @@ class Toplevel1:
         top.configure(background="#000328")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
+        top.resizable(False,False)
 
         self.email_e = tk.Entry(top)
         self.email_e.place(relx=0.234, rely=0.355, height=30, relwidth=0.548)
