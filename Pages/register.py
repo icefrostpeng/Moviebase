@@ -137,7 +137,7 @@ class Register:
         self.confirm_e.configure(insertbackground="black")
 
         self.dob = tk.Label(top)
-        self.dob.place(relx=0.181, rely=0.500, height=31, width=171)
+        self.dob.place(relx=0.163, rely=0.500, height=31, width=171)
         self.dob.configure(anchor='w')
         self.dob.configure(background="#000328")
         self.dob.configure(disabledforeground="#a3a3a3")
@@ -146,10 +146,10 @@ class Register:
         self.dob.configure(text='''Enter Date of Birth''')
 
         self.cal = DateEntry(root,width=30,bg="darkblue",fg="white",year=2010)
-        self.cal.place(relx=0.181, rely=0.550, height=31, width=171)
+        self.cal.place(relx=0.163, rely=0.550, height=31, width=171)
 
         self.address_l = tk.Label(top)
-        self.address_l.place(relx=0.181, rely=0.600, height=31, width=171)
+        self.address_l.place(relx=0.163, rely=0.600, height=31, width=171)
         self.address_l.configure(anchor='w')
         self.address_l.configure(background="#000328")
         self.address_l.configure(disabledforeground="#a3a3a3")
@@ -167,7 +167,7 @@ class Register:
         self.address_e.configure(insertbackground="black")
 
         self.mobileno_l = tk.Label(top)
-        self.mobileno_l.place(relx=0.181, rely=0.700, height=31, width=171)
+        self.mobileno_l.place(relx=0.163, rely=0.700, height=31, width=171)
         self.mobileno_l.configure(anchor='w')
         self.mobileno_l.configure(background="#000328")
         self.mobileno_l.configure(disabledforeground="#a3a3a3")
