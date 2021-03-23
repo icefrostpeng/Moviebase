@@ -62,11 +62,12 @@ class RegOTP:
         top.configure(background="#000328")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
-        
+                
+        top.resizable(False,False)
         global img
         img = ImageTk.PhotoImage(file="bg.png")
         self.Background = tk.Label(top,image = img)        
-        self.Background.place(relx=0, rely=0, height=900, width=1200)
+        self.Background.place(relx=0, rely=0, height=1000, width=1500)
         self.Background=img
 
         self.Label1 = tk.Label(top)

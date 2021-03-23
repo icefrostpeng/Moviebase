@@ -27,6 +27,7 @@ from memberbar import Memberbar
 from homebar import Homebar
 from sidebar import Sidebar
 
+
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -50,7 +51,7 @@ def destroy_Search():
     w.destroy()
     w = None
 
-class Search(Homebar, Searchbar, Memberbar, Sidebar):
+class Search(Searchbar, Memberbar, Homebar):
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -76,18 +77,18 @@ class Search(Homebar, Searchbar, Memberbar, Sidebar):
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
-
-
-        top.resizable(False,False)
+        
+        top.resizable(False, False)
         global img
         img = ImageTk.PhotoImage(file="bg.png")
         self.Background = tk.Label(top,image = img)        
-        self.Background.place(relx=0, rely=0, height=900, width=1200)
+        self.Background.place(relx=0, rely=0, height=1000, width=1500)
         self.Background=img
         
         
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
+
 
 
 ################################################################Result instance############################################################
@@ -158,8 +159,6 @@ class Search(Homebar, Searchbar, Memberbar, Sidebar):
         Memberbar.__init__(self, top=None)
         Homebar.__init__(self, top=None)
         Sidebar.__init__(self, top=None)
-
-
 #####################################################################################################################################
 
 if __name__ == '__main__':
