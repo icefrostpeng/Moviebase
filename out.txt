@@ -1,0 +1,36 @@
+   80         self.Membership_f.place(relx=0.01, rely=0.177, relheight=0.408
+   89         self.Platinum_b.place(relx=0.08, rely=0.434, height=94, width=207
+  105         self.Gold_b.place(relx=0.08, rely=0.699, height=94, width=207
+  120         self.Diamond_b.place(relx=0.08, rely=0.169, height=94, width=207
+  136         self.Label1.place(relx=0.0, rely=0.048, height=41, width=254
+  149         self.Home_f.place(relx=0.021, rely=0.039, relheight=0.093
+  158         self.home_inner_f.place(relx=0.017, rely=0.105, relheight=0.789
+  168         self.Home_b.place(relx=0.017, rely=0.133, height=54, width=87)
+  181         self.Member_l.place(relx=0.261, rely=0.133, height=51, width=384)
+  193         self.Previous_b.place(relx=0.177, rely=0.285, height=414, width=27)
+  207         self.Next_b.place(relx=0.635, rely=0.285, height=414, width=27)
+  221         self.Labelframe3.place(relx=0.635, rely=0.02, relheight=0.074
+  230         self.Search_b.place(relx=0.041, rely=0.133, height=54, width=87
+  244         self.Search_e.place(relx=0.265, rely=0.267, height=40, relwidth=0.661
+  257         self.Label3.place(relx=0.156, rely=0.157, height=71, width=284)
+  270         self.Book_b.place(relx=0.208, rely=0.747, height=54, width=207)
+  284         self.Description_f.place(relx=0.339, rely=0.728, relheight=0.108
+  293         self.Description_l.place(relx=0.009, rely=0.045, height=100, width=530
+  307         self.Info_f.place(relx=0.672, rely=0.295, relheight=0.388, relwidth=0.12)
+  316         self.Rating_l.place(relx=0.043, rely=0.025, height=41, width=215
+  329         self.TSeparator1.place(relx=0.017, rely=0.233, relwidth=1.304
+  333         self.Star1.place(relx=0.174, rely=0.152, height=21, width=24
+  344         self.Star2.place(relx=0.304, rely=0.152, height=21, width=24
+  355         self.Star3.place(relx=0.435, rely=0.152, height=21, width=24
+  366         self.Star4.place(relx=0.565, rely=0.152, height=21, width=24
+  377         self.Star5.place(relx=0.696, rely=0.152, height=21, width=24
+  388         self.TSeparator2.place(relx=-0.009, rely=0.527, relwidth=1.261
+  392         self.Cast_l.place(relx=0.043, rely=0.557, height=161, width=214
+  406         self.Genre_l.place(relx=0.043, rely=0.278, height=71, width=214
+  419         self.TSeparator3.place(relx=0.161, rely=0.167,  relheight=0.846)
+  423         self.Label8.place(relx=0.203, rely=0.216, height=61, width=804)
+  436         self.TSeparator4.place(relx=0.802, rely=0.167,  relheight=0.836)
+  440         self.Listofmovies_f.place(relx=0.813, rely=0.157, relheight=0.831
+  451         self.page_id.place(relx=0.038, rely=0.947, height=31, width=244
+  465         self.Movie1_b.place(relx=0.038, rely=0.047, height=74, width=247
+  480         self.Movie_image.place(relx=0.198, rely=0.285, height=411, width=824)
