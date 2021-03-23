@@ -5,37 +5,67 @@ Created on Mon Mar 22 10:51:14 2021
 @author: Elton
 """
 
+
 with open("E:/Python/Project/test.txt") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
 
+import re
+
+pattern=re.compile("support")
+pattern2=re.compile("Toplevel1")
+pattern3=re.compile("^    ")
+pattern4=re.compile("^        ")
 
 new=[]
 for line in lines:
-    new.append(line[6:])
+    
+    if pattern.search(line):
+        continue
+    temp=line[6:]
+    if pattern4.search(line):
+        line="\t\t"+line[8:]
+    if pattern3.search(line):
+        line="\t"+line[4:]
+        
+    new.append(line)
+        
+    
 
-with open("E:/Python/Project/home.py","w") as f:
+with open("E:/Python/Project/test.py","w") as f:
     f.writelines(new)
-
 
 #%%
-import re
-with open("E:/Python/Project/test.txt") as f:
+with open("E:/Python/Project/test.py") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
 
-pattern=re.compile("place")
+import re
+
+pattern=re.compile("support")
+pattern2=re.compile("Toplevel1")
+pattern3=re.compile("^\t")
+pattern4=re.compile("^\t\t")
+
 new=[]
 for line in lines:
-    if pattern.search(line):
-        new.append(line)
     
-with open("E:/Python/Project/out.txt","w") as f:
+    if pattern.search(line):
+        continue
+    temp=line[6:]
+    if pattern4.search(line):
+        line="        "+line[2:]
+    if pattern3.search(line):
+        line="    "+line[1:]
+        
+    new.append(line)
+        
+    
+
+with open("E:/Python/Project/test2.py","w") as f:
     f.writelines(new)
-
-
 
 
 
