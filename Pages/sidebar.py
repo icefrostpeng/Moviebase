@@ -4,7 +4,11 @@ Created on Tue Mar 23 19:22:08 2021
 
 @author: Elton
 """
-
+import pymysql
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
 
 import sys
 from PIL import ImageTk, Image
@@ -24,6 +28,51 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
+
+mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
+sql_hostname = '127.0.0.1'
+sql_username = 'root'
+sql_password = 'Srishtisingh@12'
+sql_main_database = 'movie'
+sql_port = 3306
+ssh_host = '34.229.131.207'
+ssh_user = 'ec2-user'
+ssh_port = 22
+def query(q):
+	with SSHTunnelForwarder(
+			(ssh_host, ssh_port),
+			ssh_username=ssh_user,
+			ssh_pkey=mypkey,
+			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+				passwd=sql_password, db=sql_main_database,
+				port=tunnel.local_bind_port)
+		data = pd.read_sql_query(q, conn)
+		conn.close()
+		return data
+
+name=[]
+rating=[]
+for i in range(1,6):
+    q1='select movie_name from moviedet where movie_id={0} and status="r"'.format(i)
+    v1=query(q1)
+    v1=v1.replace('movie_name' ,'')
+    print(v1)
+    if v1.empty:
+        continue
+    else:
+        name.append(v1)
+    q2='select rating from moviedet where movie_id={0} and status="r"'.format(i)
+    v2=query(q2)
+    print(v2)
+    if v2.empty:
+        continue
+    else:
+        rating.append(v2)
+#print(name)
+#print(rating)
+
+
 class Sidebar:
     def __init__(self, top=None):
         self.TSeparator4 = ttk.Separator(top)
