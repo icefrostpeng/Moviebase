@@ -24,7 +24,7 @@ except ImportError:
     py3 = True
 
 
-def vp_start_gui():
+def vp_start_gui(name='XYZ',mem='a',email='singh@fg.c'):
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -48,7 +48,7 @@ def destroy_Slots():
     w = None
 
 class Slots(Searchbar, Memberbar, Homebar):
-    def __init__(self, top=None):
+    def __init__(self, name,mem,email, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -230,6 +230,7 @@ class Slots(Searchbar, Memberbar, Homebar):
         self.Available_f.configure(disabledforeground="#a3a3a3")
         self.Available_f.configure(foreground="#000000")
         self.Available_f.configure(text='''Available''')
+        
 
         
         Searchbar.__init__(self, top=None)
