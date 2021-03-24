@@ -39,7 +39,7 @@ def create_Payment(rt, *args, **kwargs):
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Search (w)
+    top = Payment (w)
     return (w, top)
 
 def destroy_Payment():
