@@ -26,26 +26,26 @@ def vp_start_gui1(name='XYZ',mem='a',email='singh@fg.c'):
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Home (name,mem,email,root)
+    top = Movie (name,mem,email,root)
     root.mainloop()
 
 w = None
-def create_Home(rt,*args, **kwargs):
+def create_Movie(rt,*args, **kwargs):
     '''Starting point when module is imported by another module.
        Correct form of call: 'create_Home(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = Home (w)
+    top = Movie (w)
     return (w, top)
 
-def destroy_Home():
+def destroy_Movie():
     global w
     w.destroy()
     w = None
 
-class Home(Homebar, Sidebar, Searchbar, Memberbar):
+class Movie(Homebar, Sidebar, Searchbar, Memberbar):
     global to
     def ahead(self,top):
         global co
@@ -361,8 +361,8 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
         
         
         Searchbar.__init__(self, top=None)
-        Memberbar.__init__(self, top=None)
-        Homebar.__init__(self, top=None)
+        Memberbar.__init__(self,mem, top=None)
+        Homebar.__init__(self,name,mem, top=None)
         Sidebar.__init__(self, top=None)
         
 

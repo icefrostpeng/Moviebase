@@ -8,7 +8,7 @@ Created on Wed Mar 24 10:16:57 2021
 import sys
 from PIL import ImageTk, Image
 import PIL
-global co
+global co 
 co=0
 global d,to
 d={0:['1.jpeg',5,'horror'],1:['2.jpeg',4,'horror'],2:['3.jpeg',3,'horror'],3:['4.jpeg',5,'horror'],4:['5.jpeg',2,'horror']}
@@ -368,8 +368,8 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
         
         
         Searchbar.__init__(self, top=None)
-        Memberbar.__init__(self, top=None)
-        Homebar.__init__(self, top=None)
+        Memberbar.__init__(self, mem, top=None)
+        Homebar.__init__(self,name,mem, top=None)
         Sidebar.__init__(self, top=None)
         
 

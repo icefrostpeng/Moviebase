@@ -299,8 +299,7 @@ class Register:
         self.checkAge.configure(justify='left')
         self.checkAge.configure(text='''18+''')
         
-        
-        
+
         
         self.Submit = tk.Button(top,command= lambda: ins(em,usern,pass1,pass2,ad,mob,self.cal))
         self.Submit.place(relx=0.300, rely=0.875, height=54, width=177)
