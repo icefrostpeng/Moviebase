@@ -47,7 +47,7 @@ def create_Search(rt, *args, **kwargs):
 	root = rt
 	w = tk.Toplevel (root)
 	top = Search (w)
-	return (w, top)
+	return w, top
 
 def destroy_Search():
 	global w

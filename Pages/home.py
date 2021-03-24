@@ -45,7 +45,7 @@ def create_Home(rt,*args, **kwargs):
     root = rt
     w = tk.Toplevel (root)
     top = Home (w)
-    return (w, top)
+    return w, top
 
 def destroy_Home():
     global w
@@ -67,10 +67,10 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
     def bac(self,top):
         global co
         if(co==0):
-        	print(co)
+            print(co)
         else:
-        	co-=1
-        	print(co)
+            co-=1
+            print(co)
         img = ImageTk.PhotoImage(Image.open(d[co][0]).resize((560, 277), Image.ANTIALIAS))
         self.Movie_image = tk.Label(top,image = img)
         self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
@@ -310,8 +310,7 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
 
 
         self.Cast_l = tk.Label(self.Info_f)
-        self.Cast_l.place(relx=0.045, rely=0.558, height=109, width=145
-                , bordermode='ignore')
+        self.Cast_l.place(relx=0.045, rely=0.558, height=109, width=145, bordermode='ignore')
         self.Cast_l.configure(activebackground="#f9f9f9")
         self.Cast_l.configure(activeforeground="black")
         self.Cast_l.configure(anchor='nw')
@@ -324,8 +323,7 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
         self.Cast_l.configure(text='''Cast''')
 
         self.Genre_l = tk.Label(self.Info_f)
-        self.Genre_l.place(relx=0.045, rely=0.277, height=48, width=145
-                , bordermode='ignore')
+        self.Genre_l.place(relx=0.045, rely=0.277, height=48, width=145, bordermode='ignore')
         self.Genre_l.configure(activebackground="#f9f9f9")
         self.Genre_l.configure(activeforeground="black")
         self.Genre_l.configure(background="#000040")
@@ -367,10 +365,10 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
         self.Label9.configure(text='''UA/A''')
         
         
-        Searchbar.__init__(self,name,mem,email, top)
-        Memberbar.__init__(self, mem, top=None)
-        Homebar.__init__(self,name,mem, top=None)
-        Sidebar.__init__(self, top=None)
+        Searchbar.__init__(self, top)
+        Memberbar.__init__(self, name, mem, email, top)
+        Homebar.__init__(self,name,mem, top)
+        Sidebar.__init__(self, top)
         
 
 if __name__ == '__main__':

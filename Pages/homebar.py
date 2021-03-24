@@ -63,7 +63,7 @@ class Homebar:
         self.Member_l.configure(foreground="#000000")
         self.Member_l.configure(highlightbackground="#d9d9d9")
         self.Member_l.configure(highlightcolor="black")
-        self.Member_l.configure(text=f'Member status {uname} has {mem}')
+        self.Member_l.configure(text=f'Member status {uname} has {mem} Membership')
 
 
 ##################################################################################################################################################

@@ -33,30 +33,30 @@ ssh_user = 'ec2-user'
 ssh_port = 22
 def querys(email,name,age,dob,addr,phno,pass1):
     with SSHTunnelForwarder(
-        	(ssh_host, ssh_port),
-        	ssh_username=ssh_user,
-        	ssh_pkey=mypkey,
-        	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+            (ssh_host, ssh_port),
+            ssh_username=ssh_user,
+            ssh_pkey=mypkey,
+            remote_bind_address=(sql_hostname, sql_port)) as tunnel:
         try:
-        	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-        			passwd=sql_password, db=sql_main_database,
-        			port=tunnel.local_bind_port)
-        	cur=conn.cursor()
-        	sql = "INSERT INTO User (email,name,age,dob,addr,phno,pswd) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        	val = (email,name,age,dob,addr,phno,pass1)
-        	cur.execute(sql,val)
-        	#cur.execute(q)
-        	conn.commit()
-        	cur.execute("select * from User")
-        	result = cur.fetchone()
-        	print(result)
-        	#data = pd.read_sql_query(q, conn)
-        	conn.close()
-        	print("sucess")
-        	return 1
+            conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+                    passwd=sql_password, db=sql_main_database,
+                    port=tunnel.local_bind_port)
+            cur=conn.cursor()
+            sql = "INSERT INTO User (email,name,age,dob,addr,phno,pswd) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            val = (email,name,age,dob,addr,phno,pass1)
+            cur.execute(sql,val)
+            #cur.execute(q)
+            conn.commit()
+            cur.execute("select * from User")
+            result = cur.fetchone()
+            print(result)
+            #data = pd.read_sql_query(q, conn)
+            conn.close()
+            print("sucess")
+            return 1
         except Exception as e:
-        	print(e)
-        	return 0
+            print(e)
+            return 0
 def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
@@ -69,34 +69,34 @@ def  ins(emails,usern,pass1,pass2,addre,mobi,cal):
     passs2=pass2.get()
     addres=addre.get()
     mob=mobi.get()
-    if(len(email)!=0 and len(username)!=0 and len(passs1)!=0 and len(passs2)!=0 and len(addres)!=0 and len(mob)!=0):
+    if len(email)!=0 and len(username)!=0 and len(passs1)!=0 and len(passs2)!=0 and len(addres)!=0 and len(mob)!=0:
         regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
-        if(re.search(regex,email)):
-        	reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
-        	pat = re.compile(reg)
-        	if(re.search(pat, passs1)):
-        		if(passs1==passs2):
-        			Pattern = re.compile("(0/91)?[7-9][0-9]{9}")
-        			if(Pattern.match(mob) and len(mob)==10):
-        				dob=cal.get_date()
-        				age=str(calculateAge(cal.get_date()))						
-        				dob=str(dob)						
-        				try:
-        					print(email,username,age,dob,addres,mob,passs1)
-        					t=querys(email,username,age,dob,addres,mob,passs1)
-        					if(t==1):
-        						messagebox.showinfo("Sucess", "Registration successfull")
-        					else:
-        						messagebox.showerror("UnSucess", "Registration Unsuccessfull")
-        				except Exception as e: print(e)
-        			else:
-        				messagebox.showerror("Error", "Mobile Number Invalid")
-        		else:
-        			messagebox.showerror("Error", "Both passwords do not match")
-        	else:
-        		messagebox.showerror("Error", "Enter a strong Password")
+        if re.search(regex, email):
+            reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+            pat = re.compile(reg)
+            if re.search(pat, passs1):
+                if passs1==passs2:
+                    Pattern = re.compile("(0/91)?[7-9][0-9]{9}")
+                    if(Pattern.match(mob) and len(mob)==10):
+                        dob=cal.get_date()
+                        age=str(calculateAge(cal.get_date()))
+                        dob=str(dob)
+                        try:
+                            print(email,username,age,dob,addres,mob,passs1)
+                            t=querys(email,username,age,dob,addres,mob,passs1)
+                            if(t==1):
+                                messagebox.showinfo("Sucess", "Registration successfull")
+                            else:
+                                messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+                        except Exception as e: print(e)
+                    else:
+                        messagebox.showerror("Error", "Mobile Number Invalid")
+                else:
+                    messagebox.showerror("Error", "Both passwords do not match")
+            else:
+                messagebox.showerror("Error", "Enter a strong Password")
         else:
-        	messagebox.showerror("Error", "Invalid Email Id")
+            messagebox.showerror("Error", "Invalid Email Id")
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
     

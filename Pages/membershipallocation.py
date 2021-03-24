@@ -6,6 +6,7 @@
 #    Mar 24, 2021 12:19:14 PM IST  platform: Windows NT
 
 import sys
+from home import *
 
 try:
     import Tkinter as tk
@@ -19,11 +20,11 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-def vp_start_gui():
+def vp_start_gui_mem_allocation(mem,name,email):
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Membership (root)
+    top = Membership (mem,name,email, root)
     root.mainloop()
 
 w = None
@@ -35,7 +36,7 @@ def create_Membership(rt, *args, **kwargs):
     root = rt
     w = tk.Toplevel (root)
     top = Membership (w)
-    return (w, top)
+    return w, top
 
 def destroy_Membership():
     global w
@@ -43,7 +44,7 @@ def destroy_Membership():
     w = None
 
 class Membership:
-    def __init__(self, top=None):
+    def __init__(self, mem,name,email, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -109,10 +110,16 @@ class Membership:
         self.Label2.configure(disabledforeground="#a3a3a3")
         self.Label2.configure(font="-family {Segoe UI} -size 17")
         self.Label2.configure(foreground="#ffffff")
-        self.Label2.configure(text='''Congratulations You are now a ''')
+        self.Label2.configure(text='''Your membership status is:''')
         self.Label2.configure(wraplength="600")
 
-        self.Continue_b = tk.Button(self.Movie1)
+        # function to return to home
+        def button_home():
+            top.destroy()
+            vp_start_gui1(name, mem, email)
+
+        # Home button
+        self.Continue_b = tk.Button(self.Movie1, command=button_home)
         self.Continue_b.place(relx=0.629, rely=0.8, height=44, width=227)
         self.Continue_b.configure(activebackground="#ececec")
         self.Continue_b.configure(activeforeground="#000000")
@@ -123,18 +130,15 @@ class Membership:
         self.Continue_b.configure(highlightbackground="#d9d9d9")
         self.Continue_b.configure(highlightcolor="black")
         self.Continue_b.configure(pady="0")
-        self.Continue_b.configure(text='''Home''')
+        self.Continue_b.configure(text='Home')
 
         self.Membership_status = tk.Label(self.Movie1)
-        self.Membership_status.place(relx=0.503, rely=0.447, height=61
-                , width=294)
+        self.Membership_status.place(relx=0.503, rely=0.447, height=61, width=294)
         self.Membership_status.configure(background="#00002b")
         self.Membership_status.configure(disabledforeground="#a3a3a3")
         self.Membership_status.configure(font="-family {Segoe UI} -size 22")
         self.Membership_status.configure(foreground="#77ff8b")
-        self.Membership_status.configure(text='''Membership status''')
+        self.Membership_status.configure(text=f'{mem} Membership')
 
-if __name__ == '__main__':
-    vp_start_gui()
 
 

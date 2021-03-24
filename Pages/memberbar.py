@@ -1,13 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Mar 23 19:06:12 2021
-
-@author: Elton
-"""
 import sys
 from PIL import ImageTk, Image
 import PIL
-
+from payment import *
+from home import *
 try:
     import Tkinter as tk
 except ImportError:
@@ -31,7 +26,7 @@ def button_functionality(mem):
         gold = False
         platinum = True
         diamond = True
-    elif mem == 'Silver':
+    elif mem == 'Platinum':
         gold = False
         platinum = False
         diamond = True
@@ -47,7 +42,7 @@ def button_functionality(mem):
 
 
 class Memberbar:
-    def __init__(self, membership, top=None):
+    def __init__(self,name, membership,email, top=None):
         self.membership = membership
         self.Membership_f = tk.LabelFrame(top)
         self.Membership_f.place(relx=0.013, rely=0.219, relheight=0.516, relwidth=0.14)
@@ -61,9 +56,18 @@ class Memberbar:
         self.TSeparator3.place(relx=0.165, rely=0.168, relheight=0.845)
         self.TSeparator3.configure(orient="vertical")
 
+        # redirect to payment
+        def button_click(product):
+            top.destroy()
+            vp_start_gui_P(name, membership, product, email)
+
+
+        # membership status
         gold, platinum, diamond = button_functionality(membership)
 
-        self.Gold_b = tk.Button(self.Membership_f)
+        # Gold Button
+        prod_gold = ["Gold", 600]
+        self.Gold_b = tk.Button(self.Membership_f, command=lambda: button_click(prod_gold))
         self.Gold_b.place(relx=0.056, rely=0.734, height=84, width=157, bordermode='ignore')
         self.Gold_b.configure(activebackground="#f0df99")
         self.Gold_b.configure(activeforeground="#000000")
@@ -78,12 +82,12 @@ class Memberbar:
         self.Gold_b.configure(text='Gold')
         if gold:
             self.Gold_b["state"] = "normal"
-            print('true')
         else:
             self.Gold_b["state"] = "disabled"
-            print('false')
 
-        self.Platinum_b = tk.Button(self.Membership_f)
+        # Platinum Button
+        prod_platinum = ["Platinum", 800]
+        self.Platinum_b = tk.Button(self.Membership_f, command=lambda: button_click(prod_platinum))
         self.Platinum_b.place(relx=0.056, rely=0.452, height=84, width=157, bordermode='ignore')
         self.Platinum_b.configure(activebackground="#707070")
         self.Platinum_b.configure(activeforeground="white")
@@ -99,12 +103,12 @@ class Memberbar:
         self.Platinum_b.configure(text='''Platinum''')
         if platinum:
             self.Platinum_b["state"] = "normal"
-            print('true')
         else:
             self.Platinum_b["state"] = "disabled"
-            print('false')
 
-        self.Diamond_b = tk.Button(self.Membership_f)
+        # Diamond Button
+        prod_diamond = ["Diamond", 1000]
+        self.Diamond_b = tk.Button(self.Membership_f, command=lambda: button_click(prod_diamond))
         self.Diamond_b.place(relx=0.061, rely=0.169, height=84, width=157, bordermode='ignore')
         self.Diamond_b.configure(activebackground="#d9fcff")
         self.Diamond_b.configure(activeforeground="#7070fa")
@@ -120,11 +124,10 @@ class Memberbar:
         self.Diamond_b.configure(text='''Diamond''')
         if diamond:
             self.Diamond_b["state"] = "normal"
-            print('true')
         else:
             self.Diamond_b["state"] = "disabled"
-            print('false')
 
+        # Label in membership block
         self.Join_l = tk.Label(self.Membership_f)
         self.Join_l.place(relx=0.056, rely=0.028, height=41, width=155, bordermode='ignore')
         self.Join_l.configure(activebackground="#f9f9f9")
@@ -139,4 +142,3 @@ class Memberbar:
         self.Join_l.configure(wraplength="150")
 
     ######################################################################################################################################################
-
