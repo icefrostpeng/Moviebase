@@ -109,7 +109,7 @@ class Membership:
         self.Label2.configure(disabledforeground="#a3a3a3")
         self.Label2.configure(font="-family {Segoe UI} -size 17")
         self.Label2.configure(foreground="#ffffff")
-        self.Label2.configure(text='''Your membership status is:''')
+        self.Label2.configure(text='''Congratulations You are now a ''')
         self.Label2.configure(wraplength="600")
 
         self.Continue_b = tk.Button(self.Movie1)
