@@ -68,20 +68,26 @@ def sub():
 				else:
 					flag=0
 	if(flag==1):
-		messagebox.showinfo("Sucess", "Seats Booked successfully")
-	#print(query())
+		sts=''
+		for i in range(len(fin)):
+			if(i==0):
+				sts+=str(fin[i][2])
+			else:
+				sts+=","+str(fin[i][2])
+		st="Seats Booked successfully\n Seat number : "+sts
+		messagebox.showinfo("Sucess", st)
 def clicked(*args):
 	global li,count,strv,fin
 	j=args[0]
 	print(args[1],args[2])
 	if(li[args[0]].cget('bg')=='blue'):
 		li[args[0]].configure(background="yellow")
-		fin.append([args[1],args[2]])
+		fin.append([args[1],args[2],(args[0]+1)])
 		count+=1
 	else:
 		li[args[0]].configure(background="blue")
 		count-=1
-		fin.remove([args[1],args[2]])
+		fin.remove([args[1],args[2],(args[0]+1)])
 	cou=str(count)
 	st="Number of seats selected are : "+cou
 	strv.set(st)
