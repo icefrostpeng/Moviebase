@@ -22,10 +22,9 @@ except ImportError:
     
 from tkinter import *
 class Homebar:
-    def __init__(self,top=None):
+    def __init__(self,uname, mem, top=None):
         self.Home_f = tk.LabelFrame(top)
         self.Home_f.place(relx=0.023, rely=0.029, relheight=0.093, relwidth=0.50)
-
         self.Home_f.configure(relief='groove')
         self.Home_f.configure(foreground="#000000")
         self.Home_f.configure(background="#e8e8ff")
@@ -33,8 +32,7 @@ class Homebar:
         self.Home_f.configure(highlightcolor="black")
 
         self.home_inner_f = tk.Frame(self.Home_f)
-        self.home_inner_f.place(relx=0.017, rely=0.109, relheight=0.797
-                , relwidth=0.959, bordermode='ignore')
+        self.home_inner_f.place(relx=0.017, rely=0.109, relheight=0.797, relwidth=0.959, bordermode='ignore')
         self.home_inner_f.configure(relief='groove')
         self.home_inner_f.configure(borderwidth="2")
         self.home_inner_f.configure(relief="groove")
@@ -65,7 +63,7 @@ class Homebar:
         self.Member_l.configure(foreground="#000000")
         self.Member_l.configure(highlightbackground="#d9d9d9")
         self.Member_l.configure(highlightcolor="black")
-        self.Member_l.configure(text='''Membership status''')
+        self.Member_l.configure(text=f'Member status {uname} has {mem}')
 
 
 ##################################################################################################################################################
