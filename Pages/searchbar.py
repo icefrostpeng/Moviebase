@@ -53,7 +53,7 @@ def query(q):
 		conn.close()
 		return l
 
-def search(var,top):
+def search(var,name,mem,email, top):
 	val=var.get()
 	if (len(val)!=0):
 		a="select * from moviedet where movie_name LIKE '{0}%'".format(val)
@@ -62,7 +62,7 @@ def search(var,top):
 		if(len(b)!=0):
 			top.destroy()
 			#print(b)
-			vp_start_gui(0,b)
+			vp_start_gui(0,name,mem,email,b)
 			
 		else:
 			a="select * from theaterdet where theater_name='{0}%'".format(val)
@@ -71,7 +71,7 @@ def search(var,top):
 			if(len(b)!=0):
 				top.destroy()
 				#print(b)
-				search2.vp_start_gui(1,b)
+				search2.vp_start_gui(1,name,mem,email,b)
 				
 			else:
 				messagebox.showerror("Error", "No Movie or Theatre found!!!")
@@ -86,7 +86,7 @@ def search(var,top):
 class Searchbar():
 
 	###############################################Search##########################################################################################
-	def __init__(self, top=None):
+	def __init__(self,name,mem,email, top=None):
 		print(top)
 		self.Search_f = tk.LabelFrame(top)
 		self.Search_f.place(relx=0.609, rely=0.044, relheight=0.06
@@ -111,7 +111,7 @@ class Searchbar():
 		self.Search_e.configure(selectforeground="white")
 		print("here")
 
-		self.Search_b = tk.Button(self.Search_f,command=lambda:search(var,top) )
+		self.Search_b = tk.Button(self.Search_f,command=lambda:search(var,name,mem,email, top) )
 		self.Search_b.place(relx=0.0, rely=0.0, height=44, width=100
 		        , bordermode='ignore')
 		self.Search_b.configure(activebackground="#b3eaff")

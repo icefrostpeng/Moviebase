@@ -367,7 +367,7 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
         self.Label9.configure(text='''UA/A''')
         
         
-        Searchbar.__init__(self, top)
+        Searchbar.__init__(self,name,mem,email, top)
         Memberbar.__init__(self, mem, top=None)
         Homebar.__init__(self,name,mem, top=None)
         Sidebar.__init__(self, top=None)

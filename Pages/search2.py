@@ -30,11 +30,11 @@ from sidebar import Sidebar
 
 def back(top):
 	top.destroy()
-def vp_start_gui(valu,b):
+def vp_start_gui(valu,name,mem,email,b):
 	'''Starting point when module is the main routine.'''
 	global val, w, root
 	root = tk.Tk()
-	top = Search (valu,b,root)
+	top = Search (valu,name,mem,email,b,root)
 	root.mainloop()
 	print(b)
 
@@ -55,7 +55,7 @@ def destroy_Search():
 	w = None
 
 class Search( Memberbar, Homebar):
-	def __init__(self,valu, b,top=None):
+	def __init__(self,valu,name,mem,email,b,top=None):
 		print(b)
 		'''This class configures and populates the toplevel window.
 		   top is the toplevel containing window.'''
@@ -204,8 +204,8 @@ class Search( Memberbar, Homebar):
 		self.Page_list.configure(text='''1 of 4''')
 		
 		#Searchbar.__init__(self, top=None)
-		Memberbar.__init__(self, top=None)
-		Homebar.__init__(self, top=None)
+		Memberbar.__init__(self, mem, top=None)
+		Homebar.__init__(self,name,mem, top=None)
 		Sidebar.__init__(self, top=None)
 #####################################################################################################################################
 
