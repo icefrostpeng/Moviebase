@@ -41,7 +41,7 @@ def create_Search(rt, *args, **kwargs):
     global w, w_win, root
     #rt = root
     root = rt
-    w = tk.Toplevel (root)
+    w = tk.Toplevel (name,mem,email,root)
     top = Search (w)
     return (w, top)
 

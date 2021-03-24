@@ -361,8 +361,8 @@ class Movie(Homebar, Sidebar, Searchbar, Memberbar):
         
         
         Searchbar.__init__(self, top=None)
-        Memberbar.__init__(self, top=None)
-        Homebar.__init__(self, top=None)
+        Memberbar.__init__(self,mem, top=None)
+        Homebar.__init__(self,name,mem, top=None)
         Sidebar.__init__(self, top=None)
         
 

@@ -137,7 +137,6 @@ class Signin:
 		self.Background=img
 		
 		
-		
 		img = ImageTk.PhotoImage(Image.open("Logo.png").resize((150, 200), Image.ANTIALIAS))
 		#img = ImageTk.PhotoImage(file="Logo.png")
 		self.Logo_image = tk.Label(top)

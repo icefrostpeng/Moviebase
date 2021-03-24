@@ -54,7 +54,7 @@ class Homebar:
         self.Home_b.configure(text='''Home''')
 
         self.Member_l = tk.Label(self.home_inner_f)
-        self.Member_l.place(relx=0.262, rely=0.137, height=34, width=262)
+        self.Member_l.place(relx=0.262, rely=0.137, height=34, width=352)
         self.Member_l.configure(activebackground="#b3eaff")
         self.Member_l.configure(activeforeground="black")
         self.Member_l.configure(background="#b3eaff")
