@@ -24,7 +24,7 @@ new=[]
 for line in lines:
     new.append(line[6:])
     
-with open("E:/Python/Project/search.py","w") as f:
+with open("E:/Python/Project/createshow.py","w") as f:
     f.writelines(new)
 
 #%%
