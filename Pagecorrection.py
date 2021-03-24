@@ -6,7 +6,29 @@ Created on Mon Mar 22 10:51:14 2021
 """
 
 
+
+
+
+
+
+
+
+#%%
+
 with open("E:/Python/Project/test.txt") as f:
+    lines = f.readlines()
+
+lines # ['This is the first line.\n', 'This is the second line.\n']
+
+new=[]
+for line in lines:
+    new.append(line[6:])
+    
+with open("E:/Python/Project/search.py","w") as f:
+    f.writelines(new)
+
+#%%
+with open("E:/Python/Project/Pages/register.py") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
@@ -33,11 +55,11 @@ for line in lines:
         
     
 
-with open("E:/Python/Project/test.py","w") as f:
+with open("E:/Python/Project/Pages/register.py","w") as f:
     f.writelines(new)
 
 #%%
-with open("E:/Python/Project/test.py") as f:
+with open("E:/Python/Project/Pages/register.py") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
@@ -64,7 +86,7 @@ for line in lines:
         
     
 
-with open("E:/Python/Project/test2.py","w") as f:
+with open("E:/Python/Project/Pages/register.py","w") as f:
     f.writelines(new)
 
 
