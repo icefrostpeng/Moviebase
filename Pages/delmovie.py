@@ -121,7 +121,7 @@ class DelMovie:
         self.delmovie_b.configure(activebackground="#ececec")
         self.delmovie_b.configure(activeforeground="#000000")
         self.delmovie_b.configure(background="#77eaea")
-        self.delmovie_b.configure(cursor="fleur")
+        self.delmovie_b.configure(cursor="hand2")
         self.delmovie_b.configure(disabledforeground="#a3a3a3")
         self.delmovie_b.configure(font="-family {Segoe UI} -size 23")
         self.delmovie_b.configure(foreground="#000000")

@@ -174,6 +174,7 @@ class AddCinema:
         self.Createcinema_b.configure(activeforeground="#000000")
         self.Createcinema_b.configure(background="#77eaea")
         self.Createcinema_b.configure(disabledforeground="#a3a3a3")
+        self.Createcinema_b.configure(cursor="hand2")
         self.Createcinema_b.configure(font="-family {Segoe UI} -size 23")
         self.Createcinema_b.configure(foreground="#000000")
         self.Createcinema_b.configure(highlightbackground="#d9d9d9")
