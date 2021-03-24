@@ -60,7 +60,12 @@ def querys(email,name,age,dob,addr,phno,pass1):
 def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
-    return age
+    if age >18:
+        x="I agree that my age is above 18"
+    else:
+        x="I agree that my age is below 18"
+    return x
+
 def  ins(emails,usern,pass1,pass2,addre,mobi,cal):
     email=emails.get()
     username=usern.get()
@@ -123,7 +128,19 @@ def destroy_Register():
     w.destroy()
     w = None
 
+
+
 class Register:
+    def ageagreement(self,age):
+        if age < 18:
+            x = "I agree that my age is below 18"
+            return x
+        if age > 18:
+            x = " I agree that my age is above 18"
+            return x
+
+
+
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -236,7 +253,7 @@ class Register:
         self.dob.configure(foreground="#ffffff")
         self.dob.configure(text='''Enter Date of Birth''')
 
-        self.cal = DateEntry(root,width=30,bg="darkblue",fg="white",year=2010)
+        self.cal = DateEntry(root,width=30,bg="darkblue",fg="white",year=2020)
         self.cal.place(relx=0.163, rely=0.550, height=31, width=171)
 
         self.address_l = tk.Label(top)
@@ -285,22 +302,25 @@ class Register:
         self.age_warning.configure(foreground="#ffffff")
         self.age_warning.configure(text='''age confirmation''')
 
-        self.checkAge = tk.Checkbutton(top)
-        self.checkAge.place(relx=0.584, rely=0.781, relheight=0.081
-                , relwidth=0.203)
+        #dob=datetime.strptime(date_str2, '%m/%d/%y')
+        self.checkAge=tk.Checkbutton(top,text="Validate",foreground="red")
+        self.checkAge.place(relx=0.484,rely=0.781,relheight=0.081,relwidth=0.404)
+        self.checkAge.place(relx=0.484, rely=0.781, relheight=0.081
+                , relwidth=0.403)
         self.checkAge.configure(activebackground="#ececec")
         self.checkAge.configure(activeforeground="#000000")
         self.checkAge.configure(background="#000328")
-        self.checkAge.configure(cursor="hand2")
         self.checkAge.configure(disabledforeground="#a3a3a3")
-        self.checkAge.configure(foreground="#ffffff")
+        #self.checkAge.configure(foreground="#ffffff")
         self.checkAge.configure(highlightbackground="#d9d9d9")
         self.checkAge.configure(highlightcolor="black")
         self.checkAge.configure(justify='left')
-        self.checkAge.configure(text='''18+''')
-        
 
-        
+        #self.LabelAge=tk.Label(top,text=age)
+
+
+
+
         self.Submit = tk.Button(top,command= lambda: ins(em,usern,pass1,pass2,ad,mob,self.cal))
         self.Submit.place(relx=0.300, rely=0.875, height=54, width=177)
         self.Submit.configure(activebackground="#ececec")
@@ -315,7 +335,9 @@ class Register:
         self.Submit.configure(highlightcolor="black")
         self.Submit.configure(pady="0")
         self.Submit.configure(text='''Register''')
-        
+
+
 
 if __name__ == '__main__':
     vp_start_register()
+
