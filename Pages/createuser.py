@@ -6,7 +6,7 @@
 #    Mar 24, 2021 03:21:31 PM IST  platform: Windows NT
 
 import sys
-
+from tkcalendar import Calendar,DateEntry
 try:
     import Tkinter as tk
 except ImportError:
@@ -204,6 +204,9 @@ class AddUser:
         self.Createuser_b.configure(highlightcolor="black")
         self.Createuser_b.configure(pady="0")
         self.Createuser_b.configure(text='''Create User''')
+        
+        self.cal = DateEntry(root,width=30,bg="darkblue",fg="white",year=2010)
+        self.cal.place(relx=0.563, rely=0.250, height=31, width=171)
 
 if __name__ == '__main__':
     vp_start_gui()
