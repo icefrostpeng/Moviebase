@@ -69,7 +69,7 @@ class Search(Searchbar, Memberbar, Homebar):
         self.style.map('.',background=
             [('selected', _compcolor), ('active',_ana2color)])
 
-        top.geometry("1280x686+212+135")
+        top.geometry("1280x600+212+135")
         top.minsize(120, 1)
         top.maxsize(3004, 1913)
         top.resizable(1,  1)
