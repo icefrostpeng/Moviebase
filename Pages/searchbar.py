@@ -8,7 +8,7 @@ from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import sys
 from PIL import ImageTk, Image
-from search2 import *
+from search2 import vp_start_gui
 import PIL
 try:
 	import Tkinter as tk
@@ -25,8 +25,6 @@ except ImportError:
 from tkinter import *
 
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
-# if you want to use ssh password use - ssh_password='your ssh password', bellow
-
 sql_hostname = '127.0.0.1'
 sql_username = 'root'
 sql_password = 'Srishtisingh@12'
@@ -86,7 +84,7 @@ def search(var,name,mem,email, top):
 class Searchbar():
 
 	###############################################Search##########################################################################################
-	def __init__(self,name,mem,email, top=None):
+	def __init__(self,name='x',mem='x',email='x', top=None):
 		print(top)
 		self.Search_f = tk.LabelFrame(top)
 		self.Search_f.place(relx=0.609, rely=0.044, relheight=0.06

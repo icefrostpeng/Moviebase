@@ -21,7 +21,7 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-def query():
+def query(slotid):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),
 			ssh_username=ssh_user,
@@ -31,7 +31,7 @@ def query():
 				passwd=sql_password, db=sql_main_database,
 				port=tunnel.local_bind_port)
 		cur=conn.cursor()
-		cur.execute("select seat_id,status from seatdet where slot_id=1")
+		cur.execute("select seat_id,status from seatdet where slot_id={0}".format(slotid))
 		arr = list(cur.fetchall())
 		arr=dict(arr)
 		print(arr)
@@ -50,8 +50,7 @@ def quer(seatid,val):
 		cur.execute("update seatdet set status='{1}' where slot_id=1 and seat_id={0}".format(seatid,val))
 		conn.commit()
 		return 1
-window = Tk()
-dic=query()
+
 global fin
 fin=[]
 def sub():
@@ -92,45 +91,49 @@ def clicked(*args):
 	st="Number of seats selected are : "+cou
 	strv.set(st)
 	print(fin)
-topx=25
-topy=25
-rightx=75
-righty=75
-co=0
-window.geometry("700x500") 
-#c.bind('<Button-1>', clicked)
-for key,value in dic.items():
-	if(value=='v'):
-		playbutton = Button(window,text=(co+1),command=partial(clicked, co,key,value), fg='#ffffff',width=5,height=2,relief=RAISED)
-		playbutton.configure(bg='blue')
-		playbutton.place(x=topx,y=topy)
-		#c.tag_bind("playbutton","<Button-1>",clicked)
-		
-	elif(value=='i'):
-		playbutton = Button(window,text=(co+1),bg='black', fg='#ffffff',width=5,height=2,state=DISABLED,relief=FLAT).place(x=topx,y=topy)
+def creates(l,i,slotid,email):
+	window = Tk()
+	dic=query(slotid)
+	topx=25
+	topy=25
+	rightx=75
+	righty=75
+	co=0
+	window.geometry("700x500") 
+	#c.bind('<Button-1>', clicked)
+	for key,value in dic.items():
+		if(value=='v'):
+			playbutton = Button(window,text=(co+1),command=partial(clicked, co,key,value), fg='#ffffff',width=5,height=2,relief=RAISED)
+			playbutton.configure(bg='blue')
+			playbutton.place(x=topx,y=topy)
+			#c.tag_bind("playbutton","<Button-1>",clicked)
+			
+		elif(value=='i'):
+			playbutton = Button(window,text=(co+1),bg='black', fg='#ffffff',width=5,height=2,state=DISABLED,relief=FLAT).place(x=topx,y=topy)
 
-	else:
-		playbutton = Button(window,text=(co+1),bg='red', fg='#ffffff',width=5,height=2,state=DISABLED,relief=FLAT).place(x=topx,y=topy)
-	li.append(playbutton)
-	co+=1
-	if(co%10==0):
-		topy+=60
-		righty+=60
-		topx=25
-		rightx=75
-	elif(co%5==0):
-		topx+=80
-		rightx+=80
-	else:
-		topx+=60
-		rightx+=60
-we=Label(window,text="_____________________________________Screen This Side___________________________________",font="-family {Segoe UI} -size 12").place(x=20,y=280)
-blu = Button(window,text = "Available",bg='#0052cc', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=20,y=320)
-red = Button(window,text = "BOOKED",bg='red', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=110,y=320)
-bla = Button(window,text = "Invalid",bg='black', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=200,y=320)
+		else:
+			playbutton = Button(window,text=(co+1),bg='red', fg='#ffffff',width=5,height=2,state=DISABLED,relief=FLAT).place(x=topx,y=topy)
+		li.append(playbutton)
+		co+=1
+		if(co%10==0):
+			topy+=60
+			righty+=60
+			topx=25
+			rightx=75
+		elif(co%5==0):
+			topx+=80
+			rightx+=80
+		else:
+			topx+=60
+			rightx+=60
+	we=Label(window,text="_____________________________________Screen This Side___________________________________",font="-family {Segoe UI} -size 12").place(x=20,y=280)
+	blu = Button(window,text = "Available",bg='#0052cc', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=20,y=320)
+	red = Button(window,text = "BOOKED",bg='red', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=110,y=320)
+	bla = Button(window,text = "Invalid",bg='black', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=200,y=320)
 
-strv=StringVar()
-strv.set("Number of seats selected is : 0")
-wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic").place(x=40,y=380)
-b=Button(window,command=sub,text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=410)
-window.mainloop()
+	strv=StringVar()
+	strv.set("Number of seats selected is : 0")
+	wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic").place(x=40,y=380)
+	b=Button(window,command=sub,text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=410)
+	window.mainloop()
+#creates()
