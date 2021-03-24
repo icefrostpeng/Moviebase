@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar 24 10:16:57 2021
+
+@author: Admin
+"""
+
 import sys
 from PIL import ImageTk, Image
 import PIL
@@ -50,7 +57,7 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
     def ahead(self,top):
         global co
         co=(co+1)%5
-        print(co)
+        print(d[co])
         print(d[co][0])
         img = ImageTk.PhotoImage(Image.open(d[co][0]).resize((560, 277), Image.ANTIALIAS))
         self.Movie_image = tk.Label(top,image = img)
