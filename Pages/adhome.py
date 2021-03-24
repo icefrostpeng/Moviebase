@@ -225,7 +225,6 @@ class AdHome:
         self.Button1.configure(activebackground="#ececec")
         self.Button1.configure(activeforeground="#000000")
         self.Button1.configure(background="#ff8000")
-        self.Button1.configure(cursor="fleur")
         self.Button1.configure(disabledforeground="#a3a3a3")
         self.Button1.configure(font="-family {Segoe UI} -size 19")
         self.Button1.configure(foreground="#000000")

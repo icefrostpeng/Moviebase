@@ -233,7 +233,7 @@ class Slots(Searchbar, Memberbar, Homebar):
         
 
         
-        Searchbar.__init__(self, top=None)
+        Searchbar.__init__(self,name,mem,email, top=None)
         Memberbar.__init__(self, mem, top=None)
         Homebar.__init__(self,name,mem, top=None)
         Sidebar.__init__(self, top=None)
