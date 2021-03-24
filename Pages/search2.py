@@ -9,159 +9,205 @@ import sys
 from PIL import ImageTk, Image
 import PIL
 try:
-    import Tkinter as tk
+	import Tkinter as tk
 except ImportError:
-    import tkinter as tk
+	import tkinter as tk
 
 try:
-    import ttk
-    py3 = False
+	import ttk
+	py3 = False
 except ImportError:
-    import tkinter.ttk as ttk
-    py3 = True
-    
+	import tkinter.ttk as ttk
+	py3 = True
+	
 from tkinter import *
+#from home import *
 
-from searchbar import Searchbar
+#from searchbar import Searchbar
 from memberbar import Memberbar
 from homebar import Homebar
 from sidebar import Sidebar
 
-
-def vp_start_gui():
-    '''Starting point when module is the main routine.'''
-    global val, w, root
-    root = tk.Tk()
-    top = Search (root)
-    root.mainloop()
+def back(top):
+	top.destroy()
+def vp_start_gui(valu,b):
+	'''Starting point when module is the main routine.'''
+	global val, w, root
+	root = tk.Tk()
+	top = Search (valu,b,root)
+	root.mainloop()
+	print(b)
 
 w = None
 def create_Search(rt, *args, **kwargs):
-    '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Search(root, *args, **kwargs)' .'''
-    global w, w_win, root
-    #rt = root
-    root = rt
-    w = tk.Toplevel (root)
-    top = Search (w)
-    return (w, top)
+	'''Starting point when module is imported by another module.
+	   Correct form of call: 'create_Search(root, *args, **kwargs)' .'''
+	global w, w_win, root
+	#rt = root
+	root = rt
+	w = tk.Toplevel (root)
+	top = Search (w)
+	return (w, top)
 
 def destroy_Search():
-    global w
-    w.destroy()
-    w = None
+	global w
+	w.destroy()
+	w = None
 
-class Search(Searchbar, Memberbar, Homebar):
-    def __init__(self, top=None):
-        '''This class configures and populates the toplevel window.
-           top is the toplevel containing window.'''
-        _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
-        _fgcolor = '#000000'  # X11 color: 'black'
-        _compcolor = '#d9d9d9' # X11 color: 'gray85'
-        _ana1color = '#d9d9d9' # X11 color: 'gray85'
-        _ana2color = '#ececec' # Closest X11 color: 'gray92'
-        self.style = ttk.Style()
-        if sys.platform == "win32":
-            self.style.theme_use('winnative')
-        self.style.configure('.',background=_bgcolor)
-        self.style.configure('.',foreground=_fgcolor)
-        self.style.configure('.',font="TkDefaultFont")
-        self.style.map('.',background=
-            [('selected', _compcolor), ('active',_ana2color)])
+class Search( Memberbar, Homebar):
+	def __init__(self,valu, b,top=None):
+		print(b)
+		'''This class configures and populates the toplevel window.
+		   top is the toplevel containing window.'''
+		_bgcolor = '#d9d9d9'  # X11 color: 'gray85'
+		_fgcolor = '#000000'  # X11 color: 'black'
+		_compcolor = '#d9d9d9' # X11 color: 'gray85'
+		_ana1color = '#d9d9d9' # X11 color: 'gray85'
+		_ana2color = '#ececec' # Closest X11 color: 'gray92'
+		self.style = ttk.Style()
+		if sys.platform == "win32":
+		    self.style.theme_use('winnative')
+		self.style.configure('.',background=_bgcolor)
+		self.style.configure('.',foreground=_fgcolor)
+		self.style.configure('.',font="TkDefaultFont")
+		self.style.map('.',background=
+		    [('selected', _compcolor), ('active',_ana2color)])
 
-        top.geometry("1280x600+212+135")
-        top.minsize(120, 1)
-        top.maxsize(3004, 1913)
-        top.resizable(1,  1)
-        top.title("New Toplevel")
-        top.configure(background="#000040")
-        top.configure(highlightbackground="#d9d9d9")
-        top.configure(highlightcolor="#000000")
-        
-        top.resizable(False, False)
-        global img
-        img = ImageTk.PhotoImage(file="bg.png")
-        self.Background = tk.Label(top,image = img)        
-        self.Background.place(relx=0, rely=0, height=1000, width=1500)
-        self.Background=img
-        
-        
-        self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
-        top.configure(menu = self.menubar)
+		top.geometry("1280x686+212+135")
+		top.minsize(120, 1)
+		top.maxsize(3004, 1913)
+		top.resizable(1,  1)
+		top.title("New Toplevel")
+		top.configure(background="#000040")
+		top.configure(highlightbackground="#d9d9d9")
+		top.configure(highlightcolor="#000000")
+		
+		top.resizable(False, False)
+		global img
+		img = ImageTk.PhotoImage(file="bg.png")
+		self.Background = tk.Label(top,image = img)        
+		self.Background.place(relx=0, rely=0, height=1000, width=1500)
+		self.Background=img
+		
+		
+		self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
+		top.configure(menu = self.menubar)
 
-
+		self.Search_b = tk.Button(top,command=lambda:back(top) )
+		self.Search_b.place(relx=0.0, rely=0.0, height=44, width=100
+		        , bordermode='ignore')
+		self.Search_b.configure(activebackground="#b3eaff")
+		self.Search_b.configure(activeforeground="#000000")
+		self.Search_b.configure(background="#00205b")
+		self.Search_b.configure(disabledforeground="#a3a3a3")
+		self.Search_b.configure(cursor="hand2")
+		self.Search_b.configure(font="-family {Segoe UI} -size 12")
+		self.Search_b.configure(foreground="#ffffff")
+		self.Search_b.configure(highlightbackground="#d9d9d9")
+		self.Search_b.configure(highlightcolor="black")
+		self.Search_b.configure(pady="0")
+		self.Search_b.configure(text='''Back''')
 
 ################################################################Result instance############################################################
-        self.Movie1 = tk.Frame(top)
-        self.Movie1.place(relx=0.18, rely=0.233, relheight=0.138, relwidth=0.621)
+		y=0.233
+		yim=0.095
+		if(valu==0):
+			for i in b:
+				self.Movie1 = tk.Frame(top)
+				self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
+				self.Movie1.configure(relief='groove')
+				self.Movie1.configure(borderwidth="2")
+				self.Movie1.configure(relief="groove")
+				self.Movie1.configure(background="#00002b")
 
-        self.Movie1.configure(relief='groove')
-        self.Movie1.configure(borderwidth="2")
-        self.Movie1.configure(relief="groove")
-        self.Movie1.configure(background="#00002b")
+				self.Image1 = tk.Label(self.Movie1)
+				self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
+				self.Image1.configure(background="#d9d9d9")
+				self.Image1.configure(disabledforeground="#a3a3a3")
+				self.Image1.configure(foreground="#000000")
+				self.Image1.configure(text=i[1])
 
-        self.Image1 = tk.Label(self.Movie1)
-        self.Image1.place(relx=0.025, rely=0.095, height=73, width=135)
-        self.Image1.configure(background="#d9d9d9")
-        self.Image1.configure(disabledforeground="#a3a3a3")
-        self.Image1.configure(foreground="#000000")
-        self.Image1.configure(text='''image''')
+				self.Description1 = tk.Label(self.Movie1)
+				self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
+				self.Description1.configure(anchor='nw')
+				self.Description1.configure(background="#00002b")
+				self.Description1.configure(cursor="fleur")
+				self.Description1.configure(disabledforeground="#a3a3a3")
+				self.Description1.configure(font="-family {Segoe UI} -size 12")
+				self.Description1.configure(foreground="#bcfbfe")
+				self.Description1.configure(text=i[2])
+				y+=0.15
+				yim+=0.03
+		else:
+			for i in b:
+				self.Movie1 = tk.Frame(top)
+				self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
+				self.Movie1.configure(relief='groove')
+				self.Movie1.configure(borderwidth="2")
+				self.Movie1.configure(relief="groove")
+				self.Movie1.configure(background="#00002b")
 
-        self.Description1 = tk.Label(self.Movie1)
-        self.Description1.place(relx=0.239, rely=0.095, height=73, width=573)
-        self.Description1.configure(anchor='nw')
-        self.Description1.configure(background="#00002b")
-        self.Description1.configure(cursor="fleur")
-        self.Description1.configure(disabledforeground="#a3a3a3")
-        self.Description1.configure(font="-family {Segoe UI} -size 12")
-        self.Description1.configure(foreground="#bcfbfe")
-        self.Description1.configure(text='''description''')
+				self.Image1 = tk.Label(self.Movie1)
+				self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
+				self.Image1.configure(background="#d9d9d9")
+				self.Image1.configure(disabledforeground="#a3a3a3")
+				self.Image1.configure(foreground="#000000")
+				self.Image1.configure(text="Theatre Name"+i[1])
 
+				self.Description1 = tk.Label(self.Movie1)
+				self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
+				self.Description1.configure(anchor='nw')
+				self.Description1.configure(background="#00002b")
+				self.Description1.configure(cursor="fleur")
+				self.Description1.configure(disabledforeground="#a3a3a3")
+				self.Description1.configure(font="-family {Segoe UI} -size 12")
+				self.Description1.configure(foreground="#bcfbfe")
+				self.Description1.configure(text="City ="+i[3])
+				y+=0.15
+				yim+=0.03
 ##############################################################################################################################################
 
 ##################################################################scroller########################################################
-        self.Previous = tk.Button(top)
-        self.Previous.place(relx=0.383, rely=0.933, height=24, width=47)
-        self.Previous.configure(activebackground="#ececec")
-        self.Previous.configure(activeforeground="#000000")
-        self.Previous.configure(background="#b4eafe")
-        self.Previous.configure(disabledforeground="#a3a3a3")
-        self.Previous.configure(font="-family {Segoe UI} -size 15")
-        self.Previous.configure(foreground="#000000")
-        self.Previous.configure(highlightbackground="#d9d9d9")
-        self.Previous.configure(highlightcolor="black")
-        self.Previous.configure(pady="0")
-        self.Previous.configure(text='''<''')
+		self.Previous = tk.Button(top)
+		self.Previous.place(relx=0.383, rely=0.933, height=24, width=47)
+		self.Previous.configure(activebackground="#ececec")
+		self.Previous.configure(activeforeground="#000000")
+		self.Previous.configure(background="#b4eafe")
+		self.Previous.configure(disabledforeground="#a3a3a3")
+		self.Previous.configure(font="-family {Segoe UI} -size 15")
+		self.Previous.configure(foreground="#000000")
+		self.Previous.configure(highlightbackground="#d9d9d9")
+		self.Previous.configure(highlightcolor="black")
+		self.Previous.configure(pady="0")
+		self.Previous.configure(text='''<''')
 
-        self.Next = tk.Button(top)
-        self.Next.place(relx=0.57, rely=0.933, height=24, width=47)
-        self.Next.configure(activebackground="#ececec")
-        self.Next.configure(activeforeground="#000000")
-        self.Next.configure(background="#b4eafe")
-        self.Next.configure(disabledforeground="#a3a3a3")
-        self.Next.configure(font="-family {Segoe UI} -size 15")
-        self.Next.configure(foreground="#000000")
-        self.Next.configure(highlightbackground="#d9d9d9")
-        self.Next.configure(highlightcolor="black")
-        self.Next.configure(pady="0")
-        self.Next.configure(text='''>''')
+		self.Next = tk.Button(top)
+		self.Next.place(relx=0.57, rely=0.933, height=24, width=47)
+		self.Next.configure(activebackground="#ececec")
+		self.Next.configure(activeforeground="#000000")
+		self.Next.configure(background="#b4eafe")
+		self.Next.configure(disabledforeground="#a3a3a3")
+		self.Next.configure(font="-family {Segoe UI} -size 15")
+		self.Next.configure(foreground="#000000")
+		self.Next.configure(highlightbackground="#d9d9d9")
+		self.Next.configure(highlightcolor="black")
+		self.Next.configure(pady="0")
+		self.Next.configure(text='''>''')
 
-        self.Page_list = tk.Label(top)
-        self.Page_list.place(relx=0.43, rely=0.933, height=21, width=164)
-        self.Page_list.configure(activebackground="#f0f0f0f0f0f0")
-        self.Page_list.configure(background="#000040")
-        self.Page_list.configure(disabledforeground="#a3a3a3")
-        self.Page_list.configure(font="-family {Segoe UI} -size 12")
-        self.Page_list.configure(foreground="#b4eafe")
-        self.Page_list.configure(text='''1 of 4''')
-        
-        Searchbar.__init__(self, top=None)
-        Memberbar.__init__(self, mem, top=None)
-        Homebar.__init__(self,name, mem, top=None)
-        Sidebar.__init__(self, top=None)
+		self.Page_list = tk.Label(top)
+		self.Page_list.place(relx=0.43, rely=0.933, height=21, width=164)
+		self.Page_list.configure(activebackground="#f0f0f0f0f0f0")
+		self.Page_list.configure(background="#000040")
+		self.Page_list.configure(disabledforeground="#a3a3a3")
+		self.Page_list.configure(font="-family {Segoe UI} -size 12")
+		self.Page_list.configure(foreground="#b4eafe")
+		self.Page_list.configure(text='''1 of 4''')
+		
+		#Searchbar.__init__(self, top=None)
+		Memberbar.__init__(self, top=None)
+		Homebar.__init__(self, top=None)
+		Sidebar.__init__(self, top=None)
 #####################################################################################################################################
 
-if __name__ == '__main__':
-    vp_start_gui()
 
 
