@@ -1,8 +1,8 @@
 import sys
 from PIL import ImageTk, Image
 import PIL
-from payment import *
-from home import *
+import payment
+# import home
 try:
     import Tkinter as tk
 except ImportError:
@@ -59,7 +59,7 @@ class Memberbar:
         # redirect to payment
         def button_click(product):
             top.destroy()
-            vp_start_gui_P(name, membership, product, email)
+            payment.vp_start_gui_P(name, membership, product, email)
 
 
         # membership status

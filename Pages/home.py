@@ -24,10 +24,11 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-from searchbar import Searchbar
-from memberbar import Memberbar
-from homebar import Homebar
-from sidebar import Sidebar
+ 
+import searchbar
+import memberbar
+import homebar
+import sidebar
 
 def vp_start_gui1(name='XYZ',mem='a',email='singh@fg.c'):
     '''Starting point when module is the main routine.'''
@@ -52,7 +53,7 @@ def destroy_Home():
     w.destroy()
     w = None
 
-class Home(Homebar, Sidebar, Searchbar, Memberbar):
+class Home():
     global to
     def ahead(self,top):
         global co
@@ -365,10 +366,10 @@ class Home(Homebar, Sidebar, Searchbar, Memberbar):
         self.Label9.configure(text='''UA/A''')
         
         
-        Searchbar.__init__(self, top)
-        Memberbar.__init__(self, name, mem, email, top)
-        Homebar.__init__(self,name,mem, top)
-        Sidebar.__init__(self, top)
+        searchbar.Searchbar.__init__(self, top)
+        memberbar.Memberbar.__init__(self, name, mem, email, top)
+        # homebar.Homebar.__init__(self,name,mem, top)
+        sidebar.Sidebar.__init__(self, top)
         
 
 if __name__ == '__main__':

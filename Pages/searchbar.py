@@ -8,7 +8,7 @@ from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import sys
 from PIL import ImageTk, Image
-from search2 import vp_start_gui
+import search2
 import PIL
 try:
 	import Tkinter as tk
@@ -60,7 +60,7 @@ def search(var,name,mem,email, top):
 		if(len(b)!=0):
 			top.destroy()
 			#print(b)
-			vp_start_gui(0,name,mem,email,b)
+			search2.vp_start_gui(0,name,mem,email,b)
 			
 		else:
 			a="select * from theaterdet where theater_name='{0}%'".format(val)

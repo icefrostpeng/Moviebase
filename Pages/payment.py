@@ -13,7 +13,7 @@ import sys
 import smtplib
 from random import randint
 from membershipallocation import *
-from home import *
+import home
 try:
     import Tkinter as tk
 except ImportError:
@@ -25,10 +25,10 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
-from searchbar import Searchbar
-# from memberbar import Memberbar
-from homebar import Homebar
-from sidebar import Sidebar
+import searchbar
+import memberbar
+import homebar
+import sidebar
 
 
 from tkinter import messagebox

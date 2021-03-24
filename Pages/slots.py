@@ -9,9 +9,10 @@ import sys
 import seats
 from functools import partial
 #from searchbar import Searchbar
-from memberbar import Memberbar
-from homebar import Homebar
-from sidebar import Sidebar
+import searchbar
+import memberbar
+import homebar
+import sidebar
 global dic
 from datetime import date
 try:
@@ -52,7 +53,7 @@ def destroy_Slots():
 def slotb(l,i,slotid,email,top):
 	top.destroy()
 	seats.creates(l,i,slotid,email)
-class Slots( Memberbar, Homebar):
+class Slots( memberbar.Memberbar, homebar.Homebar):
 	def __init__(self, l,m,name,mem,email,top=None):
 		global dic
 		dic=m
