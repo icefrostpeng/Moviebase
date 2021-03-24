@@ -69,7 +69,7 @@ def sub():
 					flag=0
 	if(flag==1):
 		messagebox.showinfo("Sucess", "Seats Booked successfully")
-	print(query())
+	#print(query())
 def clicked(*args):
 	global li,count,strv,fin
 	j=args[0]
