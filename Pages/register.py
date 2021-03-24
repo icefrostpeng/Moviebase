@@ -60,11 +60,7 @@ def querys(email,name,age,dob,addr,phno,pass1):
 def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
-    if age >18:
-        x="I agree that my age is above 18"
-    else:
-        x="I agree that my age is below 18"
-    return x
+    return age
 
 def  ins(emails,usern,pass1,pass2,addre,mobi,cal):
     email=emails.get()
