@@ -15,17 +15,18 @@ import PIL
 import sys
 
 from home import *
+from register import *
 try:
-    import Tkinter as tk
+	import Tkinter as tk
 except ImportError:
-    import tkinter as tk
+	import tkinter as tk
 from tkinter import messagebox
 try:
-    import ttk
-    py3 = False
+	import ttk
+	py3 = False
 except ImportError:
-    import tkinter.ttk as ttk
-    py3 = True
+	import tkinter.ttk as ttk
+	py3 = True
 
 
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
@@ -80,157 +81,165 @@ def cal(root,em,pas):
 			em.set("")
 			pas.set("")
 def vp_start_gui():
-    '''Starting point when module is the main routine.'''
-    global val, w, root
-    root = tk.Tk()
-    top = Signin (root)
-    root.mainloop()
+	'''Starting point when module is the main routine.'''
+	global val, w, root
+	root = tk.Tk()
+	top = Signin (root)
+	root.mainloop()
 
 w = None
 def create_Signin(rt, *args, **kwargs):
-    '''Starting point when module is imported by another module.
-       Correct form of call: 'create_Signin(root, *args, **kwargs)' .'''
-    global w, w_win, root
-    #rt = root
-    root = rt
-    w = tk.Toplevel (root)
-    top = Signin (w)
-    return (w, top)
+	'''Starting point when module is imported by another module.
+	   Correct form of call: 'create_Signin(root, *args, **kwargs)' .'''
+	global w, w_win, root
+	#rt = root
+	root = rt
+	w = tk.Toplevel (root)
+	top = Signin (w)
+	return (w, top)
 
 def destroy_Signin():
-    global w
-    w.destroy()
-    w = None
+	global w
+	w.destroy()
+	w = None
 
 class Signin:
-    def __init__(self, top=None):
-        '''This class configures and populates the toplevel window.
-           top is the toplevel containing window.'''
-        _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
-        _fgcolor = '#000000'  # X11 color: 'black'
-        _compcolor = '#d9d9d9' # X11 color: 'gray85'
-        _ana1color = '#d9d9d9' # X11 color: 'gray85'
-        _ana2color = '#ececec' # Closest X11 color: 'gray92'
+	global to
+	def regi(self,event):
+		global to
+		to.destroy()
+		vp_start_register()
+	def __init__(self, top=None):
+		global to
+		to=top
+		'''This class configures and populates the toplevel window.
+		   top is the toplevel containing window.'''
+		_bgcolor = '#d9d9d9'  # X11 color: 'gray85'
+		_fgcolor = '#000000'  # X11 color: 'black'
+		_compcolor = '#d9d9d9' # X11 color: 'gray85'
+		_ana1color = '#d9d9d9' # X11 color: 'gray85'
+		_ana2color = '#ececec' # Closest X11 color: 'gray92'
 
-        top.geometry("427x677+660+210")
-        top.minsize(120, 1)
-        top.maxsize(3004, 1913)
-        top.resizable(1,  1)
-        top.title("Login")
-        top.configure(background="#000328")
-        top.configure(highlightbackground="#d9d9d9")
-        top.configure(highlightcolor="black")
-        top.resizable(False,False)
-        
-        global img
-        img = ImageTk.PhotoImage(file="bg.png")
-        self.Background = tk.Label(top,image = img)        
-        self.Background.place(relx=0, rely=0, height=1000, width=1500)
-        self.Background=img
-        
-        
-        
-        img = ImageTk.PhotoImage(Image.open("Logo.png").resize((150, 200), Image.ANTIALIAS))
-        #img = ImageTk.PhotoImage(file="Logo.png")
-        self.Logo_image = tk.Label(top)
-        self.Logo_image.place(relx=0.280, rely=0.025, height=150, width=200)
-        self.Logo_image.configure(image=img)
-        
+		top.geometry("427x677+660+210")
+		top.minsize(120, 1)
+		top.maxsize(3004, 1913)
+		top.resizable(1,  1)
+		top.title("Login")
+		top.configure(background="#000328")
+		top.configure(highlightbackground="#d9d9d9")
+		top.configure(highlightcolor="black")
+		top.resizable(False,False)
+		
+		global img
+		img = ImageTk.PhotoImage(file="bg.png")
+		self.Background = tk.Label(top,image = img)        
+		self.Background.place(relx=0, rely=0, height=1000, width=1500)
+		self.Background=img
+		
+		
+		
+		img = ImageTk.PhotoImage(Image.open("Logo.png").resize((150, 200), Image.ANTIALIAS))
+		#img = ImageTk.PhotoImage(file="Logo.png")
+		self.Logo_image = tk.Label(top)
+		self.Logo_image.place(relx=0.280, rely=0.025, height=150, width=200)
+		self.Logo_image.configure(image=img)
+		
 
-        
-        em=tk.StringVar()
-        self.email_e = tk.Entry(top,textvariable=em)
-        self.email_e.place(relx=0.234, rely=0.355, height=30, relwidth=0.548)
-        self.email_e.configure(background="white")
-        self.email_e.configure(disabledforeground="#a3a3a3")
-        self.email_e.configure(font="TkFixedFont")
-        self.email_e.configure(foreground="#000000")
-        self.email_e.configure(highlightbackground="#d9d9d9")
-        self.email_e.configure(highlightcolor="black")
-        self.email_e.configure(insertbackground="black")
-        self.email_e.configure(selectbackground="blue")
-        self.email_e.configure(selectforeground="white")
+		
+		em=tk.StringVar()
+		self.email_e = tk.Entry(top,textvariable=em)
+		self.email_e.place(relx=0.234, rely=0.355, height=30, relwidth=0.548)
+		self.email_e.configure(background="white")
+		self.email_e.configure(disabledforeground="#a3a3a3")
+		self.email_e.configure(font="TkFixedFont")
+		self.email_e.configure(foreground="#000000")
+		self.email_e.configure(highlightbackground="#d9d9d9")
+		self.email_e.configure(highlightcolor="black")
+		self.email_e.configure(insertbackground="black")
+		self.email_e.configure(selectbackground="blue")
+		self.email_e.configure(selectforeground="white")
 
-        self.email_l = tk.Label(top)
-        self.email_l.place(relx=0.211, rely=0.31, height=21, width=124)
-        self.email_l.configure(activebackground="#f9f9f9")
-        self.email_l.configure(activeforeground="black")
-        self.email_l.configure(background="#000328")
-        self.email_l.configure(disabledforeground="#a3a3a3")
-        self.email_l.configure(font="-family {Segoe UI} -size 12")
-        self.email_l.configure(foreground="#ffffff")
-        self.email_l.configure(highlightbackground="#d9d9d9")
-        self.email_l.configure(highlightcolor="black")
-        self.email_l.configure(text='''Email address:''')
-        
-        pas=tk.StringVar()
-        self.password_e = tk.Entry(top,textvariable=pas)
-        self.password_e.place(relx=0.234, rely=0.517, height=30, relwidth=0.548)
-        self.password_e.configure(background="white")
-        self.password_e.configure(disabledforeground="#a3a3a3")
-        self.password_e.configure(font="TkFixedFont")
-        self.password_e.configure(foreground="#000000")
-        self.password_e.configure(highlightbackground="#d9d9d9")
-        self.password_e.configure(highlightcolor="black")
-        self.password_e.configure(insertbackground="black")
-        self.password_e.configure(selectbackground="blue")
-        self.password_e.configure(selectforeground="white")
+		self.email_l = tk.Label(top)
+		self.email_l.place(relx=0.211, rely=0.31, height=21, width=124)
+		self.email_l.configure(activebackground="#f9f9f9")
+		self.email_l.configure(activeforeground="black")
+		self.email_l.configure(background="#000328")
+		self.email_l.configure(disabledforeground="#a3a3a3")
+		self.email_l.configure(font="-family {Segoe UI} -size 12")
+		self.email_l.configure(foreground="#ffffff")
+		self.email_l.configure(highlightbackground="#d9d9d9")
+		self.email_l.configure(highlightcolor="black")
+		self.email_l.configure(text='''Email address:''')
+		
+		pas=tk.StringVar()
+		self.password_e = tk.Entry(top,textvariable=pas)
+		self.password_e.place(relx=0.234, rely=0.517, height=30, relwidth=0.548)
+		self.password_e.configure(background="white")
+		self.password_e.configure(disabledforeground="#a3a3a3")
+		self.password_e.configure(font="TkFixedFont")
+		self.password_e.configure(foreground="#000000")
+		self.password_e.configure(highlightbackground="#d9d9d9")
+		self.password_e.configure(highlightcolor="black")
+		self.password_e.configure(insertbackground="black")
+		self.password_e.configure(selectbackground="blue")
+		self.password_e.configure(selectforeground="white")
 
-        self.password_l = tk.Label(top)
-        self.password_l.place(relx=0.187, rely=0.473, height=21, width=104)
-        self.password_l.configure(activebackground="#f9f9f9")
-        self.password_l.configure(activeforeground="black")
-        self.password_l.configure(background="#000328")
-        self.password_l.configure(disabledforeground="#a3a3a3")
-        self.password_l.configure(font="-family {Segoe UI} -size 12")
-        self.password_l.configure(foreground="#ffffff")
-        self.password_l.configure(highlightbackground="#d9d9d9")
-        self.password_l.configure(highlightcolor="black")
-        self.password_l.configure(text='''Password:''')
+		self.password_l = tk.Label(top)
+		self.password_l.place(relx=0.187, rely=0.473, height=21, width=104)
+		self.password_l.configure(activebackground="#f9f9f9")
+		self.password_l.configure(activeforeground="black")
+		self.password_l.configure(background="#000328")
+		self.password_l.configure(disabledforeground="#a3a3a3")
+		self.password_l.configure(font="-family {Segoe UI} -size 12")
+		self.password_l.configure(foreground="#ffffff")
+		self.password_l.configure(highlightbackground="#d9d9d9")
+		self.password_l.configure(highlightcolor="black")
+		self.password_l.configure(text='''Password:''')
 
-        self.Label3 = tk.Label(top)
-        self.Label3.place(relx=0.656, rely=0.62, height=21, width=74)
-        self.Label3.configure(activebackground="#f9f9f9")
-        self.Label3.configure(activeforeground="black")
-        self.Label3.configure(background="#000328")
-        self.Label3.configure(disabledforeground="#a3a3a3")
-        self.Label3.configure(font="-family {Segoe UI} -size 12 -underline 1")
-        self.Label3.configure(foreground="#ffffff")
-        self.Label3.configure(highlightbackground="#d9d9d9")
-        self.Label3.configure(highlightcolor="black")
-        self.Label3.configure(text='''Signup''')
+		self.Label3 = tk.Label(top)
+		self.Label3.place(relx=0.656, rely=0.62, height=21, width=74)
+		self.Label3.configure(activebackground="#f9f9f9")
+		self.Label3.configure(activeforeground="black")
+		self.Label3.configure(background="#000328")
+		self.Label3.configure(disabledforeground="#a3a3a3")
+		self.Label3.configure(font="-family {Segoe UI} -size 12 -underline 1")
+		self.Label3.configure(foreground="#ffffff")
+		self.Label3.configure(highlightbackground="#d9d9d9")
+		self.Label3.configure(highlightcolor="black")
+		self.Label3.configure(text='''Signup''')
+		self.Label3.bind('<Button>',self.regi)
 
-        self.Label4 = tk.Label(top)
-        self.Label4.place(relx=0.187, rely=0.62, height=21, width=174)
-        self.Label4.configure(activebackground="#f9f9f9")
-        self.Label4.configure(activeforeground="black")
-        self.Label4.configure(background="#000328")
-        self.Label4.configure(disabledforeground="#a3a3a3")
-        self.Label4.configure(font="-family {Segoe UI} -size 12")
-        self.Label4.configure(foreground="#ffffff")
-        self.Label4.configure(highlightbackground="#d9d9d9")
-        self.Label4.configure(highlightcolor="black")
-        self.Label4.configure(text='''Don't have an Account?''')
-                    
-                              
-                    
-        self.Submit = tk.Button(top,command=lambda: cal(top,em,pas))
-        self.Submit.place(relx=0.300, rely=0.675, height=54, width=177)
-        self.Submit.configure(activebackground="#ececec")
-        self.Submit.configure(activeforeground="#000000")
-        self.Submit.configure(background="#2ba5ff")
-        self.Submit.configure(borderwidth="4")
-        self.Submit.configure(cursor="fleur")
-        self.Submit.configure(disabledforeground="#a3a3a3")
-        self.Submit.configure(font="-family {Segoe UI} -size 14")
-        self.Submit.configure(foreground="#000000")
-        self.Submit.configure(highlightbackground="#d9d9d9")
-        self.Submit.configure(highlightcolor="black")
-        self.Submit.configure(pady="0")
-        self.Submit.configure(text='''Sign In''')
+		self.Label4 = tk.Label(top)
+		self.Label4.place(relx=0.187, rely=0.62, height=21, width=174)
+		self.Label4.configure(activebackground="#f9f9f9")
+		self.Label4.configure(activeforeground="black")
+		self.Label4.configure(background="#000328")
+		self.Label4.configure(disabledforeground="#a3a3a3")
+		self.Label4.configure(font="-family {Segoe UI} -size 12")
+		self.Label4.configure(foreground="#ffffff")
+		self.Label4.configure(highlightbackground="#d9d9d9")
+		self.Label4.configure(highlightcolor="black")
+		self.Label4.configure(text='''Don't have an Account?''')
+		            
+		                      
+		            
+		self.Submit = tk.Button(top,command=lambda: cal(top,em,pas))
+		self.Submit.place(relx=0.300, rely=0.675, height=54, width=177)
+		self.Submit.configure(activebackground="#ececec")
+		self.Submit.configure(activeforeground="#000000")
+		self.Submit.configure(background="#2ba5ff")
+		self.Submit.configure(borderwidth="4")
+		self.Submit.configure(cursor="fleur")
+		self.Submit.configure(disabledforeground="#a3a3a3")
+		self.Submit.configure(font="-family {Segoe UI} -size 14")
+		self.Submit.configure(foreground="#000000")
+		self.Submit.configure(highlightbackground="#d9d9d9")
+		self.Submit.configure(highlightcolor="black")
+		self.Submit.configure(pady="0")
+		self.Submit.configure(text='''Sign In''')
 
 if __name__ == '__main__':
-    vp_start_gui()
+	vp_start_gui()
 
 
 
