@@ -23,6 +23,7 @@ except ImportError:
     py3 = True
 
 
+
 def vp_start_gui1():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -49,7 +50,7 @@ import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import re
-from adhome import *
+import adhome
 from tkinter import messagebox
 
 sql_hostname = '127.0.0.1'
@@ -105,7 +106,7 @@ def seats(slot_id, capacity):
                 #cur.execute(q)
                 conn.commit()
             conn.close()
-            print("sucess")
+            print("sucess seats")
             return 1
         except Exception as e:
             print(e)
@@ -120,17 +121,18 @@ def querys(slot_id, theater_id, time, showdate, cost, movie_id):
         	ssh_pkey=mypkey,
         	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
         try:
-        	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+            conn = pymysql.connect(host='127.0.0.1', user=sql_username,
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
-        	cur=conn.cursor()
-        	sql = "INSERT INTO slotdet (slot_id, theater_id, timing, dates, movie_id) VALUES (%s, %s, %s, %s, %s, %s)"
-        	val = (slot_id, theater_id, time, showdate, cost, movie_id)
-        	cur.execute(sql,val)
-        	conn.commit()
-        	conn.close()
-        	print("sucess")
-        	return 1
+            cur=conn.cursor()
+            print((str(slot_id), str(theater_id), str(time), str(showdate), str(cost), str(movie_id)))
+            sql = "INSERT INTO slotdet (slot_id, theater_id, timing, dates,cost, movie_id) VALUES (%s, %s, %s, %s, %s, %s)"
+            val = (str(slot_id), str(theater_id), str(time), str(showdate), str(cost), str(movie_id))
+            cur.execute(sql,val)
+            conn.commit()
+            conn.close()
+            print("success slot")
+            return 1
         except Exception as e:
         	print(e)
         	return 0
@@ -140,29 +142,30 @@ def querys(slot_id, theater_id, time, showdate, cost, movie_id):
 
 def querys2(theater_name):
     with SSHTunnelForwarder(
-         	(ssh_host, ssh_port),
+            (ssh_host, ssh_port),
          	ssh_username=ssh_user,
          	ssh_pkey=mypkey,
          	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
         try:
-         	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+            conn = pymysql.connect(host='127.0.0.1', user=sql_username,
          			passwd=sql_password, db=sql_main_database,
          			port=tunnel.local_bind_port)
-         	cur=conn.cursor()
-         	sql = "SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(theater_name)
-         	cur.execute(sql)
-         	result = cur.fetchone()
-         	print(result)
-         	#data = pd.read_sql_query(q, conn)
-         	conn.close()
-         	print("sucess")
-         	return result
+            print("SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(str(theater_name)))
+            print("SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(theater_name))
+            sql = "SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(str(theater_name))
+            cur=conn.cursor()
+            cur.execute(sql)
+            result = cur.fetchone()
+            print(result)
+            #data = pd.read_sql_query(q, conn)
+            conn.close()
+            print("sucess theaterid")
+            return result
         except Exception as e:
          	print(e)
          	return 0
          
-
-
+# print("SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(theater_name))
 
 def  ins(theater_name1, time1,showdate1, cost1):
     print(theater_name1, time1,showdate1, cost1)
@@ -173,8 +176,10 @@ def  ins(theater_name1, time1,showdate1, cost1):
     
     
     if(len(theater_name)!=0 and len(time)!=0 and len(str(showdate))!=0 and len(cost)!=0):
-        regex = '^%d%d:%d%d$'
+        regex = "^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
         pattern=re.compile(regex)
+        print(time)
+        print(re.search(pattern,str(time)))
         if pattern.search(time):
             try:
                 cost=int(cost)					
