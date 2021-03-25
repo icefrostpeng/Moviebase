@@ -3,14 +3,15 @@ from tkinter import *
 import pymysql
 from functools import partial
 import paramiko
+import payment
 import pandas as pd
 from tkinter import messagebox
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 global li,count,strv,cosm,dcost
-cosm=0
-count=0
-li=[]
+cosm = 0
+count = 0
+li = []
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 # if you want to use ssh password use - ssh_password='your ssh password', bellow
 
@@ -49,27 +50,13 @@ def query(slotid):
 		cur.execute("select seat_id,status from seatdet where slot_id={0}".format(slotid))
 		arr = list(cur.fetchall())
 		arr=dict(arr)
-		print(arr)
+		print(f'{arr} query seats')
 		cur.close()
 		return arr
-def quer(slotid,seatid,val):
-	with SSHTunnelForwarder(
-			(ssh_host, ssh_port),
-			ssh_username=ssh_user,
-			ssh_pkey=mypkey,
-			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
-		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-				passwd=sql_password, db=sql_main_database,
-				port=tunnel.local_bind_port)
-		cur=conn.cursor()
-		print("update seatdet set status='{0}' where slot_id={1} and seat_id={2}".format(val,slotid,seatid))
-		cur.execute("update seatdet set status='{0}' where slot_id={1} and seat_id={2}".format(val,slotid,seatid))
-		conn.commit()
-		return 1
 
 global fin
 fin=[]
-def sub(l,slotid,name,mem,email,timing,tdate,cinemaNAd):
+def sub(window,l,slotid,name,mem,email,timing,tdate,cinemaNAd):
 	global fin,cosm,dcost
 	flag=0
 	chkM=1
@@ -88,21 +75,35 @@ def sub(l,slotid,name,mem,email,timing,tdate,cinemaNAd):
 			for i in fin:
 				if(i[1]=='v'):
 					i[1]='o'
-					if(quer(slotid,i[0],i[1])):
-						flag=1
-					else:
-						flag=0
-	if(flag==1):
+					flag=1
+	if flag==1:
 		sts=''
 		for i in range(len(fin)):
-			if(i==0):
+			if i==0:
 				sts+=str(fin[i][2])
 			else:
 				sts+=","+str(fin[i][2])
-		st="Seats Booked successfully\n Seat number : "+sts
-		messagebox.showinfo("Sucess", st)
+		#st="Seats Booked successfully\n Seat number : "+sts
+		#messagebox.showinfo("Sucess", st)
 		print(name,mem,email,timing,tdate,str(cosm),str(dcost),sts,cinemaNAd)
-		#call Payment function vaiables : totalcost=cosm discounted cost=dcost seat number = sts(in string as 12,13) parameters of function ssub has name,mem,email,timing,tdate
+		#return(name, mem, email, timing, tdate, str(cosm), str(dcost), sts, cinemaNAd)
+		tickets = 'Tickets'
+		dbv=[]
+		for i in fin:
+
+			i.insert(2,slotid)
+			i=i[:-1]
+			dbv.append(i)
+		print(f'{dbv} check')
+		prod = [tickets, str(dcost),timing, tdate, str(cosm), sts, cinemaNAd, dbv]
+		action = 2
+
+		window.destroy()
+
+		payment.vp_start_gui_P(name, mem, prod, email,action)
+
+
+#call Payment function vaiables : totalcost=cosm discounted cost=dcost seat number = sts(in string as 12,13) parameters of function ssub has name,mem,email,timing,tdate
 def clicked(*args):
 	global li,count,strv,fin,cosm,dcost
 	j=args[0]
@@ -112,7 +113,7 @@ def clicked(*args):
 	name=args[3]
 	email=args[5]
 	print(name,mem,email,cost)
-	if(li[args[0]].cget('bg')=='blue'):
+	if li[args[0]].cget('bg')=='blue':
 		li[args[0]].configure(background="yellow")
 		fin.append([args[1],args[2],(args[0]+1)])
 		count+=1
@@ -156,7 +157,7 @@ def creates(l,di,slotid,name,mem,email,cost,tdate):
 	strv.set("Number of seats selected is : 0\nTotal cost: 0")
 	wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic",justify="left").place(x=40,y=380)
 	cinemaNAd=di[1]+", "+di[3]+", "+di[2]
-	b=Button(window,command=lambda: sub(l,slotid,name,mem,email,di[5],tdate,cinemaNAd),text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=480)
+	b=Button(window,command=lambda: sub(window,l,slotid,name,mem,email,di[5],tdate,cinemaNAd),text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=480)
 	
 	#c.bind('<Button-1>', clicked)
 	for key,value in dic.items():

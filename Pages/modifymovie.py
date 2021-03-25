@@ -60,8 +60,8 @@ def querys(movie_id,movname, descr, rating, cast, age_rating, genre, poster ):
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
             cur=conn.cursor()
-            sql = "INSERT INTO moviedet (movie_id, movie_name,descr,rating,cast,age_rat,genre,posterx) VALUES (%s, %s, %s, %s, %s, %s, %s, %s )"
-            val = (movie_id, movname, descr, rating, cast, age_rating, genre, poster)
+            sql = "UPDATE moviedet SET movie_name = %s,descr = %s,rating = %s,cast = %s,age_rat = %s,genre = %s,posterx = %s WHERE movie_id='{0}'".format(movie_id)
+            val = (movname, descr, rating, cast, age_rating, genre, poster)
             cur.execute(sql,val)
             #cur.execute(q)
             conn.commit()
@@ -86,7 +86,7 @@ def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingc
     print(movname,descr,rating,cast,age_rating,poster,genre)
     if(len(movname)!=0 and len(descr)!=0 and len(rating)!=0 and len(cast)!=0 and len(age_rating)!=0 and len(genre)!=0 and len(poster)!=0):						
         try:
-            t=querys(movname, descr, rating, cast, age_rating, genre, poster)
+            t=querys(movie_id, movname, descr, rating, cast, age_rating, genre, poster)
             if(t==1):
                 root.withdraw()
                 create_AdHome(root)
@@ -98,15 +98,6 @@ def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingc
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
 
-def dummy(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
-    movname=movname1.get()
-    descr=descr1.get()
-    rating=RatingSpinbox1.get()
-    cast=cast1.get()
-    age_rating=ageratingcombo.get()
-    poster=poster1.get()
-    genre=genrecombo.get()
-    print(movname, descr, rating, cast, age_rating, genre, poster)
 
 w = None
 def create_AddMovie(rt, *args, **kwargs):
@@ -414,7 +405,7 @@ class AddMovie:
             			passwd=sql_password, db=sql_main_database,
             			port=tunnel.local_bind_port)
                 cur=conn.cursor()
-                cur.execute("select movie_id, movie_name, descr, rating, cast,age_rat, genre, poster from moviedet WHERE movie_name='{0}'".format(movie))
+                cur.execute("select movie_id, movie_name, descr, rating, cast,age_rat, genre, posterx from moviedet WHERE movie_name='{0}'".format(movie))
                 values=cur.fetchone()
                 print(values)
                 #cur.execute(q)
