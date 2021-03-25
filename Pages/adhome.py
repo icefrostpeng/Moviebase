@@ -20,7 +20,7 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
-
+from deletemovie import *
 
 def vp_start_guih():
     '''Starting point when module is the main routine.'''
@@ -87,6 +87,10 @@ class AdHome:
         self.Show_b['state'] = tk.DISABLED
         self.Button1['state'] = tk.DISABLED
         print('1')
+    def buttonmo(self):
+        print('1')
+        root.destroy()
+        vp_start_gui()
     
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -181,7 +185,7 @@ class AdHome:
         self.User_b.configure(pady="0")
         self.User_b.configure(text='''User''')
 
-        self.Movie_b = tk.Button(top,state=tk.DISABLED)
+        self.Movie_b = tk.Button(top,state=tk.DISABLED,command=lambda:self.buttonmo())
         self.Movie_b.place(relx=0.633, rely=0.306, height=74, width=157)
         self.Movie_b.configure(activebackground="#ececec")
         self.Movie_b.configure(activeforeground="#000000")
@@ -237,7 +241,7 @@ class AdHome:
         self.Back_b.configure(pady="0")
         self.Back_b.configure(text='''<Back''')
 
-        img = ImageTk.PhotoImage(Image.open("Logo.png").resize((90, 90), Image.ANTIALIAS))
+        img = ImageTk.PhotoImage(PIL.Image.open("Logo.png").resize((90, 90), PIL.Image.ANTIALIAS))
         #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)

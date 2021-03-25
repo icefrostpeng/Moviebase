@@ -6,7 +6,7 @@ Created on Mon Mar 22 10:51:14 2021
 """
 
 
-with open("sidebar.py") as f:
+with open("deletemovie.py") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
@@ -33,7 +33,7 @@ for line in lines:
         
     
 
-with open("sidebar.py","w") as f:
+with open("deletemovie.py","w") as f:
     f.writelines(new)
 
 
