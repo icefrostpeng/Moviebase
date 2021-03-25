@@ -24,11 +24,13 @@ except ImportError:
 
 
 
-def vp_start_gui1():
+def vp_start_gui1(movie_id):
     '''Starting point when module is the main routine.'''
-    global val, w, root
+    
+    global val, w, root, movie
+    movie=movie_id
     root = tk.Tk()
-    top = AddUser (root)
+    top = AddShow (root)
     root.mainloop()
 
 w = None
