@@ -84,7 +84,7 @@ def search(var,name,mem,email, top):
 class Searchbar():
 
 	###############################################Search##########################################################################################
-	def __init__(self,name='x',mem='x',email='x', top=None):
+	def __init__(self,name,mem,email, top=None):
 		print(top)
 		self.Search_f = tk.LabelFrame(top)
 		self.Search_f.place(relx=0.609, rely=0.044, relheight=0.06

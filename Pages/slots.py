@@ -267,9 +267,9 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 
 		
 		#Searchbar.__init__(self,name='x',mem='s',email='s', top=None)
-		Memberbar.__init__(self, mem, top=None)
-		Homebar.__init__(self,name,mem, top=None)
-		Sidebar.__init__(self, top=None)
+		memberbar.Memberbar.__init__(self, name, mem, email, root)
+		homebar.Homebar.__init__(self,name,mem, top)
+		sidebar.Sidebar.__init__(self, top)
 
 if __name__ == '__main__':
 	vp_start_gui()

@@ -301,9 +301,9 @@ class Search( Memberbar, Homebar):
 		self.Page_list.configure(text='''1 of 4''')
 		
 		#Searchbar.__init__(self, top=None)
-		Memberbar.__init__(self, mem, top=None)
-		Homebar.__init__(self,name,mem, top=None)
-		Sidebar.__init__(self, top=None)
+		Memberbar.__init__(self,name, mem,email, top)
+		Homebar.__init__(self,name,mem, top)
+		Sidebar.__init__(self, top)
 #####################################################################################################################################
 
 if __name__ == '__main__':
