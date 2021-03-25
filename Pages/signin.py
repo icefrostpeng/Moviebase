@@ -141,8 +141,7 @@ class Signin:
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.280, rely=0.025, height=150, width=200)
         self.Logo_image.configure(image=img)
-
-
+       # self.Logo_image=img
 
         em=tk.StringVar()
         self.email_e = tk.Entry(top,textvariable=em)
