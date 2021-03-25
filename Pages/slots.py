@@ -13,12 +13,13 @@ import searchbar
 import memberbar
 import homebar
 import sidebar
-global dic
+global dic,mod,co,wil
 from datetime import date
 try:
 	import Tkinter as tk
 except ImportError:
 	import tkinter as tk
+from tkinter import *
 
 try:
 	import ttk
@@ -56,10 +57,145 @@ def slotb(l,i,slotid,name,mem,email,cost,datess,top):
 	print(l)
 	
 	seats.creates(l,i,slotid,name,mem,email,cost,datess)
+def dele(m):
+	today=date.today()
+	for i in m:
+		da=i.split('-')
+		dat=date(int(da[0]),int(da[1]),int(da[2]))
+		if(dat<today):
+			del m[i]
+	return m
 class Slots( memberbar.Memberbar, homebar.Homebar):
+	def ahead(self,l,name,mem,email,top):
+		
+		global co,dic,mod,wil
+		print("yes")
+		co=(co+1)%mod
+		ky=[]
+		for i in dic:
+			ky.append(i)
+		lst=dic[ky[co]]
+		da=ky[co].split("-")
+		das=da[2]+"/"+da[1]
+		print(das)
+		self.strd.set(das)
+		dy=0.1
+		ty=0.364
+		for i in wil:
+			i.destroy()
+		wil=[]
+		for i in lst:
+			print(i)
+			self.Movie1 = tk.Frame(top)
+			self.Movie1.place(relx=0.18, rely=ty, relheight=0.137, relwidth=0.621)
+			self.Movie1.configure(relief='groove')
+			self.Movie1.configure(borderwidth="2")
+			self.Movie1.configure(relief="groove")
+			self.Movie1.configure(background="#00002b")
+			self.Movie1.configure(highlightbackground="#d9d9d9")
+			self.Movie1.configure(highlightcolor="black")
+			wil.append(self.Movie1)
+			self.Description1 = tk.Label(self.Movie1,wraplength=300, justify="left")
+			self.Description1.place(relx=0.025, rely=dy, height=160, width=490)
+			self.Description1.configure(activebackground="#f9f9f9")
+			self.Description1.configure(activeforeground="black")
+			self.Description1.configure(anchor='nw')
+			self.Description1.configure(background="#00002b")
+			self.Description1.configure(cursor="fleur")
+			self.Description1.configure(disabledforeground="#a3a3a3")
+			self.Description1.configure(font="-family {Segoe UI} -size 13")
+			self.Description1.configure(foreground="#bcfbfe")
+			self.Description1.configure(highlightbackground="#d9d9d9")
+			self.Description1.configure(highlightcolor="black")
+			ste="Cinema Hall : "+i[1]+"\t\tCost :"+str(i[6])+"\nAddress "+i[2]+","+i[3]+":\nTiming: "+i[5]
+			self.Description1.configure(text=ste)
+			wil.append(self.Description1)
+			
+			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
+			self.Book_b.place(relx=0.60, rely=ty+0.02, height=54, width=177)
+			self.Book_b.configure(activebackground="#000040")
+			self.Book_b.configure(activeforeground="white")
+			self.Book_b.configure(activeforeground="#ffffff")
+			self.Book_b.configure(background="#b3eaff")
+			self.Book_b.configure(disabledforeground="#a3a3a3")
+			self.Book_b.configure(cursor="hand2")
+			self.Book_b.configure(font="-family {Segoe UI} -size 14")
+			self.Book_b.configure(foreground="#000000")
+			self.Book_b.configure(highlightbackground="#d9d9d9")
+			self.Book_b.configure(highlightcolor="black")
+			self.Book_b.configure(pady="0")
+			self.Book_b.configure(text='''Book Ticket!''')
+			wil.append(self.Book_b)
+			ty+=0.14
+	def backw(self,l,name,mem,email,top):
+		global co,dic,mod,wil
+		if(co!=0):
+			co-=1
+		
+		ky=[]
+		for i in dic:
+			ky.append(i)
+		lst=dic[ky[co]]
+		da=ky[co].split("-")
+		das=da[2]+"/"+da[1]
+		print(das)
+		self.strd.set(das)
+		dy=0.1
+		ty=0.364
+		for i in wil:
+			i.destroy()
+		wil=[]
+		for i in lst:
+			print(i)
+			self.Movie1 = tk.Frame(top)
+			self.Movie1.place(relx=0.18, rely=ty, relheight=0.137, relwidth=0.621)
+			self.Movie1.configure(relief='groove')
+			self.Movie1.configure(borderwidth="2")
+			self.Movie1.configure(relief="groove")
+			self.Movie1.configure(background="#00002b")
+			self.Movie1.configure(highlightbackground="#d9d9d9")
+			self.Movie1.configure(highlightcolor="black")
+			wil.append(self.Movie1)
+			self.Description1 = tk.Label(self.Movie1,wraplength=300, justify="left")
+			self.Description1.place(relx=0.025, rely=dy, height=160, width=490)
+			self.Description1.configure(activebackground="#f9f9f9")
+			self.Description1.configure(activeforeground="black")
+			self.Description1.configure(anchor='nw')
+			self.Description1.configure(background="#00002b")
+			self.Description1.configure(cursor="fleur")
+			self.Description1.configure(disabledforeground="#a3a3a3")
+			self.Description1.configure(font="-family {Segoe UI} -size 13")
+			self.Description1.configure(foreground="#bcfbfe")
+			self.Description1.configure(highlightbackground="#d9d9d9")
+			self.Description1.configure(highlightcolor="black")
+			ste="Cinema Hall : "+i[1]+"\t\tCost :"+str(i[6])+"\nAddress "+i[2]+","+i[3]+":\nTiming: "+i[5]
+			self.Description1.configure(text=ste)
+			wil.append(self.Description1)
+			
+			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
+			self.Book_b.place(relx=0.60, rely=ty+0.02, height=54, width=177)
+			self.Book_b.configure(activebackground="#000040")
+			self.Book_b.configure(activeforeground="white")
+			self.Book_b.configure(activeforeground="#ffffff")
+			self.Book_b.configure(background="#b3eaff")
+			self.Book_b.configure(disabledforeground="#a3a3a3")
+			self.Book_b.configure(cursor="hand2")
+			self.Book_b.configure(font="-family {Segoe UI} -size 14")
+			self.Book_b.configure(foreground="#000000")
+			self.Book_b.configure(highlightbackground="#d9d9d9")
+			self.Book_b.configure(highlightcolor="black")
+			self.Book_b.configure(pady="0")
+			self.Book_b.configure(text='''Book Ticket!''')
+			wil.append(self.Book_b)
+			ty+=0.14
 	def __init__(self, l,m,name,mem,email,top=None):
-		global dic
+		global dic,mod,co,wil
+		co=0
+		m=dele(m)
 		dic=m
+		print("here")
+		print(m)
+		mod=len(m)
 		'''This class configures and populates the toplevel window.
 		   top is the toplevel containing window.'''
 		_bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -173,9 +309,11 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 		self.Label2.configure(disabledforeground="#a3a3a3")
 		self.Label2.configure(font="-family {Segoe UI} -size 16")
 		self.Label2.configure(foreground="#bbfcff")
-		self.Label2.configure(text=das)
+		self.strd=StringVar()
+		self.strd.set(das)
+		self.Label2.configure(textvariable=self.strd)
 
-		self.Button1 = tk.Button(top)
+		self.Button1 = tk.Button(top,command=lambda: self.backw(l,name,mem,email,top))
 		self.Button1.place(relx=0.391, rely=0.262, height=44, width=47)
 		self.Button1.configure(activebackground="#ececec")
 		self.Button1.configure(activeforeground="#000000")
@@ -188,7 +326,7 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 		self.Button1.configure(pady="0")
 		self.Button1.configure(text='''<''')
 
-		self.Button2 = tk.Button(top)
+		self.Button2 = tk.Button(top,command=lambda: self.ahead(l,name,mem,email,top))
 		self.Button2.place(relx=0.555, rely=0.262, height=44, width=47)
 		self.Button2.configure(activebackground="#ececec")
 		self.Button2.configure(activeforeground="#000000")
@@ -202,6 +340,7 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 		self.Button2.configure(text='''>''')
 		dy=0.1
 		ty=0.364
+		wil=[]
 		for i in g:
 			print(i)
 			self.Movie1 = tk.Frame(top)
@@ -212,13 +351,14 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 			self.Movie1.configure(background="#00002b")
 			self.Movie1.configure(highlightbackground="#d9d9d9")
 			self.Movie1.configure(highlightcolor="black")
+			wil.append(self.Movie1)
 			self.Description1 = tk.Label(self.Movie1,wraplength=300, justify="left")
 			self.Description1.place(relx=0.025, rely=dy, height=160, width=490)
 			self.Description1.configure(activebackground="#f9f9f9")
 			self.Description1.configure(activeforeground="black")
 			self.Description1.configure(anchor='nw')
 			self.Description1.configure(background="#00002b")
-			#self.Description1.configure(cursor="fleur")
+			self.Description1.configure(cursor="fleur")
 			self.Description1.configure(disabledforeground="#a3a3a3")
 			self.Description1.configure(font="-family {Segoe UI} -size 13")
 			self.Description1.configure(foreground="#bcfbfe")
@@ -226,6 +366,7 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 			self.Description1.configure(highlightcolor="black")
 			ste="Cinema Hall : "+i[1]+"\t\tCost :"+str(i[6])+"\nAddress "+i[2]+","+i[3]+":\nTiming: "+i[5]
 			self.Description1.configure(text=ste)
+			wil.append(self.Description1)
 			
 			
 			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
@@ -242,6 +383,7 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 			self.Book_b.configure(highlightcolor="black")
 			self.Book_b.configure(pady="0")
 			self.Book_b.configure(text='''Book Ticket!''')
+			wil.append(self.Book_b)
 			ty+=0.14
 		
 		
