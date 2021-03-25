@@ -60,7 +60,7 @@ def query(q):
 		conn.close()
 		return result
     
-def vp_start_gui():
+def vp_start_gui_deluser():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -212,6 +212,6 @@ class deluser:
         self.deluser_b.configure(text='''Delete user''')
 
 if __name__ == '__main__':
-    vp_start_gui()
+    vp_start_gui_deluser()
 
 

@@ -20,12 +20,13 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
-from deletemovie import *
+import deletemovie 
 from modifymovie import *
 from createmovie import *
 from createuser import *
 from modifyusers import *
 from modifyseats import *
+from deltheater import *
 
 def vp_start_guih():
     '''Starting point when module is the main routine.'''
@@ -36,6 +37,7 @@ def vp_start_guih():
 from modifycinema import *
 from createcinema import *
 from createshow import *
+from deluser import *
 w = None
 def create_AdHome(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
@@ -90,8 +92,8 @@ class AdHome:
         self.User_b['state'] = tk.NORMAL
         self.Movie_b['state'] = tk.NORMAL
         self.Cinema_b['state'] = tk.NORMAL
-        self.Show_b['state'] = tk.NORMAL
-        self.Button1['state'] = tk.NORMAL
+        self.Show_b['state'] = tk.DISABLED
+        self.Button1['state'] = tk.DISABLED
         print('1')
         return flag
     def button4(self):
@@ -109,7 +111,7 @@ class AdHome:
         if flag==3:
             print('1')
             root.destroy()
-            vp_start_gui()
+            deletemovie.vp_start_gui_deletemovie()
         elif flag==2:
             root.destroy()
             vp_start_gui_mod()
@@ -121,7 +123,9 @@ class AdHome:
             
     def buttonus(self):
         if flag==3:
-            print('1')
+            print('3')
+            root.destroy()
+            vp_start_gui_deluser()
             
         elif flag==2:
             root.destroy()
@@ -135,6 +139,8 @@ class AdHome:
     def buttonci(self):
         if flag==3:
             print('1')
+            root.destroy()
+            vp_start_gui_deltheater()
             
         elif flag==2:
             root.destroy()
