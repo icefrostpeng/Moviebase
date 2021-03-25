@@ -46,6 +46,37 @@ def destroy_AdHome():
     w = None
 
 class AdHome:
+    def button1(self):
+        print('1')
+        self.Modify_b['state'] = tk.DISABLED
+        self.Delete_b['state'] = tk.DISABLED
+        self.User_b['state'] = tk.NORMAL
+        self.Movie_b['state'] = tk.NORMAL
+        self.Cinema_b['state'] = tk.NORMAL
+        self.Show_b['state'] = tk.NORMAL
+        self.Button1['state'] = tk.NORMAL
+        print('1')
+    def button2(self):
+        print('1')
+        self.Add_b['state'] = tk.DISABLED
+        self.Delete_b['state'] = tk.DISABLED
+        self.User_b['state'] = tk.NORMAL
+        self.Movie_b['state'] = tk.NORMAL
+        self.Cinema_b['state'] = tk.NORMAL
+        self.Show_b['state'] = tk.NORMAL
+        self.Button1['state'] = tk.NORMAL
+        print('1')
+    def button3(self):
+        print('1')
+        self.Modify_b['state'] = tk.DISABLED
+        self.Add_b['state'] = tk.DISABLED
+        self.User_b['state'] = tk.NORMAL
+        self.Movie_b['state'] = tk.NORMAL
+        self.Cinema_b['state'] = tk.NORMAL
+        self.Show_b['state'] = tk.NORMAL
+        self.Button1['state'] = tk.NORMAL
+        print('1')        
+    
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -83,7 +114,7 @@ class AdHome:
         self.TSeparator4.place(relx=0.818, rely=0.168,  relheight=0.835)
         self.TSeparator4.configure(orient="vertical")
 
-        self.Add_b = tk.Button(top)
+        self.Add_b = tk.Button(top,command =lambda:self.button1())
         self.Add_b.place(relx=0.211, rely=0.204, height=104, width=247)
         self.Add_b.configure(activebackground="#ececec")
         self.Add_b.configure(activeforeground="#000000")
@@ -97,7 +128,7 @@ class AdHome:
         self.Add_b.configure(pady="0")
         self.Add_b.configure(text='''Add''')
 
-        self.Modify_b = tk.Button(top)
+        self.Modify_b = tk.Button(top,command =lambda:self.button2())
         self.Modify_b.place(relx=0.211, rely=0.423, height=114, width=247)
         self.Modify_b.configure(activebackground="#ececec")
         self.Modify_b.configure(activeforeground="#000000")
@@ -111,7 +142,7 @@ class AdHome:
         self.Modify_b.configure(pady="0")
         self.Modify_b.configure(text='''Modify''')
 
-        self.Delete_b = tk.Button(top)
+        self.Delete_b = tk.Button(top,command =lambda:self.button3())
         self.Delete_b.place(relx=0.211, rely=0.641, height=124, width=247)
         self.Delete_b.configure(activebackground="#ececec")
         self.Delete_b.configure(activeforeground="#000000")
@@ -125,7 +156,7 @@ class AdHome:
         self.Delete_b.configure(pady="0")
         self.Delete_b.configure(text='''Delete''')
 
-        self.User_b = tk.Button(top)
+        self.User_b = tk.Button(top,state=tk.DISABLED)
         self.User_b.place(relx=0.633, rely=0.175, height=74, width=157)
         self.User_b.configure(activebackground="#ececec")
         self.User_b.configure(activeforeground="#000000")
@@ -139,7 +170,7 @@ class AdHome:
         self.User_b.configure(pady="0")
         self.User_b.configure(text='''User''')
 
-        self.Movie_b = tk.Button(top)
+        self.Movie_b = tk.Button(top,state=tk.DISABLED)
         self.Movie_b.place(relx=0.633, rely=0.306, height=74, width=157)
         self.Movie_b.configure(activebackground="#ececec")
         self.Movie_b.configure(activeforeground="#000000")
@@ -153,7 +184,7 @@ class AdHome:
         self.Movie_b.configure(pady="0")
         self.Movie_b.configure(text='''Movie''')
 
-        self.Cinema_b = tk.Button(top)
+        self.Cinema_b = tk.Button(top,state=tk.DISABLED)
         self.Cinema_b.place(relx=0.633, rely=0.437, height=74, width=157)
         self.Cinema_b.configure(activebackground="#ececec")
         self.Cinema_b.configure(activeforeground="#000000")
@@ -167,7 +198,7 @@ class AdHome:
         self.Cinema_b.configure(pady="0")
         self.Cinema_b.configure(text='''Cinema''')
 
-        self.Show_b = tk.Button(top)
+        self.Show_b = tk.Button(top,state=tk.DISABLED)
         self.Show_b.place(relx=0.633, rely=0.569, height=74, width=157)
         self.Show_b.configure(activebackground="#ececec")
         self.Show_b.configure(activeforeground="#000000")
@@ -237,7 +268,7 @@ class AdHome:
         self.Label2.configure(highlightcolor="black")
         self.Label2.configure(text='''>>''')
 
-        self.Button1 = tk.Button(top)
+        self.Button1 = tk.Button(top,state=tk.DISABLED)
         self.Button1.place(relx=0.633, rely=0.7, height=74, width=157)
         self.Button1.configure(activebackground="#ececec")
         self.Button1.configure(activeforeground="#000000")
