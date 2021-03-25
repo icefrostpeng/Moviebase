@@ -186,12 +186,18 @@ class AddMovie:
         self.ad=tk.StringVar()
         self.mob=tk.StringVar()
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0aeb174a7ebdc7d2ffef804e056ce022fbf14476
         img = ImageTk.PhotoImage(PIL.Image.open("Logo.png").resize((90, 90), PIL.Image.ANTIALIAS))
         #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
         self.Logo_image.configure(image=img)
         self.Logo_image=img
+<<<<<<< HEAD
+=======
         
         '''self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
@@ -199,6 +205,7 @@ class AddMovie:
         self.Logo_image.configure(disabledforeground="#a3a3a3")
         self.Logo_image.configure(foreground="#000000")
         self.Logo_image.configure(text=''Label'')'''
+>>>>>>> 0aeb174a7ebdc7d2ffef804e056ce022fbf14476
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.359, rely=0.044, height=61, width=372)

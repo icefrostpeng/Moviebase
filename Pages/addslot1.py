@@ -205,7 +205,7 @@ class findmovie():
 			self.Book_b.configure(highlightbackground="#d9d9d9")
 			self.Book_b.configure(highlightcolor="black")
 			self.Book_b.configure(pady="0")
-			self.Book_b.configure(text='''Delete''')
+			self.Book_b.configure(text='''Select Movie''')
 			y+=0.15
 			yim+=0.03
 			yib+=0.15

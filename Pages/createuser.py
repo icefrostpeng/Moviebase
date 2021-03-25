@@ -83,7 +83,6 @@ def querys(email,name,age,dob,addr,phno,pass1):
         	cur.execute(sql,val)
         	#cur.execute(q)
         	conn.commit()
-        	print(result)
         	#data = pd.read_sql_query(q, conn)
         	conn.close()
         	print("sucess")
@@ -188,6 +187,8 @@ class AddUser:
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
         self.Logo_image.configure(image=img)
         self.Logo_image=img
+<<<<<<< HEAD
+=======
 
         '''self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
@@ -195,6 +196,7 @@ class AddUser:
         self.Logo_image.configure(disabledforeground="#a3a3a3")
         self.Logo_image.configure(foreground="#000000")
         self.Logo_image.configure(text=''Label'')'''
+>>>>>>> 0aeb174a7ebdc7d2ffef804e056ce022fbf14476
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.359, rely=0.044, height=61, width=372)
