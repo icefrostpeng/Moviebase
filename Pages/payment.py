@@ -277,7 +277,7 @@ class Payment:
         self.Pay_b.configure(activebackground="#ececec")
         self.Pay_b.configure(activeforeground="#000000")
         self.Pay_b.configure(background="#00c6c6")
-        self.Pay_b.configure(cursor="fleur")
+        self.Pay_b.configure(cursor="hand2")
         self.Pay_b.configure(disabledforeground="#a3a3a3")
         self.Pay_b.configure(font="-family {Segoe UI} -size 22")
         self.Pay_b.configure(foreground="#000000")

@@ -16,6 +16,7 @@ try:
     import Tkinter as tk
 except ImportError:
     import tkinter as tk
+from tkinter import *
 from tkinter import messagebox
 try:
     import ttk
@@ -303,24 +304,33 @@ class Register:
 
         #self.LabelAge=tk.Label(top,text="I confirm")
         #ob=datetime.strftime(date_str2, '%m/%d/%y')
+        def sel():
+            selection = "You selected the option " + str(var.get())
+            self.label1=tk.Label(top)
+            #self.label1.config(text=selection)
 
-        self.checkAge=tk.Checkbutton(top,text="My age is above 18",foreground="red")
+
+        var=IntVar()
+        self.checkAge=tk.Radiobutton(top,text="My age is above 18",foreground="red",variable=var,value=1,command=sel)
+        self.checkAge.deselect()
         self.checkAge.place(relx=0.484,rely=0.781,relheight=0.051,relwidth=0.404)
         self.checkAge.configure(activebackground="#ececec")
         self.checkAge.configure(activeforeground="#000000")
         self.checkAge.configure(background="#000328")
         self.checkAge.configure(disabledforeground="#a3a3a3")
+        self.checkAge.configure(cursor="hand2")
         #self.checkAge.configure(foreground="#ffffff")
         self.checkAge.configure(highlightbackground="#d9d9d9")
         self.checkAge.configure(highlightcolor="black")
         self.checkAge.configure(justify='left')
 
-        self.checkAge1 = tk.Checkbutton(top, text="My age is below 18", foreground="red")
+        self.checkAge1 = tk.Radiobutton(top, text="My age is below 18", foreground="red",variable=var,value=2,command=sel)
         self.checkAge1.place(relx=0.484, rely=0.820, relheight=0.051, relwidth=0.404)
         self.checkAge1.configure(activebackground="#ececec")
         self.checkAge1.configure(activeforeground="#000000")
         self.checkAge1.configure(background="#000328")
         self.checkAge1.configure(disabledforeground="#a3a3a3")
+        self.checkAge1.configure(cursor="hand2")
         # self.checkAge.configure(foreground="#ffffff")
         self.checkAge1.configure(highlightbackground="#d9d9d9")
         self.checkAge1.configure(highlightcolor="black")
