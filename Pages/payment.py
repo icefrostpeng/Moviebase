@@ -265,6 +265,7 @@ class Payment:
         self.Cancel_b.configure(activeforeground="#000000")
         self.Cancel_b.configure(background="#eb0214")
         self.Cancel_b.configure(disabledforeground="#a3a3a3")
+        self.Cancel_b.configure(cursor="hand2")
         self.Cancel_b.configure(font="-family {Segoe UI} -size 12")
         self.Cancel_b.configure(foreground="#000000")
         self.Cancel_b.configure(highlightbackground="#d9d9d9")
