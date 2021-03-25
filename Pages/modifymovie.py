@@ -49,7 +49,7 @@ def vp_start_gui():
     root.mainloop()
 
 
-def querys(movname, descr, rating, cast, age_rating, genre, poster ):
+def querys(movie_id,movname, descr, rating, cast, age_rating, genre, poster ):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
         	ssh_username=ssh_user,
@@ -60,10 +60,6 @@ def querys(movname, descr, rating, cast, age_rating, genre, poster ):
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
             cur=conn.cursor()
-            cur.execute("select movie_id from moviedet ORDER BY movie_id DESC LIMIT 1")
-            movie_id=cur.fetchone()
-            movie_id=movie_id[0]+1
-            print(movie_id)
             sql = "INSERT INTO moviedet (movie_id, movie_name,descr,rating,cast,age_rat,genre,posterx) VALUES (%s, %s, %s, %s, %s, %s, %s, %s )"
             val = (movie_id, movname, descr, rating, cast, age_rating, genre, poster)
             cur.execute(sql,val)
@@ -91,11 +87,10 @@ def  ins(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genre
         try:
             t=querys(movname, descr, rating, cast, age_rating, genre, poster)
             if(t==1):
-                messagebox.showinfo("Sucess", "Registration successfull")
                 root.withdraw()
                 create_AdHome(root)
             else:
-                messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+                messagebox.showerror("UnSucess", "Could not find movie")
 
         except Exception as e: print(e)
 
@@ -129,6 +124,11 @@ def destroy_AddMovie():
     w = None
 
 class AddMovie:
+
+
+            
+
+    
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -155,13 +155,14 @@ class AddMovie:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
         
-        movname=tk.StringVar()
-        descr=tk.StringVar()
-        age_rating=tk.StringVar()
-        rating=tk.StringVar()
-        genre=tk.StringVar()
-        poster=tk.StringVar()
-        cast=tk.StringVar()
+        self.movie_id=tk.StringVar()
+        self.movname=tk.StringVar()
+        self.descr=tk.StringVar()
+        self.age_rating=tk.StringVar()
+        self.rating=tk.StringVar()
+        self.genre=tk.StringVar()
+        self.poster=tk.StringVar()
+        self.cast=tk.StringVar()
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
@@ -223,7 +224,7 @@ class AddMovie:
         self.Desc_l.configure(highlightcolor="black")
         self.Desc_l.configure(text='''Enter description:''')
 
-        self.Moviename_e = tk.Entry(top, textvariable=movname)
+        self.Moviename_e = tk.Entry(top, textvariable=self.movname)
         self.Moviename_e.place(relx=0.203, rely=0.262, height=30, relwidth=0.222)
 
         self.Moviename_e.configure(background="white")
@@ -236,7 +237,7 @@ class AddMovie:
         self.Moviename_e.configure(selectbackground="blue")
         self.Moviename_e.configure(selectforeground="white")
 
-        self.Desc_e = tk.Entry(top, textvariable=descr)
+        self.Desc_e = tk.Entry(top, textvariable=self.descr)
         self.Desc_e.place(relx=0.203, rely=0.394, height=30, relwidth=0.222)
         self.Desc_e.configure(background="white")
         self.Desc_e.configure(disabledforeground="#a3a3a3")
@@ -275,7 +276,7 @@ class AddMovie:
         self.cast_l.configure(highlightcolor="black")
         self.cast_l.configure(text='''Enter Cast:''')
 
-        self.cast_e = tk.Entry(top, textvariable=cast)
+        self.cast_e = tk.Entry(top, textvariable=self.cast)
         self.cast_e.place(relx=0.203, rely=0.612, height=30, relwidth=0.222)
         self.cast_e.configure(background="white")
         self.cast_e.configure(disabledforeground="#a3a3a3")
@@ -330,7 +331,7 @@ class AddMovie:
         self.RatingSpinbox1.configure(selectbackground="blue")
         self.RatingSpinbox1.configure(selectforeground="white")
 
-        self.ageratingcombo = ttk.Combobox(top, textvariable=age_rating)
+        self.ageratingcombo = ttk.Combobox(top, textvariable=self.age_rating)
         self.ageratingcombo.place(relx=0.336, rely=0.685, relheight=0.045
                 , relwidth=0.088)
         self.ageratingcombo.configure(font="-family {Segoe UI} -size 12")
@@ -339,7 +340,7 @@ class AddMovie:
         self.ageratingcombo.current(1)
         
 
-        self.Genrecombo = ttk.Combobox(top, textvariable= genre)
+        self.Genrecombo = ttk.Combobox(top, textvariable= self.genre)
         self.Genrecombo.place(relx=0.336, rely=0.758, relheight=0.045
                 , relwidth=0.088)
         self.Genrecombo.configure(takefocus="")
@@ -360,7 +361,7 @@ class AddMovie:
         self.Poster_l.configure(highlightcolor="black")
         self.Poster_l.configure(text='''Enter Poster''')
         
-        self.Poster_e = tk.Entry(top, textvariable=poster)
+        self.Poster_e = tk.Entry(top, textvariable=self.poster)
         self.Poster_e.place(relx=0.500, rely=0.394, height=30, relwidth=0.222)
         self.Poster_e.configure(background="white")
         self.Poster_e.configure(disabledforeground="#a3a3a3")
@@ -373,7 +374,7 @@ class AddMovie:
         self.Poster_e.configure(selectforeground="white")
 
         
-        self.Createuser_b = tk.Button(top, command=lambda: ins(movname, descr, cast, poster, self.RatingSpinbox1, self.ageratingcombo, self.Genrecombo))
+        self.Createuser_b = tk.Button(top, command=lambda: ins(self.movie_id, self.movname, self.descr, self.cast, self.poster, self.RatingSpinbox1, self.ageratingcombo, self.Genrecombo))
         self.Createuser_b.place(relx=0.594, rely=0.7, height=84, width=207)
         self.Createuser_b.configure(activebackground="#ececec")
         self.Createuser_b.configure(activeforeground="#000000")
@@ -386,6 +387,65 @@ class AddMovie:
         self.Createuser_b.configure(highlightcolor="black")
         self.Createuser_b.configure(pady="0")
         self.Createuser_b.configure(text='''Create Movie''')
+        
+        self.Get_info_b = tk.Button(top, command=lambda: self.getinfo())
+        self.Get_info_b.place(relx=0.594, rely=0.47, height=84, width=207)
+        self.Get_info_b.configure(activebackground="#ececec")
+        self.Get_info_b.configure(activeforeground="#000000")
+        self.Get_info_b.configure(background="#77eaea")
+        self.Get_info_b.configure(disabledforeground="#a3a3a3")
+        self.Get_info_b.configure(cursor="hand2")
+        self.Get_info_b.configure(font="-family {Segoe UI} -size 23")
+        self.Get_info_b.configure(foreground="#000000")
+        self.Get_info_b.configure(highlightbackground="#d9d9d9")
+        self.Get_info_b.configure(highlightcolor="black")
+        self.Get_info_b.configure(pady="0")
+        self.Get_info_b.configure(text='''Get Info''')
+        
+    def querysd(self,movie):
+        with SSHTunnelForwarder(
+            	(ssh_host, ssh_port),
+            	ssh_username=ssh_user,
+            	ssh_pkey=mypkey,
+            	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+            try:
+                conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+            			passwd=sql_password, db=sql_main_database,
+            			port=tunnel.local_bind_port)
+                cur=conn.cursor()
+                cur.execute("select movie_id, movie_name, descr, rating, cast,age_rat, genre, poster from moviedet WHERE movie_name='{0}'".format(movie))
+                values=cur.fetchone()
+                print(values)
+                #cur.execute(q)
+                conn.commit()
+            	#data = pd.read_sql_query(q, conn)
+                conn.close()
+                print("success")
+                return values
+            except Exception as e:
+            	print(e)
+            	return None
+    
+    def getinfo(self):        						
+
+                movie=self.movname.get()
+                if len(movie):
+                    result=self.querysd(movie)
+                    if(result):
+                        messagebox.showinfo("Sucess", "Registration successfull")
+                        self.movie_id.set(result[0])
+                        self.movname.set(result[1])
+                        self.descr.set(result[2])
+                        self.rating.set(result[3])
+                        self.cast.set(result[4])
+                        self.age_rating.set(result[5])
+                        self.poster.set(result[6])
+                        self.genre.set(result[7])
+
+                else:
+                    messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+    
+
 
 if __name__ == '__main__':
     vp_start_gui()

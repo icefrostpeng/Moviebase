@@ -240,7 +240,7 @@ class Register:
         self.dob.configure(foreground="#ffffff")
         self.dob.configure(text='''Enter Date of Birth''')
 
-        self.cal = DateEntry(root, width=30, bg="darkblue", fg="white", year=2020)
+        self.cal = DateEntry(root, width=30, bg="darkblue", fg="white", year=2020, date_pattern='mm/dd/y')
         self.cal.place(relx=0.163, rely=0.550, height=31, width=171)
 
         self.address_l = tk.Label(top)

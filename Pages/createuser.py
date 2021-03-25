@@ -84,8 +84,6 @@ def querys(email,name,age,dob,addr,phno,pass1):
         	cur.execute(sql,val)
         	#cur.execute(q)
         	conn.commit()
-        	cur.execute("select * from User")
-        	result = cur.fetchone()
         	print(result)
         	#data = pd.read_sql_query(q, conn)
         	conn.close()

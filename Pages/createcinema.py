@@ -51,22 +51,22 @@ def querys(cname,city,caddress,capacity):
         	ssh_pkey=mypkey,
         	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
         try:
-        	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+            conn = pymysql.connect(host='127.0.0.1', user=sql_username,
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
-        	cur=conn.cursor()
-        	sql = "INSERT INTO theaterdet (theater_id,theater_name,city,theater_add, capacity) VALUES (%s, %s, %s, %s, %s)"
-        	val = ("28",cname, city, caddress, capacity)
-        	cur.execute(sql,val)
-        	#cur.execute(q)
-        	conn.commit()
-        	cur.execute("select * from User")
-        	result = cur.fetchone()
-        	print(result)
+            cur=conn.cursor()
+            cur.execute("select theater_id from theaterdet ORDER BY theater_id DESC LIMIT 1")
+            theater_id=cur.fetchone()
+            theater_id=theater_id[0]+1
+            sql = "INSERT INTO theaterdet (theater_id,theater_name,city,theater_add, capacity) VALUES (%s, %s, %s, %s, %s)"
+            val = (theater_id,cname, city, caddress, capacity)
+            cur.execute(sql,val)
+            #cur.execute(q)
+            conn.commit()
         	#data = pd.read_sql_query(q, conn)
-        	conn.close()
-        	print("sucess")
-        	return 1
+            conn.close()
+            print("sucess")
+            return 1
         except Exception as e:
         	print(e)
         	return 0

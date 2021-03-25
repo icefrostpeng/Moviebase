@@ -114,7 +114,7 @@ def seats(slot_id, capacity):
 
 
 
-def querys(slot_id, theater_id, time, showdate, cost, movie_id):
+def querys(theater_id, time, showdate, cost, movie_id):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
         	ssh_username=ssh_user,
@@ -125,6 +125,11 @@ def querys(slot_id, theater_id, time, showdate, cost, movie_id):
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
             cur=conn.cursor()
+            cur.execute("select slot_id from slotdet ORDER BY slot_id DESC LIMIT 1")
+            slot_id=cur.fetchone()
+            slot_id=slot_id[0]
+            print(slot_id)
+            slot_id = str(slot_id+1)            
             print((str(slot_id), str(theater_id), str(time), str(showdate), str(cost), str(movie_id)))
             sql = "INSERT INTO slotdet (slot_id, theater_id, timing, dates,cost, movie_id) VALUES (%s, %s, %s, %s, %s, %s)"
             val = (str(slot_id), str(theater_id), str(time), str(showdate), str(cost), str(movie_id))
@@ -132,10 +137,10 @@ def querys(slot_id, theater_id, time, showdate, cost, movie_id):
             conn.commit()
             conn.close()
             print("success slot")
-            return 1
+            return 1,slot_id
         except Exception as e:
         	print(e)
-        	return 0
+        	return 0,None
 
 
 
@@ -150,10 +155,9 @@ def querys2(theater_name):
             conn = pymysql.connect(host='127.0.0.1', user=sql_username,
          			passwd=sql_password, db=sql_main_database,
          			port=tunnel.local_bind_port)
-            print("SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(str(theater_name)))
-            print("SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(theater_name))
-            sql = "SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(str(theater_name))
             cur=conn.cursor()
+            sql = "SELECT theater_id, capacity FROM theaterdet WHERE theater_name='{0}'".format(str(theater_name))
+
             cur.execute(sql)
             result = cur.fetchone()
             print(result)
@@ -184,18 +188,23 @@ def  ins(theater_name1, time1,showdate1, cost1):
             try:
                 cost=int(cost)					
                 try:
-                    theater_id,capacity=querys2(theater_name)
-                    movie_id="24"
-                    slot_id="66"
-                    t=querys(slot_id, theater_id, time, showdate, str(cost), movie_id)
-                    z=seats(slot_id, capacity)
-                    if(t==1):
-                        messagebox.showinfo("Success", "Cinema Creation successfull")
-                        root.withdraw()
-                        create_AdHome(root)
+                    result=querys2(theater_name)
+                    if result:
+                        theater_id, capacity=result                        
+                        movie_id="24"
+                        t,slot_id=querys(theater_id, time, showdate, str(cost), movie_id)
+                        if t==1:
+                            z=seats(slot_id, capacity)
+                        else:
+                            messagebox.showerror("Error", "Could not add a slot")
+                        if(t==1):
+                            messagebox.showinfo("Success", "Show Creation successfull")
+                            root.withdraw()
+                            create_AdHome(root)
+                        else:
+                            messagebox.showerror("UnSucess", "Show Creation Unsuccessfull")
                     else:
-                        messagebox.showerror("UnSucess", "Cinema Creation Unsuccessfull")
-    
+                        messagebox.showerror("Error", "Could not find that Theater")
                 except Exception as e: print(e)
             except Exception as e: 
                 print(e)
