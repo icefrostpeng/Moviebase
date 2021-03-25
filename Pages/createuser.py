@@ -23,7 +23,7 @@ except ImportError:
     py3 = True
 
 
-def vp_start_gui1():
+def vp_start_gui_createuser():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -49,7 +49,7 @@ import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import re
-from adhome import *
+import adhome
 from tkinter import messagebox
 
 sql_hostname = '127.0.0.1'
@@ -316,6 +316,6 @@ class AddUser:
         self.cal.place(relx=0.563, rely=0.250, height=31, width=171)
 
 if __name__ == '__main__':
-    vp_start_gui1()
+    vp_start_gui_createuser()
 
 

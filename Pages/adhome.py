@@ -23,6 +23,8 @@ except ImportError:
 from deletemovie import *
 from modifymovie import *
 from createmovie import *
+from createuser import *
+from modifyusers import *
 
 def vp_start_guih():
     '''Starting point when module is the main routine.'''
@@ -113,6 +115,20 @@ class AdHome:
             root.destroy()
             vp_start_gui_create()
             print("try with delete")
+            
+    def buttonus(self):
+        if flag==3:
+            print('1')
+            
+        elif flag==2:
+            root.destroy()
+            vp_start_gui_modifyusers()
+            print("modify works")
+        else:
+            root.destroy()
+            vp_start_gui_createuser()
+            print("user works")
+            
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -192,7 +208,7 @@ class AdHome:
         self.Delete_b.configure(pady="0")
         self.Delete_b.configure(text='''Delete''')
 
-        self.User_b = tk.Button(top,state=tk.DISABLED)
+        self.User_b = tk.Button(top,state=tk.DISABLED,command=lambda:self.buttonus())
         self.User_b.place(relx=0.633, rely=0.175, height=74, width=157)
         self.User_b.configure(activebackground="#ececec")
         self.User_b.configure(activeforeground="#000000")
