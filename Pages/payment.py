@@ -12,7 +12,7 @@ import re
 import sys
 import smtplib
 from random import randint
-from membershipallocation import *
+import membershipallocation
 import home
 
 try:
@@ -252,7 +252,7 @@ class Payment:
                 print('success')
             else:
                 print('failure')
-            vp_start_gui_mem_allocation(membership, name, email)
+            membershipallocation.vp_start_gui_mem_allocation(membership, name, email)
 
         def button_home():
             print(f'from button {name} {mem} {email} and this is {product[0]}')
