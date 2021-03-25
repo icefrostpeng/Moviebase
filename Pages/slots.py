@@ -52,6 +52,9 @@ def destroy_Slots():
 	w = None
 def slotb(l,i,slotid,name,mem,email,cost,datess,top):
 	top.destroy()
+	print("check :")
+	print(l)
+	
 	seats.creates(l,i,slotid,name,mem,email,cost,datess)
 class Slots( memberbar.Memberbar, homebar.Homebar):
 	def __init__(self, l,m,name,mem,email,top=None):

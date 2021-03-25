@@ -22,6 +22,20 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
+def quera(email):
+	with SSHTunnelForwarder(
+			(ssh_host, ssh_port),
+			ssh_username=ssh_user,
+			ssh_pkey=mypkey,
+			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+				passwd=sql_password, db=sql_main_database,
+				port=tunnel.local_bind_port)
+		cur=conn.cursor()
+		cur.execute("select age from User where email='{0}'".format(email))
+		arr = list(cur.fetchall())
+		cur.close()
+		return int(arr[0][0])
 def query(slotid):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),
@@ -55,19 +69,29 @@ def quer(slotid,seatid,val):
 
 global fin
 fin=[]
-def sub(slotid,name,mem,email,timing,tdate,cinemaNAd):
+def sub(l,slotid,name,mem,email,timing,tdate,cinemaNAd):
 	global fin,cosm,dcost
 	flag=0
+	chkM=1
 	if(len(fin)==0):
 		messagebox.showerror("Error", "No Seats selected")
 	else:
-		for i in fin:
-			if(i[1]=='v'):
-				i[1]='o'
-				if(quer(slotid,i[0],i[1])):
-					flag=1
-				else:
-					flag=0
+		if(l[5]=='A'):
+			age=quera(email)
+			print(age)
+			if(age<18):
+				chkM=0
+				messagebox.showerror("Error", "Adult Movie and your age is Less than 18")
+			elif(age>18 and len(fin)>1):
+				messagebox.showinfo("Adult Movie", "You are booking an adult movie so please ensure all the Pals with you are 18+")
+		if(chkM==1):
+			for i in fin:
+				if(i[1]=='v'):
+					i[1]='o'
+					if(quer(slotid,i[0],i[1])):
+						flag=1
+					else:
+						flag=0
 	if(flag==1):
 		sts=''
 		for i in range(len(fin)):
@@ -132,7 +156,7 @@ def creates(l,di,slotid,name,mem,email,cost,tdate):
 	strv.set("Number of seats selected is : 0\nTotal cost: 0")
 	wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic",justify="left").place(x=40,y=380)
 	cinemaNAd=di[1]+", "+di[3]+", "+di[2]
-	b=Button(window,command=lambda: sub(slotid,name,mem,email,di[5],tdate,cinemaNAd),text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=480)
+	b=Button(window,command=lambda: sub(l,slotid,name,mem,email,di[5],tdate,cinemaNAd),text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=480)
 	
 	#c.bind('<Button-1>', clicked)
 	for key,value in dic.items():
