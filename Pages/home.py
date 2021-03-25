@@ -53,7 +53,7 @@ def destroy_Home():
     w.destroy()
     w = None
 
-class Home():
+class Home(searchbar.Searchbar):
     global to
     def ahead(self,top):
         global co
@@ -366,8 +366,8 @@ class Home():
         self.Label9.configure(text='''UA/A''')
         
         
-        searchbar.Searchbar.__init__(self, top)
-        memberbar.Memberbar.__init__(self, name, mem, email, top)
+        searchbar.Searchbar.__init__(self, top=root)
+        memberbar.Memberbar.__init__(self, name, mem, email, root)
         # homebar.Homebar.__init__(self,name,mem, top)
         sidebar.Sidebar.__init__(self, top)
         
