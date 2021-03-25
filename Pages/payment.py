@@ -12,7 +12,8 @@ import re
 import sys
 import smtplib
 from random import randint
-import membershipallocation
+from ticketallocation import *
+from membershipallocation import *
 import home
 
 try:
@@ -73,7 +74,20 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-
+def quer(slotid,seatid,val):
+    with SSHTunnelForwarder(
+            (ssh_host, ssh_port),
+            ssh_username=ssh_user,
+            ssh_pkey=mypkey,
+            remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+        conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+                passwd=sql_password, db=sql_main_database,
+                port=tunnel.local_bind_port)
+        cur=conn.cursor()
+        print("update seatdet set status='{0}' where slot_id={1} and seat_id={2}".format(val,slotid,seatid))
+        cur.execute("update seatdet set status='{0}' where slot_id={1} and seat_id={2}".format(val,slotid,seatid))
+        conn.commit()
+        return 1
 
 def querys(mem, email):
     with SSHTunnelForwarder(
@@ -108,13 +122,13 @@ def querys(mem, email):
 
 
 ########################################
-def vp_start_gui_P(name='XYZ', mem='a', product=[], email='abc@gmail.com'):
+def vp_start_gui_P(name='XYZ', mem='a', product=[], email='abc@gmail.com',action='0'):
     '''Starting point when module is the main routine.'''
     if product is None:
         product = []
     global val, w, root
     root = tk.Tk()
-    top = Payment(name, mem, product, email, root)
+    top = Payment(name, mem, product, email,action, root)
     root.mainloop()
 
 
@@ -139,7 +153,7 @@ def destroy_Payment():
 
 
 class Payment:
-    def __init__(self, name, mem, product, email, top=None):
+    def __init__(self, name, mem, product, email,action, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
 
@@ -213,7 +227,7 @@ class Payment:
         self.Product_name.configure(foreground="#bcfbfe")
         self.Product_name.configure(highlightbackground="#d9d9d9")
         self.Product_name.configure(highlightcolor="black")
-        self.Product_name.configure(text=f'{product[0]} Membership')
+        self.Product_name.configure(text=f'{product[0]}')
 
         # Cost label
         self.Cost_l = tk.Label(self.Frame_f)
@@ -227,7 +241,7 @@ class Payment:
         self.Cost_l.configure(foreground="#aaffff")
         self.Cost_l.configure(highlightbackground="#d9d9d9")
         self.Cost_l.configure(highlightcolor="black")
-        self.Cost_l.configure(text='''Cost''')
+        self.Cost_l.configure(text='Cost')
 
         # Cost to be payed
         self.Cost_value = tk.Label(self.Frame_f)
@@ -244,18 +258,33 @@ class Payment:
         self.Cost_value.configure(text=product[1])
 
         def button_clicked(membership):
-            top.destroy()
-            print(f'From button {email}')
-            email_generator('M')
-            t = querys(membership, email)
-            if t == 1:
-                print('success')
+            if membership[1] == 1:
+                top.destroy()
+                print(f'From button {email}')
+                email_generator('M')
+                t = querys(membership[0], email)
+                if t == 1:
+                    print('success')
+                else:
+                    print('failure')
+                vp_start_gui_mem_allocation(membership[0], name, email)
+
             else:
-                print('failure')
-            membershipallocation.vp_start_gui_mem_allocation(membership, name, email)
+                top.destroy()
+                print(f'from click paym {product[5]} {name} {mem} {email} ')
+                print(product)
+                email_generator('T')
+                flag = 0
+                dbv = product[7]
+                for i in dbv:
+                    if quer(i[2],i[0],i[1]):
+                        flag = 1
+                if flag == 1:
+                    vp_start_gui_ticket_allocation(product[5],name,mem,email)
+
+
 
         def button_home():
-            print(f'from button {name} {mem} {email} and this is {product[0]}')
             top.destroy()
             home.vp_start_gui1(name, mem, email)
 
@@ -273,7 +302,9 @@ class Payment:
         self.Cancel_b.configure(pady="0")
         self.Cancel_b.configure(text='Cancel')
 
-        self.Pay_b = tk.Button(self.Frame_f, command=lambda: button_clicked(product[0]))
+        pro_action = [product[0], action]
+        print(f'{pro_action} and {pro_action[0]} + {pro_action[1]}')
+        self.Pay_b = tk.Button(self.Frame_f, command=lambda: button_clicked(pro_action))
         self.Pay_b.place(relx=0.742, rely=0.691, height=54, width=157)
         self.Pay_b.configure(activebackground="#ececec")
         self.Pay_b.configure(activeforeground="#000000")
@@ -313,10 +344,9 @@ class Payment:
 
             elif action == 'T':
                 body = f'Congratulations your ticket has been booked successfully\n\n' \
-                       f'Cinema name: {cinema}\n' \
-                       f'Movie name: {movie}\n' \
-                       f'Slot: {slot}\n' \
-                       f'seat number: {seat_number}'
+                       f'Timing: {product[2]}\n' \
+                       f'Date: {product[3]}\n' \
+                       f'seat number: {product[5]}'
                 message = f'Subject: {subject}\n\n{body}'
                 send_mail(sender_email, password, rec_email, message)
                 print('Mail sent successfully')

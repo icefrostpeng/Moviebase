@@ -58,8 +58,7 @@ class Membership:
         self.style.configure('.',background=_bgcolor)
         self.style.configure('.',foreground=_fgcolor)
         self.style.configure('.',font="TkDefaultFont")
-        self.style.map('.',background=
-            [('selected', _compcolor), ('active',_ana2color)])
+        self.style.map('.',background=[('selected', _compcolor), ('active',_ana2color)])
 
         top.geometry("1280x686+263+199")
         top.minsize(120, 1)
@@ -110,7 +109,7 @@ class Membership:
         self.Label2.configure(disabledforeground="#a3a3a3")
         self.Label2.configure(font="-family {Segoe UI} -size 17")
         self.Label2.configure(foreground="#ffffff")
-        self.Label2.configure(text='''Your membership status is:''')
+        self.Label2.configure(text='Your membership status is:')
         self.Label2.configure(wraplength="600")
 
         # function to return to home

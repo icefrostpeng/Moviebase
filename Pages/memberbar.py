@@ -59,7 +59,8 @@ class Memberbar:
         # redirect to payment
         def button_click(product):
             top.destroy()
-            payment.vp_start_gui_P(name, membership, product, email)
+            action = 1
+            payment.vp_start_gui_P(name, membership, product, email, action)
 
 
         # membership status

@@ -5,10 +5,8 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 12:06:02 PM IST  platform: Windows NT
 
-import home
-from home import *
 import sys
-
+import home
 try:
     import Tkinter as tk
 except ImportError:
@@ -22,11 +20,11 @@ except ImportError:
     py3 = True
 
 
-def vp_start_gui():
+def vp_start_gui_ticket_allocation(seats,name,mem,email):
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = Ticket (root)
+    top = Ticket (seats,name, mem,email, root)
     root.mainloop()
 
 w = None
@@ -46,7 +44,7 @@ def destroy_Ticket():
     w = None
 
 class Ticket:
-    def __init__(self, top=None):
+    def __init__(self,seats,name,mem,email, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -89,7 +87,7 @@ class Ticket:
         self.Movie1.configure(borderwidth="2")
         self.Movie1.configure(relief="groove")
         self.Movie1.configure(background="#00002b")
-        #self.Movie1.configure(cursor="fleur")
+        self.Movie1.configure(cursor="fleur")
         self.Movie1.configure(highlightbackground="#d9d9d9")
         self.Movie1.configure(highlightcolor="black")
 
@@ -115,24 +113,25 @@ class Ticket:
         self.Label2.configure(text='''Your Ticket number is:''')
         self.Label2.configure(wraplength="600")
 
-        def button_home():
-            #print(f'from button {name} {mem} {email} and this is {product[0]}')
-            top.destroy()
-            home.vp_start_gui1()
 
-        self.Continue_b = tk.Button(self.Movie1,command=button_home)
+        def on_click_home():
+            print(f'from final {name} {mem} {email}')
+            top.destroy()
+            home.vp_start_gui1(name, mem, email)
+
+        self.Continue_b = tk.Button(self.Movie1, command=on_click_home)
         self.Continue_b.place(relx=0.629, rely=0.8, height=44, width=227)
         self.Continue_b.configure(activebackground="#ececec")
         self.Continue_b.configure(activeforeground="#000000")
         self.Continue_b.configure(background="#b4eafe")
         self.Continue_b.configure(disabledforeground="#a3a3a3")
-        self.Continue_b.configure(cursor="hand2")
         self.Continue_b.configure(font="-family {Segoe UI} -size 14")
         self.Continue_b.configure(foreground="#000000")
         self.Continue_b.configure(highlightbackground="#d9d9d9")
         self.Continue_b.configure(highlightcolor="black")
         self.Continue_b.configure(pady="0")
-        self.Continue_b.configure(text='''Home''')
+        self.Continue_b.configure(cursor="hand2")
+        self.Continue_b.configure(text='Home')
 
         self.Label5 = tk.Label(self.Movie1)
         self.Label5.place(relx=0.491, rely=0.447, height=61, width=294)
@@ -140,9 +139,5 @@ class Ticket:
         self.Label5.configure(disabledforeground="#a3a3a3")
         self.Label5.configure(font="-family {Segoe UI} -size 13")
         self.Label5.configure(foreground="#77ff8b")
-        self.Label5.configure(text='''List of ticket numbers''')
-
-if __name__ == '__main__':
-    vp_start_gui()
-
+        self.Label5.configure(text=seats)
 
