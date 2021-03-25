@@ -5,20 +5,61 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 05:09:10 PM IST  platform: Windows NT
 
+from functools import partial
+from tkinter import messagebox
 import sys
+import adhome
+from PIL import ImageTk, Image
+import PIL
+try:
+	import Tkinter as tk
+except ImportError:
+	import tkinter as tk
 
 try:
-    import Tkinter as tk
+	import ttk
+	py3 = False
 except ImportError:
-    import tkinter as tk
+	import tkinter.ttk as ttk
+	py3 = True
+from tkinter import *
+#from home import *
 
-try:
-    import ttk
-    py3 = False
-except ImportError:
-    import tkinter.ttk as ttk
-    py3 = True
-
+#from Deletemoviebar import Deletemoviebar
+import adhome
+import pymysql
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
+global co,mod,wil,flag
+flag=1
+wil=[]
+co=0
+mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
+sql_hostname = '127.0.0.1'
+sql_username = 'root'
+sql_password = 'Srishtisingh@12'
+sql_main_database = 'movie'
+sql_port = 3306
+ssh_host = '34.229.131.207'
+ssh_user = 'ec2-user'
+ssh_port = 22
+def query(q):
+	with SSHTunnelForwarder(
+			(ssh_host, ssh_port),
+			ssh_username=ssh_user,
+			ssh_pkey=mypkey,
+			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+				passwd=sql_password, db=sql_main_database,
+				port=tunnel.local_bind_port)
+		cur=conn.cursor()
+		cur.execute(q)
+		result=cur.fetchone()
+		conn.close()
+		return result
+    
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -41,6 +82,19 @@ def destroy_delcinema():
     global w
     w.destroy()
     w = None
+    
+def delete_theater(theater):
+    tname=theater.get()
+    try:
+        print("Delete FROM theaterdet where theater_name='{0}'".format(tname))
+        q=query("Delete FROM theaterdet where theater_name='{0}'".format(tname))
+        print(q)
+    except Exception as e:
+        print(e)
+        messagebox.showerror("Failed", "Could not Delete the theater")
+    root.destroy()
+    adhome.vp_start_guih()
+    
 
 class delcinema:
     def __init__(self, top=None):
@@ -143,7 +197,7 @@ class delcinema:
         self.Theater_e.configure(selectbackground="blue")
         self.Theater_e.configure(selectforeground="white")
 
-        self.delcinema_b = tk.Button(top)
+        self.delcinema_b = tk.Button(top, command=lambda: delete_theater(theater))
         self.delcinema_b.place(relx=0.594, rely=0.7, height=84, width=207)
         self.delcinema_b.configure(activebackground="#ececec")
         self.delcinema_b.configure(activeforeground="#000000")
