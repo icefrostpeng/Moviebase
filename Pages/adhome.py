@@ -75,7 +75,18 @@ class AdHome:
         self.Cinema_b['state'] = tk.NORMAL
         self.Show_b['state'] = tk.NORMAL
         self.Button1['state'] = tk.NORMAL
-        print('1')        
+        print('1')
+    def button4(self):
+        print('1')
+        self.Add_b['state'] = tk.NORMAL
+        self.Modify_b['state'] = tk.NORMAL
+        self.Delete_b['state'] = tk.NORMAL
+        self.User_b['state'] = tk.DISABLED
+        self.Movie_b['state'] = tk.DISABLED
+        self.Cinema_b['state'] = tk.DISABLED
+        self.Show_b['state'] = tk.DISABLED
+        self.Button1['state'] = tk.DISABLED
+        print('1')
     
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -212,7 +223,7 @@ class AdHome:
         self.Show_b.configure(pady="0")
         self.Show_b.configure(text='''Show''')
 
-        self.Back_b = tk.Button(top)
+        self.Back_b = tk.Button(top,command =lambda:self.button4())
         self.Back_b.place(relx=0.648, rely=0.845, height=64, width=147)
         self.Back_b.configure(activebackground="#ececec")
         self.Back_b.configure(activeforeground="#000000")
