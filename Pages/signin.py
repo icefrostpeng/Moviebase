@@ -135,13 +135,12 @@ class Signin:
         self.Background=img
 
 
-        img = ImageTk.PhotoImage(Image.open("Logo.png").resize((150, 200), Image.ANTIALIAS))
+        img = ImageTk.PhotoImage(PIL.Image.open("Logo.png").resize((150, 200), PIL.Image.ANTIALIAS))
         #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.280, rely=0.025, height=150, width=200)
         self.Logo_image.configure(image=img)
-
-
+       # self.Logo_image=img
 
         em=tk.StringVar()
         self.email_e = tk.Entry(top,textvariable=em)
