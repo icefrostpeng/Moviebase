@@ -10,6 +10,9 @@ from tkcalendar import Calendar,DateEntry
 from datetime import date
 from PIL import ImageTk, Image
 import PIL
+
+import hashlib
+
 try:
     import Tkinter as tk
 except ImportError:
@@ -23,7 +26,7 @@ except ImportError:
     py3 = True
 
 
-def vp_start_gui1():
+def vp_start_gui_createuser():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -49,7 +52,7 @@ import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import re
-from adhome import *
+import adhome
 from tkinter import messagebox
 
 sql_hostname = '127.0.0.1'
@@ -116,6 +119,11 @@ def  ins(emails,usern,pass1,addre,mobi,cal):
                         dob=str(dob)						
                         try:
                             print(email,username,age,dob,addres,mob,passs1)
+                            
+                            passs1=passs1.encode()
+                            passs1=hashlib.sha256(passs1).hexdigest()
+                            print(passs1)
+                            
                             t=querys(email,username,age,dob,addres,mob,passs1)
                             if(t==1):
                                 messagebox.showinfo("Sucess", "Registration successfull")
@@ -124,6 +132,10 @@ def  ins(emails,usern,pass1,addre,mobi,cal):
                                 
                             else:
                                 messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+                            f=open("credentials.txt","a")
+                            creds=" \n " + email+" : "+passs1
+                            f.write(creds)
+                            f.close
                         except Exception as e: print(e)
                     else:
                         messagebox.showerror("Error", "Mobile Number Invalid")
@@ -157,7 +169,7 @@ class AddUser:
         top.minsize(120, 1)
         top.maxsize(3004, 1913)
         top.resizable(1,  1)
-        top.title("New Toplevel")
+        top.title("Admin - CreateUser")
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
@@ -187,8 +199,6 @@ class AddUser:
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
         self.Logo_image.configure(image=img)
         self.Logo_image=img
-<<<<<<< HEAD
-=======
 
         '''self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
@@ -196,7 +206,6 @@ class AddUser:
         self.Logo_image.configure(disabledforeground="#a3a3a3")
         self.Logo_image.configure(foreground="#000000")
         self.Logo_image.configure(text=''Label'')'''
->>>>>>> 0aeb174a7ebdc7d2ffef804e056ce022fbf14476
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.359, rely=0.044, height=61, width=372)
@@ -235,6 +244,7 @@ class AddUser:
         self.password_e = tk.Entry(top,textvariable=pass1)
         self.password_e.place(relx=0.203, rely=0.394, height=30, relwidth=0.222)
         self.password_e.configure(background="white")
+        self.password_e.configure(show="*")
         self.password_e.configure(disabledforeground="#a3a3a3")
         self.password_e.configure(font="TkFixedFont")
         self.password_e.configure(foreground="#000000")
@@ -318,6 +328,6 @@ class AddUser:
         self.cal.place(relx=0.563, rely=0.250, height=31, width=171)
 
 if __name__ == '__main__':
-    vp_start_gui1()
+    vp_start_gui_createuser()
 
 

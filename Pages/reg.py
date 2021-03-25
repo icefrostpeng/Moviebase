@@ -135,9 +135,9 @@ class RegOTP:
         pswd = data[6]
 
         f=open("credentials.txt","a")
-        creds=email+" : "+pswd
+        creds=" \n " +email+" : "+pswd
         f.write(creds)
-        f.close
+        f.close()
 
         pswd=pswd.encode()
         pswd=hashlib.sha256(pswd).hexdigest()
@@ -212,6 +212,8 @@ class RegOTP:
 
                 else:
                     print(f'failure from email')
+                    root.destroy()
+                    register.vp_start_register()
 
             else:
                 messagebox.showinfo("Failure", "Invalid OTP!\n Try again")
