@@ -50,9 +50,9 @@ def destroy_Slots():
 	global w
 	w.destroy()
 	w = None
-def slotb(l,i,slotid,email,top):
+def slotb(l,i,slotid,name,mem,email,cost,datess,top):
 	top.destroy()
-	seats.creates(l,i,slotid,email)
+	seats.creates(l,i,slotid,name,mem,email,cost,datess)
 class Slots( memberbar.Memberbar, homebar.Homebar):
 	def __init__(self, l,m,name,mem,email,top=None):
 		global dic
@@ -210,21 +210,22 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 			self.Movie1.configure(highlightbackground="#d9d9d9")
 			self.Movie1.configure(highlightcolor="black")
 			self.Description1 = tk.Label(self.Movie1,wraplength=300, justify="left")
-			self.Description1.place(relx=0.025, rely=dy, height=180, width=450)
+			self.Description1.place(relx=0.025, rely=dy, height=160, width=490)
 			self.Description1.configure(activebackground="#f9f9f9")
 			self.Description1.configure(activeforeground="black")
 			self.Description1.configure(anchor='nw')
 			self.Description1.configure(background="#00002b")
 			self.Description1.configure(cursor="fleur")
 			self.Description1.configure(disabledforeground="#a3a3a3")
-			self.Description1.configure(font="-family {Segoe UI} -size 12")
+			self.Description1.configure(font="-family {Segoe UI} -size 13")
 			self.Description1.configure(foreground="#bcfbfe")
 			self.Description1.configure(highlightbackground="#d9d9d9")
 			self.Description1.configure(highlightcolor="black")
-			ste="Cinema Hall : "+i[1]+"\nAddress "+i[2]+","+i[3]+":\nTiming: "+i[5]
+			ste="Cinema Hall : "+i[1]+"\t\tCost :"+str(i[6])+"\nAddress "+i[2]+","+i[3]+":\nTiming: "+i[5]
 			self.Description1.configure(text=ste)
 			
-			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],email,top))
+			
+			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
 			self.Book_b.place(relx=0.60, rely=ty+0.02, height=54, width=177)
 			self.Book_b.configure(activebackground="#000040")
 			self.Book_b.configure(activeforeground="white")
