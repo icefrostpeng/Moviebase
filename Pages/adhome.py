@@ -21,6 +21,8 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 from deletemovie import *
+from modifymovie import *
+from createmovie import *
 
 def vp_start_guih():
     '''Starting point when module is the main routine.'''
@@ -103,7 +105,13 @@ class AdHome:
             print('1')
             root.destroy()
             vp_start_gui()
+        elif flag==2:
+            root.destroy()
+            vp_start_gui_mod()
+            print("try with delete")
         else:
+            root.destroy()
+            vp_start_gui_create()
             print("try with delete")
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.

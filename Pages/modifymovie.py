@@ -41,7 +41,7 @@ ssh_user = 'ec2-user'
 ssh_port = 22
 from adhome import *
 
-def vp_start_gui():
+def vp_start_gui_mod():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -439,6 +439,6 @@ class AddMovie:
 
 
 if __name__ == '__main__':
-    vp_start_gui()
+    vp_start_gui_mod()
 
 
