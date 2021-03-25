@@ -39,7 +39,7 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-from adhome import *
+import adhome
 
 def vp_start_gui_mod():
     '''Starting point when module is the main routine.'''
@@ -97,6 +97,8 @@ def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingc
 
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
+    root.destroy()
+    adhome.vp_start_guih()
 
 
 w = None

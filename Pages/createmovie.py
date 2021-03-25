@@ -9,6 +9,7 @@ from functools import partial
 import sys
 from PIL import ImageTk, Image
 import PIL
+import adhome
 try:
 	import Tkinter as tk
 except ImportError:
@@ -39,7 +40,7 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-from adhome import *
+
 
 def vp_start_gui_create():
     '''Starting point when module is the main routine.'''
@@ -101,7 +102,8 @@ def  ins(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genre
 
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
-
+    root.destroy()
+    adhome.vp_start_guih()
 def dummy(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
     movname=movname1.get()
     descr=descr1.get()
