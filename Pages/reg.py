@@ -18,6 +18,9 @@ import register
 import signin
 # from signin import vp_start_gui
 # from register import *
+
+import hashlib
+
 try:
     import Tkinter as tk
 except ImportError:
@@ -186,6 +189,10 @@ class RegOTP:
         def on_click():
             user_otp = self.OTP_e.get()
             if user_otp == otp:
+                print(email,name,age,dob,addr,phno)
+                '''pswd=pswd.encode()
+                pswd=hashlib.sha256(pswd).hexdigest()
+                print(pswd)'''
                 t = querys(email, name, age, dob, addr, phno, pswd)
                 if t == 1:
                     print('Login Success from email!')

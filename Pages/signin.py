@@ -13,6 +13,8 @@ from PIL import *
 from PIL import ImageTk, Image
 import PIL
 
+import hashlib
+
 import sys
 
 from home import *
@@ -68,6 +70,9 @@ def cal(root,em,pas):
     if len(ema)==0 or len(passw)==0:
         messagebox.showerror("Error", "Email or Password cannot be empty")
     else:
+        passw=passw.encode()
+        passw=hashlib.sha256(passw).hexdigest()
+        print(passw)
         name,mem=login(ema,passw)
         if name!=0:
             if mem is None:
