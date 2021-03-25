@@ -164,29 +164,39 @@ def querys2(theater_name):
 
 
 
-def  ins(theater_name1, time1, showdate1, cost1):
+def  ins(theater_name1, time1,showdate1, cost1):
+    print(theater_name1, time1,showdate1, cost1)
     theater_name=theater_name1.get()
     time= time1.get()
-    showdate=showdate1.get()
+    showdate=showdate1.get_date()
     cost=cost1.get()
     
     
-    if(len(theater_name)!=0 and len(time)!=0 and len(showdate)!=0 and len(showdate)!=0):					
-        try:
-            theater_id,capacity=querys2(theater_name)
-            movie_id="24"
-            slot_id="66"
-            t=querys(slot_id, theater_id, time, showdate, cost, movie_id)
-            z=seats(slot_id, capacity)
-            if(t==1):
-                messagebox.showinfo("Success", "Cinema Creation successfull")
-                root.withdraw()
-                create_AdHome(root)
-            else:
-                messagebox.showerror("UnSucess", "Cinema Creation Unsuccessfull")
-
-        except Exception as e: print(e)
-
+    if(len(theater_name)!=0 and len(time)!=0 and len(str(showdate))!=0 and len(cost)!=0):
+        regex = '^%d%d:%d%d$'
+        pattern=re.compile(regex)
+        if pattern.search(time):
+            try:
+                cost=int(cost)					
+                try:
+                    theater_id,capacity=querys2(theater_name)
+                    movie_id="24"
+                    slot_id="66"
+                    t=querys(slot_id, theater_id, time, showdate, str(cost), movie_id)
+                    z=seats(slot_id, capacity)
+                    if(t==1):
+                        messagebox.showinfo("Success", "Cinema Creation successfull")
+                        root.withdraw()
+                        create_AdHome(root)
+                    else:
+                        messagebox.showerror("UnSucess", "Cinema Creation Unsuccessfull")
+    
+                except Exception as e: print(e)
+            except Exception as e: 
+                print(e)
+                messagebox.showerror("UnSucess", "Enter a number in cost")
+        else:
+            messagebox.showerror("Error", "time has to be in hh:mm format")
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
 
@@ -335,10 +345,10 @@ class AddShow:
         self.cost_l.configure(foreground="#ffffff")
         self.cost_l.configure(highlightbackground="#d9d9d9")
         self.cost_l.configure(highlightcolor="black")
-        self.cost_l.configure(text='''Enter Cinema Name:''')
+        self.cost_l.configure(text='''Enter Cost in Rs:''')
         
         self.cost_e = tk.Entry(top, textvariable=cost)
-        self.cost_e.place(relx=0.200, rely=0.600, height=30, relwidth=0.222)
+        self.cost_e.place(relx=0.200, rely=0.600, height=30, relwidth=0.122)
         self.cost_e.configure(background="white")
         self.cost_e.configure(disabledforeground="#a3a3a3")
         self.cost_e.configure(font="TkFixedFont")
@@ -351,7 +361,7 @@ class AddShow:
         
         
 
-        self.CreateShow_b = tk.Button(top, command=lambda: ins(cname, showtime, cal, cost))
+        self.CreateShow_b = tk.Button(top, command=lambda: ins(cname, showtime,self.cal, cost))
         self.CreateShow_b.place(relx=0.594, rely=0.7, height=84, width=207)
         self.CreateShow_b.configure(activebackground="#ececec")
         self.CreateShow_b.configure(activeforeground="#000000")
