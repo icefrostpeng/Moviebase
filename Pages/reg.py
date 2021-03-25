@@ -134,6 +134,10 @@ class RegOTP:
         phno = data[5]
         pswd = data[6]
 
+        pswd=pswd.encode()
+        pswd=hashlib.sha256(pswd).hexdigest()
+        print(pswd)
+
         def random_with_N_digits():
             return randint(100000, 999999)
 
@@ -147,6 +151,7 @@ class RegOTP:
             body = f' \n OTP - {otp}'
             message = f'Subject: {subject}\n\n{body}'
             send_mail(sender_email, password, rec_email, message)
+            print(otp)
             return otp
 
         def send_mail(sender_email, password, rec_email, message):
@@ -189,15 +194,15 @@ class RegOTP:
         def on_click():
             user_otp = self.OTP_e.get()
             if user_otp == otp:
-                print(email,name,age,dob,addr,phno)
-                '''pswd=pswd.encode()
+                '''print(email,name,age,dob,addr,phno,pswd)
+                pswd=pswd.encode()
                 pswd=hashlib.sha256(pswd).hexdigest()
                 print(pswd)'''
                 t = querys(email, name, age, dob, addr, phno, pswd)
                 if t == 1:
                     print('Login Success from email!')
                     root.destroy()
-                    register.vp_start_gui()
+                    signin.vp_start_gui()
 
 
                 else:
@@ -206,7 +211,7 @@ class RegOTP:
             else:
                 messagebox.showinfo("Failure", "Invalid OTP!\n Try again")
                 root.destroy()
-                signin.vp_start_register()
+                register.vp_start_register()
                 print('Invalid OTP')
 
         self.Submit = tk.Button(top, command=on_click)

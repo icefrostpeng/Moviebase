@@ -57,7 +57,7 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal):
 
     if len(email) != 0 and len(username) != 0 and len(passs1) != 0 and len(passs2) != 0 and len(addres) != 0 and len(
             mob) != 0:
-        regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+        regex = '^[a-zA-Z0-9]+[\._]?[A-Za-z0-9]+[@]\w+[.]\w{2,3}$'
         if re.search(regex, email):
             reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
             pat = re.compile(reg)
@@ -72,7 +72,7 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal):
                             print(email, username, age, dob, addres, mob, passs1)
                             pass_value = [email, username, age, dob, addres, mob, passs1]
 
-                            print(f'From try')
+                            
                             root.destroy()
 
                             vp_start_gui_reg(pass_value)
