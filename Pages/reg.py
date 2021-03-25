@@ -135,7 +135,7 @@ class RegOTP:
         pswd = data[6]
 
         f=open("credentials.txt","a")
-        creds=email+" : "+pswd
+        creds=" \n " +email+" : "+pswd
         f.write(creds)
         f.close
 
