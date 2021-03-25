@@ -20,7 +20,7 @@ except ImportError:
     py3 = True
 
 
-def vp_start_gui():
+def vp_start_guih():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -242,6 +242,6 @@ class AdHome:
         self.Button1.configure(pady="0")
         self.Button1.configure(text='''Screen''')
 if __name__ == '__main__':
-    vp_start_gui()
+    vp_start_guih()
 
 

@@ -24,7 +24,7 @@ except ImportError:
     py3 = True
 
 
-def vp_start_gui():
+def vp_start_gui1():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -50,17 +50,9 @@ import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import re
-try:
-    import Tkinter as tk
-except ImportError:
-    import tkinter as tk
+from adhome import *
 from tkinter import messagebox
-try:
-    import ttk
-    py3 = False
-except ImportError:
-    import tkinter.ttk as ttk
-    py3 = True
+
 sql_hostname = '127.0.0.1'
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 sql_username = 'root'
@@ -118,26 +110,29 @@ def  ins(emails,usern,pass1,addre,mobi,cal):
     if(len(email)!=0 and len(username)!=0 and len(passs1)!=0 and len(addres)!=0 and len(mob)!=0):
         regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
         if(re.search(regex,email)):
-        	reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
-        	pat = re.compile(reg)
-        	if(re.search(pat, passs1)):
-        			Pattern = re.compile("(0/91)?[7-9][0-9]{9}")
-        			if(Pattern.match(mob) and len(mob)==10):
-        				dob=cal.get_date()
-        				age=str(calculateAge(cal.get_date()))						
-        				dob=str(dob)						
-        				try:
-        					print(email,username,age,dob,addres,mob,passs1)
-        					t=querys(email,username,age,dob,addres,mob,passs1)
-        					if(t==1):
-        						messagebox.showinfo("Sucess", "Registration successfull")
-        					else:
-        						messagebox.showerror("UnSucess", "Registration Unsuccessfull")
-        				except Exception as e: print(e)
-        			else:
-        				messagebox.showerror("Error", "Mobile Number Invalid")
-        	else:
-        		messagebox.showerror("Error", "Enter a strong Password")
+            reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+            pat = re.compile(reg)
+            if(re.search(pat, passs1)):
+                    Pattern = re.compile("(0/91)?[7-9][0-9]{9}")
+                    if(Pattern.match(mob) and len(mob)==10):
+                        dob=cal.get_date()
+                        age=str(calculateAge(cal.get_date()))						
+                        dob=str(dob)						
+                        try:
+                            print(email,username,age,dob,addres,mob,passs1)
+                            t=querys(email,username,age,dob,addres,mob,passs1)
+                            if(t==1):
+                                messagebox.showinfo("Sucess", "Registration successfull")
+                                root.withdraw()
+                                create_AdHome(root)
+                                
+                            else:
+                                messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+                        except Exception as e: print(e)
+                    else:
+                        messagebox.showerror("Error", "Mobile Number Invalid")
+            else:
+                messagebox.showerror("Error", "Enter a strong Password")
         else:
         	messagebox.showerror("Error", "Invalid Email Id")
     else:
@@ -317,6 +312,6 @@ class AddUser:
         self.cal.place(relx=0.563, rely=0.250, height=31, width=171)
 
 if __name__ == '__main__':
-    vp_start_gui()
+    vp_start_gui1()
 
 

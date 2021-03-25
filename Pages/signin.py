@@ -42,13 +42,13 @@ ssh_user = 'ec2-user'
 ssh_port = 22
 def query(q):
     with SSHTunnelForwarder(
-        	(ssh_host, ssh_port),
-        	ssh_username=ssh_user,
-        	ssh_pkey=mypkey,
-        	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+            (ssh_host, ssh_port),
+            ssh_username=ssh_user,
+            ssh_pkey=mypkey,
+            remote_bind_address=(sql_hostname, sql_port)) as tunnel:
         conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-        		passwd=sql_password, db=sql_main_database,
-        		port=tunnel.local_bind_port)
+                passwd=sql_password, db=sql_main_database,
+                port=tunnel.local_bind_port)
         data = pd.read_sql_query(q, conn)
         conn.close()
         return data
@@ -57,29 +57,27 @@ def login(ema,passw):
     if(df.empty):
         return 0,0
     else:
-        print(df)
         return df['name'][0],df['mem'][0]
 
+
 def cal(root,em,pas):
-    
+
     ema=em.get()
     passw=pas.get()
-    if(len(ema)==0 or len(passw)==0):
+    if len(ema)==0 or len(passw)==0:
         messagebox.showerror("Error", "Email or Password cannot be empty")
     else:
         name,mem=login(ema,passw)
-        print(type(mem))
-        if(name!=0):
-        	if(mem is None):
-        		mem='None'
-        		print("true")
-        	print("successfull")
-        	root.destroy()
-        	vp_start_gui1(name,mem,ema)
+        if name!=0:
+            if mem is None:
+                mem='None'
+            root.destroy()
+            print(f'from sign in {name} {mem} {ema}')
+            vp_start_gui1(name,mem,ema)
         else:
-        	messagebox.showerror("Error", "Invalid Credentails!!!")
-        	em.set("")
-        	pas.set("")
+            messagebox.showerror("Error", "Invalid Credentails!!!")
+            em.set("")
+            pas.set("")
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -129,22 +127,22 @@ class Signin:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
         top.resizable(False,False)
-        
+
         global img
         img = ImageTk.PhotoImage(file="bg.png")
-        self.Background = tk.Label(top,image = img)        
+        self.Background = tk.Label(top,image = img)
         self.Background.place(relx=0, rely=0, height=1000, width=1500)
         self.Background=img
-        
-        
+
+
         img = ImageTk.PhotoImage(Image.open("Logo.png").resize((150, 200), Image.ANTIALIAS))
         #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.280, rely=0.025, height=150, width=200)
         self.Logo_image.configure(image=img)
-        
 
-        
+
+
         em=tk.StringVar()
         self.email_e = tk.Entry(top,textvariable=em)
         self.email_e.place(relx=0.234, rely=0.355, height=30, relwidth=0.548)
@@ -169,7 +167,7 @@ class Signin:
         self.email_l.configure(highlightbackground="#d9d9d9")
         self.email_l.configure(highlightcolor="black")
         self.email_l.configure(text='''Email address:''')
-        
+
         pas=tk.StringVar()
         self.password_e = tk.Entry(top,textvariable=pas)
         self.password_e.place(relx=0.234, rely=0.517, height=30, relwidth=0.548)
@@ -221,9 +219,8 @@ class Signin:
         self.Label4.configure(highlightbackground="#d9d9d9")
         self.Label4.configure(highlightcolor="black")
         self.Label4.configure(text='''Don't have an Account?''')
-                    
-                              
-                    
+
+
         self.Submit = tk.Button(top,command=lambda: cal(top,em,pas))
         self.Submit.place(relx=0.300, rely=0.675, height=54, width=177)
         self.Submit.configure(activebackground="#ececec")
@@ -237,7 +234,7 @@ class Signin:
         self.Submit.configure(highlightbackground="#d9d9d9")
         self.Submit.configure(highlightcolor="black")
         self.Submit.configure(pady="0")
-        self.Submit.configure(text='''Sign In''')
+        self.Submit.configure(text='Sign In')
 
 if __name__ == '__main__':
     vp_start_gui()

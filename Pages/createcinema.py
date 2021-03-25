@@ -18,7 +18,77 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
+from tkinter import messagebox
 
+import pymysql
+import pymysql.cursors
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
+import re
+
+from adhome import *
+
+
+sql_hostname = '127.0.0.1'
+mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
+sql_username = 'root'
+sql_password = 'Srishtisingh@12'
+sql_main_database = 'movie'
+sql_port = 3306
+ssh_host = '34.229.131.207'
+ssh_user = 'ec2-user'
+ssh_port = 22
+
+
+
+
+def querys(cname,city,caddress):
+    with SSHTunnelForwarder(
+        	(ssh_host, ssh_port),
+        	ssh_username=ssh_user,
+        	ssh_pkey=mypkey,
+        	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+        try:
+        	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+        			passwd=sql_password, db=sql_main_database,
+        			port=tunnel.local_bind_port)
+        	cur=conn.cursor()
+        	sql = "INSERT INTO theaterdet (theater_id,theater_name,city,theater_add) VALUES (%s, %s, %s, %s)"
+        	val = ("24",cname, city, caddress)
+        	cur.execute(sql,val)
+        	#cur.execute(q)
+        	conn.commit()
+        	cur.execute("select * from User")
+        	result = cur.fetchone()
+        	print(result)
+        	#data = pd.read_sql_query(q, conn)
+        	conn.close()
+        	print("sucess")
+        	return 1
+        except Exception as e:
+        	print(e)
+        	return 0
+
+
+def  ins(name, cityname, address):
+    cname=name.get()
+    city=cityname.get()
+    caddress=address.get()
+    if(len(cname)!=0 and len(caddress)!=0 and len(city)!=0):						
+        try:
+            t=querys(name,city,caddress)
+            if(t==1):
+                messagebox.showinfo("Sucess", "Registration successfull")
+            else:
+                messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+                root.withdraw()
+                create_AdHome(root)
+        except Exception as e: print(e)
+
+    else:
+        messagebox.showerror("Error", "Fields cannot be empty")
 
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
@@ -81,6 +151,13 @@ class AddCinema:
         self.TSeparator4.place(relx=0.818, rely=0.168,  relheight=0.835)
         self.TSeparator4.configure(orient="vertical")
 
+
+
+        cname=tk.StringVar()
+        city=tk.StringVar()
+        caddress=tk.StringVar()
+
+        
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
         self.Logo_image.configure(activebackground="#f9f9f9")
@@ -130,7 +207,7 @@ class AddCinema:
         self.City_l.configure(highlightcolor="black")
         self.City_l.configure(text='''Enter City''')
 
-        self.Cinemaname_e = tk.Entry(top)
+        self.Cinemaname_e = tk.Entry(top, textvariable=cname)
         self.Cinemaname_e.place(relx=0.203, rely=0.262, height=30
                 , relwidth=0.222)
         self.Cinemaname_e.configure(background="white")
@@ -143,7 +220,7 @@ class AddCinema:
         self.Cinemaname_e.configure(selectbackground="blue")
         self.Cinemaname_e.configure(selectforeground="white")
 
-        self.City_e = tk.Entry(top)
+        self.City_e = tk.Entry(top, textvariable=city)
         self.City_e.place(relx=0.203, rely=0.394, height=30, relwidth=0.222)
         self.City_e.configure(background="white")
         self.City_e.configure(disabledforeground="#a3a3a3")
@@ -154,21 +231,27 @@ class AddCinema:
         self.City_e.configure(insertbackground="black")
         self.City_e.configure(selectbackground="blue")
         self.City_e.configure(selectforeground="white")
+        
+        
+        self.address_l = tk.Label(top)
+        self.address_l.place(relx=0.203, rely=0.598, height=31, width=284)
+        self.address_l.configure(anchor='w')
+        self.address_l.configure(background="#000040")
+        self.address_l.configure(disabledforeground="#a3a3a3")
+        self.address_l.configure(font="-family {Segoe UI} -size 13")
+        self.address_l.configure(foreground="#ffffff")
+        self.address_l.configure(text='''Enter Address''')
 
-        self.screens_l = tk.Label(top)
-        self.screens_l.place(relx=0.203, rely=0.466, height=31, width=284)
-        self.screens_l.configure(activebackground="#f9f9f9")
-        self.screens_l.configure(activeforeground="black")
-        self.screens_l.configure(anchor='w')
-        self.screens_l.configure(background="#000040")
-        self.screens_l.configure(disabledforeground="#a3a3a3")
-        self.screens_l.configure(font="-family {Segoe UI} -size 13")
-        self.screens_l.configure(foreground="#ffffff")
-        self.screens_l.configure(highlightbackground="#d9d9d9")
-        self.screens_l.configure(highlightcolor="black")
-        self.screens_l.configure(text='''Enter No of screens:''')
+        self.address_e = tk.Entry(top,textvariable=caddress)
+        self.address_e.place(relx=0.203, rely=0.656, height=30, relwidth=0.222)
+        self.address_e.configure(background="white")
+        self.address_e.configure(disabledforeground="#a3a3a3")
+        self.address_e.configure(font="TkFixedFont")
+        self.address_e.configure(foreground="#000000")
+        self.address_e.configure(insertbackground="black")
 
-        self.Createcinema_b = tk.Button(top)
+
+        self.Createcinema_b = tk.Button(top, command=lambda: ins(cname,city,caddress))
         self.Createcinema_b.place(relx=0.594, rely=0.7, height=84, width=207)
         self.Createcinema_b.configure(activebackground="#ececec")
         self.Createcinema_b.configure(activeforeground="#000000")
@@ -182,20 +265,6 @@ class AddCinema:
         self.Createcinema_b.configure(pady="0")
         self.Createcinema_b.configure(text='''Create Cinema''')
 
-        self.ScreensSpinbox1 = tk.Spinbox(top, from_=1.0, to=20.0)
-        self.ScreensSpinbox1.place(relx=0.367, rely=0.466, relheight=0.044
-                , relwidth=0.034)
-        self.ScreensSpinbox1.configure(activebackground="#f9f9f9")
-        self.ScreensSpinbox1.configure(background="white")
-        self.ScreensSpinbox1.configure(buttonbackground="#d9d9d9")
-        self.ScreensSpinbox1.configure(disabledforeground="#a3a3a3")
-        self.ScreensSpinbox1.configure(font="TkDefaultFont")
-        self.ScreensSpinbox1.configure(foreground="black")
-        self.ScreensSpinbox1.configure(highlightbackground="black")
-        self.ScreensSpinbox1.configure(highlightcolor="black")
-        self.ScreensSpinbox1.configure(insertbackground="black")
-        self.ScreensSpinbox1.configure(selectbackground="blue")
-        self.ScreensSpinbox1.configure(selectforeground="white")
 
 if __name__ == '__main__':
     vp_start_gui()
