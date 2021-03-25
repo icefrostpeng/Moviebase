@@ -6,6 +6,8 @@
 #    Mar 24, 2021 02:49:35 PM IST  platform: Windows NT
 
 import sys
+from PIL import ImageTk, Image
+import PIL
 
 try:
     import Tkinter as tk
@@ -65,7 +67,7 @@ class AdHome:
         top.minsize(120, 1)
         top.maxsize(3004, 1913)
         top.resizable(1,  1)
-        top.title("New Toplevel")
+        top.title("Admin Homepage")
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
@@ -193,7 +195,14 @@ class AdHome:
         self.Back_b.configure(pady="0")
         self.Back_b.configure(text='''<Back''')
 
+        img = ImageTk.PhotoImage(Image.open("Logo.png").resize((90, 90), Image.ANTIALIAS))
+        #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
+        self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
+        self.Logo_image.configure(image=img)
+        self.Logo_image=img
+        
+        '''self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
         self.Logo_image.configure(activebackground="#f9f9f9")
         self.Logo_image.configure(activeforeground="black")
@@ -202,7 +211,7 @@ class AdHome:
         self.Logo_image.configure(foreground="#000000")
         self.Logo_image.configure(highlightbackground="#d9d9d9")
         self.Logo_image.configure(highlightcolor="black")
-        self.Logo_image.configure(text='''Label''')
+        self.Logo_image.configure(text=''Label'')'''
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.32, rely=0.044, height=61, width=372)
