@@ -87,6 +87,7 @@ def vp_start_gui():
 	m=query("Select * from moviedet")
 	top = Deletemovie (m,root)
 	root.mainloop()
+	print(b)
 
 def create_Deletemovie(rt, *args, **kwargs):
 	'''Starting point when module is imported by another module.
@@ -167,7 +168,7 @@ class Deletemovie():
 					self.Book_b.configure(highlightbackground="#d9d9d9")
 					self.Book_b.configure(highlightcolor="black")
 					self.Book_b.configure(pady="0")
-					self.Book_b.configure(text='''Book Ticket!''')
+					self.Book_b.configure(text='''Delete!''')
 					wil.append(self.Book_b)
 					y+=0.15
 					yim+=0.03
@@ -188,7 +189,10 @@ class Deletemovie():
 			yim=0.095
 			yib=0.32
 			for i in range(5):
-				j=(i+5)*co
+				if(co!=0):
+					j=(i+5)*co
+				else:
+					j=i
 				if(j<(len(b)-1)):
 					self.Movie1 = tk.Frame(top)
 					self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
@@ -228,7 +232,7 @@ class Deletemovie():
 					self.Book_b.configure(highlightbackground="#d9d9d9")
 					self.Book_b.configure(highlightcolor="black")
 					self.Book_b.configure(pady="0")
-					self.Book_b.configure(text='''Book Ticket!''')
+					self.Book_b.configure(text='''Delete!''')
 					wil.append(self.Book_b)
 					y+=0.15
 					yim+=0.03
