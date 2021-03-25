@@ -136,7 +136,11 @@ class Register:
         _ana1color = '#d9d9d9'  # X11 color: 'gray85'
         _ana2color = '#ececec'  # Closest X11 color: 'gray92'
 
+<<<<<<< HEAD
+        top.geometry("477x686+532+10")#1280x686
+=======
         top.geometry("497x804+552+110")  # 1280x686
+>>>>>>> 2c729820a65c80fd5fa21b56d20d843015874935
         top.minsize(120, 1)
         top.maxsize(3004, 1913)
         top.resizable(1, 1)

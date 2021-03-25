@@ -5,6 +5,8 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 12:06:02 PM IST  platform: Windows NT
 
+import home
+from home import *
 import sys
 
 try:
@@ -87,7 +89,7 @@ class Ticket:
         self.Movie1.configure(borderwidth="2")
         self.Movie1.configure(relief="groove")
         self.Movie1.configure(background="#00002b")
-        self.Movie1.configure(cursor="fleur")
+        #self.Movie1.configure(cursor="fleur")
         self.Movie1.configure(highlightbackground="#d9d9d9")
         self.Movie1.configure(highlightcolor="black")
 
@@ -113,12 +115,18 @@ class Ticket:
         self.Label2.configure(text='''Your Ticket number is:''')
         self.Label2.configure(wraplength="600")
 
-        self.Continue_b = tk.Button(self.Movie1)
+        def button_home():
+            #print(f'from button {name} {mem} {email} and this is {product[0]}')
+            top.destroy()
+            home.vp_start_gui1()
+
+        self.Continue_b = tk.Button(self.Movie1,command=button_home)
         self.Continue_b.place(relx=0.629, rely=0.8, height=44, width=227)
         self.Continue_b.configure(activebackground="#ececec")
         self.Continue_b.configure(activeforeground="#000000")
         self.Continue_b.configure(background="#b4eafe")
         self.Continue_b.configure(disabledforeground="#a3a3a3")
+        self.Continue_b.configure(cursor="hand2")
         self.Continue_b.configure(font="-family {Segoe UI} -size 14")
         self.Continue_b.configure(foreground="#000000")
         self.Continue_b.configure(highlightbackground="#d9d9d9")

@@ -5,6 +5,7 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 12:06:02 PM IST  platform: Windows NT
 
+import adhome
 import sys
 
 try:
@@ -104,8 +105,12 @@ class Ticket:
         self.Description1.configure(text='''xyzwas created''')
         self.Description1.configure(wraplength="600")
 
+        def button_home():
+            #print(f'from button {name} {mem} {email} and this is {product[0]}')
+            top.destroy()
+            adhome.vp_start_guih()
 
-        self.Continue_b = tk.Button(self.Movie1)
+        self.Continue_b = tk.Button(self.Movie1,command=button_home)
         self.Continue_b.place(relx=0.629, rely=0.8, height=44, width=227)
         self.Continue_b.configure(activebackground="#ececec")
         self.Continue_b.configure(activeforeground="#000000")

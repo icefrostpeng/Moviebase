@@ -9,6 +9,7 @@ import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
+from PIL import *
 from PIL import ImageTk, Image
 import PIL
 
