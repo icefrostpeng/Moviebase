@@ -3,6 +3,7 @@ from tkcalendar import Calendar,DateEntry
 from datetime import date
 from PIL import ImageTk, Image
 import PIL
+import datetime
 
 import pymysql
 import pymysql.cursors
@@ -296,13 +297,13 @@ class Register:
         #self.age_warning.configure(cursor="fleur")
         self.age_warning.configure(disabledforeground="#a3a3a3")
         self.age_warning.configure(foreground="#ffffff")
-        self.age_warning.configure(text='''age confirmation''')
+        self.age_warning.configure(text='''I confirm''')
 
-        #dob=datetime.strptime(date_str2, '%m/%d/%y')
-        self.checkAge=tk.Checkbutton(top,text="Validate",foreground="red")
-        self.checkAge.place(relx=0.484,rely=0.781,relheight=0.081,relwidth=0.404)
-        self.checkAge.place(relx=0.484, rely=0.781, relheight=0.081
-                , relwidth=0.403)
+        #self.LabelAge=tk.Label(top,text="I confirm")
+        #ob=datetime.strftime(date_str2, '%m/%d/%y')
+
+        self.checkAge=tk.Checkbutton(top,text="My age is above 18",foreground="red")
+        self.checkAge.place(relx=0.484,rely=0.781,relheight=0.051,relwidth=0.404)
         self.checkAge.configure(activebackground="#ececec")
         self.checkAge.configure(activeforeground="#000000")
         self.checkAge.configure(background="#000328")
@@ -312,7 +313,20 @@ class Register:
         self.checkAge.configure(highlightcolor="black")
         self.checkAge.configure(justify='left')
 
-        #self.LabelAge=tk.Label(top,text=age)
+        self.checkAge1 = tk.Checkbutton(top, text="My age is below 18", foreground="red")
+        self.checkAge1.place(relx=0.484, rely=0.820, relheight=0.051, relwidth=0.404)
+        self.checkAge1.configure(activebackground="#ececec")
+        self.checkAge1.configure(activeforeground="#000000")
+        self.checkAge1.configure(background="#000328")
+        self.checkAge1.configure(disabledforeground="#a3a3a3")
+        # self.checkAge.configure(foreground="#ffffff")
+        self.checkAge1.configure(highlightbackground="#d9d9d9")
+        self.checkAge1.configure(highlightcolor="black")
+        self.checkAge1.configure(justify='left')
+
+
+
+
 
 
 
