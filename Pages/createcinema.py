@@ -96,7 +96,7 @@ def  ins(name, cityname, address, capacity_s):
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
 
-def vp_start_gui():
+def vp_start_gui_createcinema():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -320,6 +320,6 @@ class AddCinema:
 
 
 if __name__ == '__main__':
-    vp_start_gui()
+    vp_start_gui_createcinema()
 
 

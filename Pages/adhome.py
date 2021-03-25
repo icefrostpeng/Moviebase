@@ -25,6 +25,7 @@ from modifymovie import *
 from createmovie import *
 from createuser import *
 from modifyusers import *
+from modifyseats import *
 
 def vp_start_guih():
     '''Starting point when module is the main routine.'''
@@ -32,7 +33,9 @@ def vp_start_guih():
     root = tk.Tk()
     top = AdHome (root)
     root.mainloop()
-
+from modifycinema import *
+from createcinema import *
+from createshow import *
 w = None
 def create_AdHome(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
@@ -62,7 +65,7 @@ class AdHome:
         self.Movie_b['state'] = tk.NORMAL
         self.Cinema_b['state'] = tk.NORMAL
         self.Show_b['state'] = tk.NORMAL
-        self.Button1['state'] = tk.NORMAL
+        self.Button1['state'] = tk.DISABLED
         print('1')
         
     def button2(self):
@@ -74,7 +77,7 @@ class AdHome:
         self.User_b['state'] = tk.NORMAL
         self.Movie_b['state'] = tk.NORMAL
         self.Cinema_b['state'] = tk.NORMAL
-        self.Show_b['state'] = tk.NORMAL
+        self.Show_b['state'] = tk.DISABLED
         self.Button1['state'] = tk.NORMAL
         print('1')
         return flag
@@ -127,6 +130,43 @@ class AdHome:
         else:
             root.destroy()
             vp_start_gui_createuser()
+            print("user works")
+            
+    def buttonci(self):
+        if flag==3:
+            print('1')
+            
+        elif flag==2:
+            root.destroy()
+            vp_start_gui_cinema()
+            print("modify works")
+        else:
+            root.destroy()
+            vp_start_gui_createcinema()
+            print("user works")
+            
+    def buttonsh(self):
+        if flag==3:
+            print('1')
+            
+        elif flag==2:
+            print('2')
+        else:
+            root.destroy()
+            vp_start_gui_createshow()
+            print("user works")
+    def buttonsc(self):
+        if flag==3:
+            print('1')
+            
+        elif flag==2:
+            print('2')
+            root.destroy()
+            vp_start_gui_modifyseats()
+            print("modifyyyy works")
+            
+        else:
+            
             print("user works")
             
     def __init__(self, top=None):
@@ -236,7 +276,7 @@ class AdHome:
         self.Movie_b.configure(pady="0")
         self.Movie_b.configure(text='''Movie''')
 
-        self.Cinema_b = tk.Button(top,state=tk.DISABLED)
+        self.Cinema_b = tk.Button(top,state=tk.DISABLED,command=lambda:self.buttonci())
         self.Cinema_b.place(relx=0.633, rely=0.437, height=74, width=157)
         self.Cinema_b.configure(activebackground="#ececec")
         self.Cinema_b.configure(activeforeground="#000000")
@@ -250,7 +290,7 @@ class AdHome:
         self.Cinema_b.configure(pady="0")
         self.Cinema_b.configure(text='''Cinema''')
 
-        self.Show_b = tk.Button(top,state=tk.DISABLED)
+        self.Show_b = tk.Button(top,state=tk.DISABLED,command=lambda:self.buttonsh())
         self.Show_b.place(relx=0.633, rely=0.569, height=74, width=157)
         self.Show_b.configure(activebackground="#ececec")
         self.Show_b.configure(activeforeground="#000000")
@@ -320,7 +360,7 @@ class AdHome:
         self.Label2.configure(highlightcolor="black")
         self.Label2.configure(text='''>>''')
 
-        self.Button1 = tk.Button(top,state=tk.DISABLED)
+        self.Button1 = tk.Button(top,state=tk.DISABLED,command=lambda:self.buttonsc())
         self.Button1.place(relx=0.633, rely=0.7, height=74, width=157)
         self.Button1.configure(activebackground="#ececec")
         self.Button1.configure(activeforeground="#000000")

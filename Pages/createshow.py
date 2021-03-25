@@ -24,7 +24,7 @@ except ImportError:
 
 
 
-def vp_start_gui1(movie_id):
+def vp_start_gui_createshow2(movie_id):
     '''Starting point when module is the main routine.'''
     
     global val, w, root, movie
@@ -66,7 +66,7 @@ ssh_user = 'ec2-user'
 ssh_port = 22
 
 from adhome import *
-def vp_start_gui():
+def vp_start_gui_createshow():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
@@ -390,6 +390,6 @@ class AddShow:
         
 
 if __name__ == '__main__':
-    vp_start_gui()
+    vp_start_gui_createshow()
 
 
