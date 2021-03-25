@@ -59,7 +59,7 @@ with open("E:/Python/Project/Pages/register.py","w") as f:
     f.writelines(new)
 
 #%%
-with open("E:/Python/Project/Pages/register.py") as f:
+with open("E:/Python/Project/Moviebase/Pages/createshow.py") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
@@ -73,20 +73,18 @@ pattern4=re.compile("^\t\t")
 
 new=[]
 for line in lines:
-    
-    if pattern.search(line):
-        continue
-    temp=line[6:]
-    if pattern4.search(line):
-        line="        "+line[2:]
-    if pattern3.search(line):
-        line="    "+line[1:]
-        
+    temp=""
+    while True:
+        if pattern3.search(line):
+            line=line[1:]
+            temp+="    "
+        else:
+            break
     new.append(line)
         
     
 
-with open("E:/Python/Project/Pages/register.py","w") as f:
+with open("E:/Python/Project/Moviebase/Pages/createshow.py","w") as f:
     f.writelines(new)
 
 
