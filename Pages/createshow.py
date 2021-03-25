@@ -18,7 +18,17 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
+from tkinter import messagebox
 
+import pymysql
+import pymysql.cursors
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
+import re
+
+from adhome import *
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -41,6 +51,91 @@ def destroy_AddShow():
     global w
     w.destroy()
     w = None
+    
+    
+# def seats(slot_id,status, capacity):
+#     with SSHTunnelForwarder(
+#             (ssh_host, ssh_port),
+#             ssh_username=ssh_user,
+#             ssh_pkey=mypkey,
+#             remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+#         try:
+#             conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+#                     passwd=sql_password, db=sql_main_database,
+#                     port=tunnel.local_bind_port)
+#             cur=conn.cursor()
+#             for i in range(capacity):
+#                 sql = "INSERT INTO seatdet (slot_id,status) VALUES (%s, %s)"
+#                 val = (slot_id,status)
+#                 cur.execute(sql,val)
+#                 #cur.execute(q)
+#                 conn.commit()
+#                 #cur.execute("select * from User")
+#                 #result = cur.fetchone()
+#                 #print(result)
+#                 #data = pd.read_sql_query(q, conn)
+#             conn.close()
+#             print("sucess")
+#             return 1
+#         except Exception as e:
+#             print(e)
+#             return 0
+
+# slot_id=input("write slot id:")
+# status=input("write status :")
+# seats(slot_id,status, capacity)
+
+# def querys(cname,city,caddress,capacity):
+#     with SSHTunnelForwarder(
+#         	(ssh_host, ssh_port),
+#         	ssh_username=ssh_user,
+#         	ssh_pkey=mypkey,
+#         	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+#         try:
+#         	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+#         			passwd=sql_password, db=sql_main_database,
+#         			port=tunnel.local_bind_port)
+#         	cur=conn.cursor()
+#         	sql = "INSERT INTO slotdet (theater_id,theater_name,city,theater_add, capacity) VALUES (%s, %s, %s, %s, %s)"
+#         	val = ("28",cname, city, caddress, capacity)
+#         	cur.execute(sql,val)
+#         	#cur.execute(q)
+#         	conn.commit()
+#         	cur.execute("select * from User")
+#         	result = cur.fetchone()
+#         	print(result)
+#         	#data = pd.read_sql_query(q, conn)
+#         	conn.close()
+#         	print("sucess")
+#         	return 1
+#         except Exception as e:
+#         	print(e)
+#         	return 0
+
+
+
+
+
+# def  ins(name, cityname, address, capacity_s):
+#     cname=name.get()
+#     city=cityname.get()
+#     caddress=address.get()
+#     capacity=capacity_s.get()
+#     if(len(cname)!=0 and len(caddress)!=0 and len(city)!=0):	
+#         print(str(cname),str(city),str(caddress) , str(capacity))					
+#         try:
+#             t=querys(str(cname),str(city),str(caddress) , str(capacity))
+#             if(t==1):
+#                 messagebox.showinfo("Success", "Cinema Creation successfull")
+#                 root.withdraw()
+#                 create_AdHome(root)
+#             else:
+#                 messagebox.showerror("UnSucess", "Cinema Creation Unsuccessfull")
+
+#         except Exception as e: print(e)
+
+#     else:
+#         messagebox.showerror("Error", "Fields cannot be empty")
 
 class AddShow:
     def __init__(self, top=None):
@@ -68,6 +163,13 @@ class AddShow:
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
+        
+        
+        em=tk.StringVar()
+        usern=tk.StringVar()
+        pass1=tk.StringVar()
+        ad=tk.StringVar()
+        mob=tk.StringVar()
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)

@@ -48,7 +48,7 @@ def querys(movname, descr, rating, cast, age_rating, genre, poster ):
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
         	cur=conn.cursor()
-        	sql = "INSERT INTO moviedet (movie_id, movie_name,descr,rating,cast,age_rat,genre,poster) VALUES (%s, %s, %s, %s, %s, %s, %s, %s )"
+        	sql = "INSERT INTO moviedet (movie_id, movie_name,descr,rating,cast,age_rat,genre,posterx) VALUES (%s, %s, %s, %s, %s, %s, %s, %s )"
         	val = ("24", movname, descr, rating, cast, age_rating, genre, poster)
         	cur.execute(sql,val)
         	#cur.execute(q)

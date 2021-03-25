@@ -72,34 +72,6 @@ def querys(cname,city,caddress,capacity):
         	return 0
 
 
-def Seats(slot_id,status):
-    with SSHTunnelForwarder(
-            (ssh_host, ssh_port),
-            ssh_username=ssh_user,
-            ssh_pkey=mypkey,
-            remote_bind_address=(sql_hostname, sql_port)) as tunnel:
-        try:
-            conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-                    passwd=sql_password, db=sql_main_database,
-                    port=tunnel.local_bind_port)
-            cur=conn.cursor()
-            for i in range(34):
-                sql = "INSERT INTO seatdet (slot_id,status) VALUES (%s, %s)"
-                val = (slot_id,status)
-                cur.execute(sql,val)
-                #cur.execute(q)
-                conn.commit()
-                #cur.execute("select * from User")
-                #result = cur.fetchone()
-                #print(result)
-                #data = pd.read_sql_query(q, conn)
-            conn.close()
-            print("sucess")
-            return 1
-        except Exception as e:
-            print(e)
-            return 0
-
 
 
 
