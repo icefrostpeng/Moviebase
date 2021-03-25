@@ -72,7 +72,7 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal):
                             print(email, username, age, dob, addres, mob, passs1)
                             pass_value = [email, username, age, dob, addres, mob, passs1]
 
-                            print(f'From try')
+                            
                             root.destroy()
 
                             vp_start_gui_reg(pass_value)

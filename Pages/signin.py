@@ -56,7 +56,9 @@ def query(q):
         conn.close()
         return data
 def login(ema,passw):
+    print("1")
     df = query('select name,mem from User where email="{0}" and pswd="{1}"'.format(ema,passw))
+    print(df)
     if(df.empty):
         return 0,0
     else:
