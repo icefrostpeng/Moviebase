@@ -74,7 +74,8 @@ def querys(movie_id,movname, descr, rating, cast, age_rating, genre, poster ):
         	return 0
 
 
-def  ins(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
+def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
+    movie_id=movie_id1.get()
     movname=movname1.get()
     descr=descr1.get()
     rating=RatingSpinbox1.get()
@@ -316,7 +317,7 @@ class AddMovie:
         self.Genre_l.configure(text='''Enter Genre:''')
 
 
-        self.RatingSpinbox1 = tk.Spinbox(top, from_=1.0, to=5.0)
+        self.RatingSpinbox1 = tk.Spinbox(top, from_=1.0, to=5.0, textvariable=self.rating)
         self.RatingSpinbox1.place(relx=0.305, rely=0.481, relheight=0.044
                 , relwidth=0.034)
         self.RatingSpinbox1.configure(activebackground="#f9f9f9")
@@ -439,8 +440,8 @@ class AddMovie:
                         self.rating.set(result[3])
                         self.cast.set(result[4])
                         self.age_rating.set(result[5])
-                        self.poster.set(result[6])
-                        self.genre.set(result[7])
+                        self.genre.set(result[6])
+                        self.poster.set(result[7])
 
                 else:
                     messagebox.showerror("UnSucess", "Registration Unsuccessfull")
