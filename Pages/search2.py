@@ -73,7 +73,7 @@ def clicked(mov,name,mem,email,top):
 	
 	ids=mov[0]
 	dic={}
-	m=query(" select theaterdet.theater_id,theaterdet.theater_name,theaterdet.city,theaterdet.theater_add,slotdet.slot_id,slotdet.timing,slotdet.dates from theaterdet,slotdet where movie_id={0} and slotdet.theater_id=theaterdet.theater_id order by slotdet.dates".format(ids))
+	m=query(" select theaterdet.theater_id,theaterdet.theater_name,theaterdet.city,theaterdet.theater_add,slotdet.slot_id,slotdet.timing,slotdet.cost,slotdet.dates from theaterdet,slotdet where movie_id={0} and slotdet.theater_id=theaterdet.theater_id order by slotdet.dates".format(ids))
 	le=0
 	l=[]
 	i=0
@@ -81,38 +81,38 @@ def clicked(mov,name,mem,email,top):
 	print(m)
 	while(i!=(len(m))):
 		print(i)
-		if(m[i][6]==m[i+1][6]):
-			if(m[i][6] in dic.keys()):
-				li=dic[m[i][6]]
+		if(m[i][7]==m[i+1][7]):
+			if(m[i][7] in dic.keys()):
+				li=dic[m[i][7]]
 				nd={}
 				print(li)
-				li.append(m[i][:6])
-				nd[m[i][6]]=li
+				li.append(m[i][:7])
+				nd[m[i][7]]=li
 				print(li)
 				dic.update(nd)
 			else:
-				dic[m[i][6]]=[m[i][:6]]
+				dic[m[i][7]]=[m[i][:7]]
 		else:
-			if(m[i][6] in dic.keys()):
-				li=dic[m[i][6]]
+			if(m[i][7] in dic.keys()):
+				li=dic[m[i][7]]
 				nd={}
 				print(li)
-				li.append(m[i][:6])
-				nd[m[i][6]]=li
+				li.append(m[i][:7])
+				nd[m[i][7]]=li
 				print(li)
 				dic.update(nd)
 			else:
-				dic[m[i][6]]=[m[i][:6]]
+				dic[m[i][7]]=[m[i][:7]]
 		i=i+1
 		if(i==(len(m)-1)):
-			if(m[i][6] in dic.keys()):
-				li=dic[m[i][6]]
+			if(m[i][7] in dic.keys()):
+				li=dic[m[i][7]]
 				nd={}
-				li.append(m[i][:6])
-				nd[m[i][6]]=li
+				li.append(m[i][:7])
+				nd[m[i][7]]=li
 				dic.update(nd)
 			else:
-				dic[m[i][6]]=[m[i][:6]]
+				dic[m[i][7]]=[m[i][:7]]
 			break
 	print(dic)
 	
