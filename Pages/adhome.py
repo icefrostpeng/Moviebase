@@ -45,9 +45,13 @@ def destroy_AdHome():
     w.destroy()
     w = None
 
+
 class AdHome:
+    
     def button1(self):
         print('1')
+        global flag 
+        flag=1
         self.Modify_b['state'] = tk.DISABLED
         self.Delete_b['state'] = tk.DISABLED
         self.User_b['state'] = tk.NORMAL
@@ -56,8 +60,11 @@ class AdHome:
         self.Show_b['state'] = tk.NORMAL
         self.Button1['state'] = tk.NORMAL
         print('1')
+        
     def button2(self):
         print('1')
+        global flag
+        flag=2
         self.Add_b['state'] = tk.DISABLED
         self.Delete_b['state'] = tk.DISABLED
         self.User_b['state'] = tk.NORMAL
@@ -66,8 +73,11 @@ class AdHome:
         self.Show_b['state'] = tk.NORMAL
         self.Button1['state'] = tk.NORMAL
         print('1')
+        return flag
     def button3(self):
         print('1')
+        global flag
+        flag=3
         self.Modify_b['state'] = tk.DISABLED
         self.Add_b['state'] = tk.DISABLED
         self.User_b['state'] = tk.NORMAL
@@ -76,6 +86,7 @@ class AdHome:
         self.Show_b['state'] = tk.NORMAL
         self.Button1['state'] = tk.NORMAL
         print('1')
+        return flag
     def button4(self):
         print('1')
         self.Add_b['state'] = tk.NORMAL
@@ -88,10 +99,12 @@ class AdHome:
         self.Button1['state'] = tk.DISABLED
         print('1')
     def buttonmo(self):
-        print('1')
-        root.destroy()
-        vp_start_gui()
-    
+        if flag==3:
+            print('1')
+            root.destroy()
+            vp_start_gui()
+        else:
+            print("try with delete")
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -111,7 +124,7 @@ class AdHome:
 
         top.geometry("1280x686+212+135")
         top.minsize(120, 1)
-        top.maxsize(3004, 1913)
+        top.maxsize(3004, 1913)        
         top.resizable(1,  1)
         top.title("Admin Homepage")
         top.configure(background="#000040")
