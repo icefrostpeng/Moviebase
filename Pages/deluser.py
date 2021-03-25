@@ -5,44 +5,98 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 05:09:10 PM IST  platform: Windows NT
 
+from functools import partial
+from tkinter import messagebox
 import sys
+import adhome
+from PIL import ImageTk, Image
+import PIL
+try:
+	import Tkinter as tk
+except ImportError:
+	import tkinter as tk
 
 try:
-    import Tkinter as tk
+	import ttk
+	py3 = False
 except ImportError:
-    import tkinter as tk
+	import tkinter.ttk as ttk
+	py3 = True
+from tkinter import *
+#from home import *
 
-try:
-    import ttk
-    py3 = False
-except ImportError:
-    import tkinter.ttk as ttk
-    py3 = True
-
+#from Deletemoviebar import Deletemoviebar
+import adhome
+import pymysql
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
+global co,mod,wil,flag
+flag=1
+wil=[]
+co=0
+mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
+sql_hostname = '127.0.0.1'
+sql_username = 'root'
+sql_password = 'Srishtisingh@12'
+sql_main_database = 'movie'
+sql_port = 3306
+ssh_host = '34.229.131.207'
+ssh_user = 'ec2-user'
+ssh_port = 22
+def query(q):
+	with SSHTunnelForwarder(
+			(ssh_host, ssh_port),
+			ssh_username=ssh_user,
+			ssh_pkey=mypkey,
+			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+				passwd=sql_password, db=sql_main_database,
+				port=tunnel.local_bind_port)
+		cur=conn.cursor()
+		cur.execute(q)
+		result=cur.fetchone()
+		conn.close()
+		return result
+    
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
-    top = delcinema (root)
+    top = deluser (root)
     root.mainloop()
 
 w = None
-def create_delcinema(rt, *args, **kwargs):
+def create_deluser(rt, *args, **kwargs):
     '''Starting point when module is imported by another module.
-       Correct form of call: 'create_delcinema(root, *args, **kwargs)' .'''
+       Correct form of call: 'create_deluser(root, *args, **kwargs)' .'''
     global w, w_win, root
     #rt = root
     root = rt
     w = tk.Toplevel (root)
-    top = delcinema (w)
+    top = deluser (w)
     return (w, top)
 
-def destroy_delcinema():
+def destroy_deluser():
     global w
     w.destroy()
     w = None
+    
+def delete_user(user):
+    tname=user.get()
+    try:
+        print("Delete FROM user where email='{0}'".format(tname))
+        q=query("Delete FROM User where email='{0}'".format(tname))
+        print(q)
+    except Exception as e:
+        print(e)
+        messagebox.showerror("Failed", "Could not Delete the user")
+    root.destroy()
+    adhome.vp_start_guih()
+    
 
-class delcinema:
+class deluser:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -72,7 +126,7 @@ class delcinema:
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
         
-        theater=tk.StringVar()
+        user=tk.StringVar()
 
         self.TSeparator3 = ttk.Separator(top)
         self.TSeparator3.place(relx=0.165, rely=0.168,  relheight=0.845)
@@ -115,47 +169,47 @@ class delcinema:
         self.Message_l.configure(foreground="#ffffff")
         self.Message_l.configure(highlightbackground="#d9d9d9")
         self.Message_l.configure(highlightcolor="black")
-        self.Message_l.configure(text='''Sorry There are shows lined up with current movie. Hence cannot be deleted. Try deleting the shows first!/Do you want to delete xyz Movie?''')
+        self.Message_l.configure(text='''If there the user has bought some tickets then it will not be possble to delete them''')
         self.Message_l.configure(wraplength="600")
         
-        self.Theater_l = tk.Label(top)
-        self.Theater_l.place(relx=0.203, rely=0.554, height=31, width=284)
-        self.Theater_l.configure(activebackground="#f9f9f9")
-        self.Theater_l.configure(activeforeground="black")
-        self.Theater_l.configure(anchor='w')
-        self.Theater_l.configure(background="#000040")
-        self.Theater_l.configure(disabledforeground="#a3a3a3")
-        self.Theater_l.configure(font="-family {Segoe UI} -size 13")
-        self.Theater_l.configure(foreground="#ffffff")
-        self.Theater_l.configure(highlightbackground="#d9d9d9")
-        self.Theater_l.configure(highlightcolor="black")
-        self.Theater_l.configure(text='''Enter the name of Theater you want to Delete''')
+        self.user_l = tk.Label(top)
+        self.user_l.place(relx=0.203, rely=0.554, height=31, width=400)
+        self.user_l.configure(activebackground="#f9f9f9")
+        self.user_l.configure(activeforeground="black")
+        self.user_l.configure(anchor='w')
+        self.user_l.configure(background="#000040")
+        self.user_l.configure(disabledforeground="#a3a3a3")
+        self.user_l.configure(font="-family {Segoe UI} -size 13")
+        self.user_l.configure(foreground="#ffffff")
+        self.user_l.configure(highlightbackground="#d9d9d9")
+        self.user_l.configure(highlightcolor="black")
+        self.user_l.configure(text='''Enter the email of user you want to Delete''')
 
-        self.Theater_e = tk.Entry(top, textvariable=theater)
-        self.Theater_e.place(relx=0.203, rely=0.612, height=30, relwidth=0.222)
-        self.Theater_e.configure(background="white")
-        self.Theater_e.configure(disabledforeground="#a3a3a3")
-        self.Theater_e.configure(font="TkFixedFont")
-        self.Theater_e.configure(foreground="#000000")
-        self.Theater_e.configure(highlightbackground="#d9d9d9")
-        self.Theater_e.configure(highlightcolor="black")
-        self.Theater_e.configure(insertbackground="black")
-        self.Theater_e.configure(selectbackground="blue")
-        self.Theater_e.configure(selectforeground="white")
+        self.user_e = tk.Entry(top, textvariable=user)
+        self.user_e.place(relx=0.203, rely=0.612, height=30, relwidth=0.222)
+        self.user_e.configure(background="white")
+        self.user_e.configure(disabledforeground="#a3a3a3")
+        self.user_e.configure(font="TkFixedFont")
+        self.user_e.configure(foreground="#000000")
+        self.user_e.configure(highlightbackground="#d9d9d9")
+        self.user_e.configure(highlightcolor="black")
+        self.user_e.configure(insertbackground="black")
+        self.user_e.configure(selectbackground="blue")
+        self.user_e.configure(selectforeground="white")
 
-        self.delcinema_b = tk.Button(top)
-        self.delcinema_b.place(relx=0.594, rely=0.7, height=84, width=207)
-        self.delcinema_b.configure(activebackground="#ececec")
-        self.delcinema_b.configure(activeforeground="#000000")
-        self.delcinema_b.configure(background="#77eaea")
-        self.delcinema_b.configure(cursor="hand2")
-        self.delcinema_b.configure(disabledforeground="#a3a3a3")
-        self.delcinema_b.configure(font="-family {Segoe UI} -size 23")
-        self.delcinema_b.configure(foreground="#000000")
-        self.delcinema_b.configure(highlightbackground="#d9d9d9")
-        self.delcinema_b.configure(highlightcolor="black")
-        self.delcinema_b.configure(pady="0")
-        self.delcinema_b.configure(text='''Delete Theater''')
+        self.deluser_b = tk.Button(top, command=lambda: delete_user(user))
+        self.deluser_b.place(relx=0.594, rely=0.7, height=84, width=207)
+        self.deluser_b.configure(activebackground="#ececec")
+        self.deluser_b.configure(activeforeground="#000000")
+        self.deluser_b.configure(background="#77eaea")
+        self.deluser_b.configure(cursor="hand2")
+        self.deluser_b.configure(disabledforeground="#a3a3a3")
+        self.deluser_b.configure(font="-family {Segoe UI} -size 23")
+        self.deluser_b.configure(foreground="#000000")
+        self.deluser_b.configure(highlightbackground="#d9d9d9")
+        self.deluser_b.configure(highlightcolor="black")
+        self.deluser_b.configure(pady="0")
+        self.deluser_b.configure(text='''Delete user''')
 
 if __name__ == '__main__':
     vp_start_gui()
