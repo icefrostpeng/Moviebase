@@ -87,7 +87,7 @@ class IfnotAdult:
         self.Movie1.configure(borderwidth="2")
         self.Movie1.configure(relief="groove")
         self.Movie1.configure(background="#00002b")
-        self.Movie1.configure(cursor="fleur")
+        #self.Movie1.configure(cursor="fleur")
         self.Movie1.configure(highlightbackground="#d9d9d9")
         self.Movie1.configure(highlightcolor="black")
 
@@ -119,6 +119,7 @@ class IfnotAdult:
         self.Continue_b.configure(activeforeground="#000000")
         self.Continue_b.configure(background="#b4eafe")
         self.Continue_b.configure(disabledforeground="#a3a3a3")
+        self.Continue_b.configure(cursor="hand2")
         self.Continue_b.configure(font="-family {Segoe UI} -size 14")
         self.Continue_b.configure(foreground="#000000")
         self.Continue_b.configure(highlightbackground="#d9d9d9")

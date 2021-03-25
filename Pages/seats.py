@@ -134,6 +134,6 @@ def creates(l,i,slotid,email):
 	strv=StringVar()
 	strv.set("Number of seats selected is : 0")
 	wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic").place(x=40,y=380)
-	b=Button(window,command=sub,text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=410)
+	b=Button(window,command=sub,text = "Payment",bg='#0052cc', fg='#ffffff',cursor="hand2",width=8,height=2,relief=RAISED).place(x=100,y=410)
 	window.mainloop()
 #creates()
