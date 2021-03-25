@@ -186,18 +186,12 @@ class AddMovie:
         self.ad=tk.StringVar()
         self.mob=tk.StringVar()
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0aeb174a7ebdc7d2ffef804e056ce022fbf14476
         img = ImageTk.PhotoImage(PIL.Image.open("Logo.png").resize((90, 90), PIL.Image.ANTIALIAS))
         #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
         self.Logo_image.configure(image=img)
         self.Logo_image=img
-<<<<<<< HEAD
-=======
         
         '''self.Logo_image = tk.Label(top)
         self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
@@ -205,7 +199,6 @@ class AddMovie:
         self.Logo_image.configure(disabledforeground="#a3a3a3")
         self.Logo_image.configure(foreground="#000000")
         self.Logo_image.configure(text=''Label'')'''
->>>>>>> 0aeb174a7ebdc7d2ffef804e056ce022fbf14476
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.359, rely=0.044, height=61, width=372)
@@ -225,14 +218,14 @@ class AddMovie:
         self.Username_l.configure(foreground="#ffffff")
         self.Username_l.configure(text='''Enter Username:''')
 
-        self.password_l = tk.Label(top)
+        '''self.password_l = tk.Label(top)
         self.password_l.place(relx=0.203, rely=0.335, height=31, width=284)
         self.password_l.configure(anchor='w')
         self.password_l.configure(background="#000040")
         self.password_l.configure(disabledforeground="#a3a3a3")
         self.password_l.configure(font="-family {Segoe UI} -size 13")
         self.password_l.configure(foreground="#ffffff")
-        self.password_l.configure(text='''Enter password:''')
+        self.password_l.configure(text=''Enter password:'')'''
 
         self.username_e = tk.Entry(top,textvariable=self.usern)
         self.username_e.place(relx=0.203, rely=0.525, height=30, relwidth=0.222)
@@ -242,13 +235,13 @@ class AddMovie:
         self.username_e.configure(foreground="#000000")
         self.username_e.configure(insertbackground="black")
 
-        self.password_e = tk.Entry(top,textvariable=self.pass1)
+        '''self.password_e = tk.Entry(top,textvariable=self.pass1)
         self.password_e.place(relx=0.203, rely=0.394, height=30, relwidth=0.222)
         self.password_e.configure(background="white")
         self.password_e.configure(disabledforeground="#a3a3a3")
         self.password_e.configure(font="TkFixedFont")
         self.password_e.configure(foreground="#000000")
-        self.password_e.configure(insertbackground="black")
+        self.password_e.configure(insertbackground="black")'''
 
         self.email_l = tk.Label(top)
         self.email_l.place(relx=0.203, rely=0.204, height=31, width=284)

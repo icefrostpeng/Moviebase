@@ -169,7 +169,7 @@ class AddUser:
         top.minsize(120, 1)
         top.maxsize(3004, 1913)
         top.resizable(1,  1)
-        top.title("New Toplevel")
+        top.title("Admin - CreateUser")
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
