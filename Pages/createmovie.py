@@ -18,14 +18,85 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
+from tkinter import messagebox
 
+import pymysql
+import pymysql.cursors
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
+import re
 
+from adhome import *
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
     root = tk.Tk()
     top = AddMovie (root)
     root.mainloop()
+
+
+def querys(movname, descr, rating, cast, age_rating, genre, poster ):
+    with SSHTunnelForwarder(
+        	(ssh_host, ssh_port),
+        	ssh_username=ssh_user,
+        	ssh_pkey=mypkey,
+        	remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+        try:
+        	conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+        			passwd=sql_password, db=sql_main_database,
+        			port=tunnel.local_bind_port)
+        	cur=conn.cursor()
+        	sql = "INSERT INTO moviedet (movie_id, movie_name,descr,rating,cast,age_rat,genre,poster) VALUES (%s, %s, %s, %s, %s, %s, %s, %s )"
+        	val = ("24", movname, descr, rating, cast, age_rating, genre, poster)
+        	cur.execute(sql,val)
+        	#cur.execute(q)
+        	conn.commit()
+        	cur.execute("select * from User")
+        	result = cur.fetchone()
+        	print(result)
+        	#data = pd.read_sql_query(q, conn)
+        	conn.close()
+        	print("success")
+        	return 1
+        except Exception as e:
+        	print(e)
+        	return 0
+
+
+def  ins(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
+    movname=movname1.get()
+    descr=descr1.get()
+    rating=RatingSpinbox1.get()
+    cast=cast1.get()
+    age_rating=ageratingcombo.get()
+    poster=poster1.get()
+    genre=genrecombo.get()
+    if(len(movname)!=0 and len(descr)!=0 and len(rating)!=0 and len(cast)!=0 and len(age_rating)!=0 and len(genre)!=0 and len(poster)!=0):						
+        try:
+            t=querys(movname, descr, rating, cast, age_rating, genre, poster)
+            if(t==1):
+                messagebox.showinfo("Sucess", "Registration successfull")
+                root.withdraw()
+                create_AdHome(root)
+            else:
+                messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+
+        except Exception as e: print(e)
+
+    else:
+        messagebox.showerror("Error", "Fields cannot be empty")
+
+def dummy(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
+    movname=movname1.get()
+    descr=descr1.get()
+    rating=RatingSpinbox1.get()
+    cast=cast1.get()
+    age_rating=ageratingcombo.get()
+    poster=poster1.get()
+    genre=genrecombo.get()
+    print(movname, descr, rating, cast, age_rating, genre, poster)
 
 w = None
 def create_AddMovie(rt, *args, **kwargs):
@@ -69,6 +140,14 @@ class AddMovie:
         top.configure(background="#000040")
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="#000000")
+        
+        movname=tk.StringVar()
+        descr=tk.StringVar()
+        age_rating=tk.StringVar()
+        rating=tk.StringVar()
+        genre=tk.StringVar()
+        poster=tk.StringVar()
+        cast=tk.StringVar()
 
         self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
         top.configure(menu = self.menubar)
@@ -130,7 +209,7 @@ class AddMovie:
         self.Desc_l.configure(highlightcolor="black")
         self.Desc_l.configure(text='''Enter description:''')
 
-        self.Moviename_e = tk.Entry(top)
+        self.Moviename_e = tk.Entry(top, textvariable=movname)
         self.Moviename_e.place(relx=0.203, rely=0.262, height=30, relwidth=0.222)
 
         self.Moviename_e.configure(background="white")
@@ -143,7 +222,7 @@ class AddMovie:
         self.Moviename_e.configure(selectbackground="blue")
         self.Moviename_e.configure(selectforeground="white")
 
-        self.Desc_e = tk.Entry(top)
+        self.Desc_e = tk.Entry(top, textvariable=descr)
         self.Desc_e.place(relx=0.203, rely=0.394, height=30, relwidth=0.222)
         self.Desc_e.configure(background="white")
         self.Desc_e.configure(disabledforeground="#a3a3a3")
@@ -182,7 +261,7 @@ class AddMovie:
         self.cast_l.configure(highlightcolor="black")
         self.cast_l.configure(text='''Enter Cast:''')
 
-        self.cast_e = tk.Entry(top)
+        self.cast_e = tk.Entry(top, textvariable=cast)
         self.cast_e.place(relx=0.203, rely=0.612, height=30, relwidth=0.222)
         self.cast_e.configure(background="white")
         self.cast_e.configure(disabledforeground="#a3a3a3")
@@ -221,19 +300,6 @@ class AddMovie:
         self.Genre_l.configure(highlightcolor="black")
         self.Genre_l.configure(text='''Enter Genre:''')
 
-        self.Createuser_b = tk.Button(top)
-        self.Createuser_b.place(relx=0.594, rely=0.7, height=84, width=207)
-        self.Createuser_b.configure(activebackground="#ececec")
-        self.Createuser_b.configure(activeforeground="#000000")
-        self.Createuser_b.configure(background="#77eaea")
-        self.Createuser_b.configure(disabledforeground="#a3a3a3")
-        self.Createuser_b.configure(cursor="hand2")
-        self.Createuser_b.configure(font="-family {Segoe UI} -size 23")
-        self.Createuser_b.configure(foreground="#000000")
-        self.Createuser_b.configure(highlightbackground="#d9d9d9")
-        self.Createuser_b.configure(highlightcolor="black")
-        self.Createuser_b.configure(pady="0")
-        self.Createuser_b.configure(text='''Create Movie''')
 
         self.RatingSpinbox1 = tk.Spinbox(top, from_=1.0, to=5.0)
         self.RatingSpinbox1.place(relx=0.305, rely=0.481, relheight=0.044
@@ -250,16 +316,62 @@ class AddMovie:
         self.RatingSpinbox1.configure(selectbackground="blue")
         self.RatingSpinbox1.configure(selectforeground="white")
 
-        self.ageratingcombo = ttk.Combobox(top)
+        self.ageratingcombo = ttk.Combobox(top, textvariable=age_rating)
         self.ageratingcombo.place(relx=0.336, rely=0.685, relheight=0.045
                 , relwidth=0.088)
         self.ageratingcombo.configure(font="-family {Segoe UI} -size 12")
         self.ageratingcombo.configure(takefocus="")
+        self.ageratingcombo['values']=('U', 'U/A', 'A')
+        self.ageratingcombo.current(1)
+        
 
-        self.Genrecombo = ttk.Combobox(top)
+        self.Genrecombo = ttk.Combobox(top, textvariable= genre)
         self.Genrecombo.place(relx=0.336, rely=0.758, relheight=0.045
                 , relwidth=0.088)
         self.Genrecombo.configure(takefocus="")
+        self.Genrecombo['values']=('Horror', 'Comedy', 'Action','Suspense', 'Drama')
+        self.Genrecombo.current(1)
+        
+        
+        self.Poster_l = tk.Label(top)
+        self.Poster_l.place(relx=0.500, rely=0.335, height=31, width=284)
+        self.Poster_l.configure(activebackground="#f9f9f9")
+        self.Poster_l.configure(activeforeground="black")
+        self.Poster_l.configure(anchor='w')
+        self.Poster_l.configure(background="#000040")
+        self.Poster_l.configure(disabledforeground="#a3a3a3")
+        self.Poster_l.configure(font="-family {Segoe UI} -size 13")
+        self.Poster_l.configure(foreground="#ffffff")
+        self.Poster_l.configure(highlightbackground="#d9d9d9")
+        self.Poster_l.configure(highlightcolor="black")
+        self.Poster_l.configure(text='''Enter Poster''')
+        
+        self.Poster_e = tk.Entry(top, textvariable=poster)
+        self.Poster_e.place(relx=0.500, rely=0.394, height=30, relwidth=0.222)
+        self.Poster_e.configure(background="white")
+        self.Poster_e.configure(disabledforeground="#a3a3a3")
+        self.Poster_e.configure(font="TkFixedFont")
+        self.Poster_e.configure(foreground="#000000")
+        self.Poster_e.configure(highlightbackground="#d9d9d9")
+        self.Poster_e.configure(highlightcolor="black")
+        self.Poster_e.configure(insertbackground="black")
+        self.Poster_e.configure(selectbackground="blue")
+        self.Poster_e.configure(selectforeground="white")
+
+        
+        self.Createuser_b = tk.Button(top, command=lambda: ins(movname, descr, cast, poster, self.RatingSpinbox1, self.ageratingcombo, self.Genrecombo))
+        self.Createuser_b.place(relx=0.594, rely=0.7, height=84, width=207)
+        self.Createuser_b.configure(activebackground="#ececec")
+        self.Createuser_b.configure(activeforeground="#000000")
+        self.Createuser_b.configure(background="#77eaea")
+        self.Createuser_b.configure(disabledforeground="#a3a3a3")
+        self.Createuser_b.configure(cursor="hand2")
+        self.Createuser_b.configure(font="-family {Segoe UI} -size 23")
+        self.Createuser_b.configure(foreground="#000000")
+        self.Createuser_b.configure(highlightbackground="#d9d9d9")
+        self.Createuser_b.configure(highlightcolor="black")
+        self.Createuser_b.configure(pady="0")
+        self.Createuser_b.configure(text='''Create Movie''')
 
 if __name__ == '__main__':
     vp_start_gui()
