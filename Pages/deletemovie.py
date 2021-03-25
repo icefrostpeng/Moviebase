@@ -87,7 +87,6 @@ def vp_start_gui():
 	m=query("Select * from moviedet")
 	top = Deletemovie (m,root)
 	root.mainloop()
-	print(b)
 
 def create_Deletemovie(rt, *args, **kwargs):
 	'''Starting point when module is imported by another module.
@@ -438,6 +437,6 @@ class Deletemovie():
 #####################################################################################################################################
 
 if __name__ == '__main__':
-	vp_start_gui(0,'sris','Gold','srish@gh.co')
+	vp_start_gui()
 
 

@@ -164,16 +164,12 @@ class AddMovie:
 
 
         
+        img = ImageTk.PhotoImage(PIL.Image.open("Logo.png").resize((90, 90), PIL.Image.ANTIALIAS))
+        #img = ImageTk.PhotoImage(file="Logo.png")
         self.Logo_image = tk.Label(top)
-        self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
-        self.Logo_image.configure(activebackground="#f9f9f9")
-        self.Logo_image.configure(activeforeground="black")
-        self.Logo_image.configure(background="#d9d9d9")
-        self.Logo_image.configure(disabledforeground="#a3a3a3")
-        self.Logo_image.configure(foreground="#000000")
-        self.Logo_image.configure(highlightbackground="#d9d9d9")
-        self.Logo_image.configure(highlightcolor="black")
-        self.Logo_image.configure(text='''Label''')
+        self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
+        self.Logo_image.configure(image=img)
+        self.Logo_image=img
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.359, rely=0.044, height=61, width=372)
