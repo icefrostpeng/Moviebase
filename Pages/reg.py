@@ -134,6 +134,11 @@ class RegOTP:
         phno = data[5]
         pswd = data[6]
 
+        f=open("credentials.txt","a")
+        creds=name+" : "+pswd
+        f.write(creds)
+        f.close
+
         pswd=pswd.encode()
         pswd=hashlib.sha256(pswd).hexdigest()
         print(pswd)
