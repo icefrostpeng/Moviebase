@@ -378,7 +378,7 @@ class AddMovie:
         self.Createuser_b.configure(highlightbackground="#d9d9d9")
         self.Createuser_b.configure(highlightcolor="black")
         self.Createuser_b.configure(pady="0")
-        self.Createuser_b.configure(text='''Create Movie''')
+        self.Createuser_b.configure(text='''Modify Movie''')
         
         self.Get_info_b = tk.Button(top, command=lambda: self.getinfo())
         self.Get_info_b.place(relx=0.594, rely=0.47, height=84, width=207)
@@ -424,7 +424,6 @@ class AddMovie:
                 if len(movie):
                     result=self.querysd(movie)
                     if(result):
-                        messagebox.showinfo("Sucess", "Registration successfull")
                         self.movie_id.set(result[0])
                         self.movname.set(result[1])
                         self.descr.set(result[2])
@@ -435,7 +434,7 @@ class AddMovie:
                         self.poster.set(result[7])
 
                 else:
-                    messagebox.showerror("UnSucess", "Registration Unsuccessfull")
+                    messagebox.showerror("UnSucess", "Couldnt find movie")
     
 
 

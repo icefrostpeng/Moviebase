@@ -304,7 +304,7 @@ class AddMovie:
         self.Createcinema_b.configure(highlightbackground="#d9d9d9")
         self.Createcinema_b.configure(highlightcolor="black")
         self.Createcinema_b.configure(pady="0")
-        self.Createcinema_b.configure(text='''Create Cinema''')
+        self.Createcinema_b.configure(text='''Modify Cinema''')
         
         self.Get_info_b = tk.Button(top, command=lambda: self.getinfo())
         self.Get_info_b.place(relx=0.594, rely=0.47, height=84, width=207)
