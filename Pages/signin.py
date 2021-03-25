@@ -172,6 +172,7 @@ class Signin:
         self.password_e = tk.Entry(top,textvariable=pas)
         self.password_e.place(relx=0.234, rely=0.517, height=30, relwidth=0.548)
         self.password_e.configure(background="white")
+        self.password_e.configure(show="*")
         self.password_e.configure(disabledforeground="#a3a3a3")
         self.password_e.configure(font="TkFixedFont")
         self.password_e.configure(foreground="#000000")
