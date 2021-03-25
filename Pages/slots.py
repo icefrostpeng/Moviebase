@@ -218,7 +218,7 @@ class Slots( memberbar.Memberbar, homebar.Homebar):
 			self.Description1.configure(activeforeground="black")
 			self.Description1.configure(anchor='nw')
 			self.Description1.configure(background="#00002b")
-			self.Description1.configure(cursor="fleur")
+			#self.Description1.configure(cursor="fleur")
 			self.Description1.configure(disabledforeground="#a3a3a3")
 			self.Description1.configure(font="-family {Segoe UI} -size 13")
 			self.Description1.configure(foreground="#bcfbfe")
