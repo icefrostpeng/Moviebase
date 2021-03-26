@@ -74,7 +74,23 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-def quer(slotid,seatid,val):
+def quert(slotid,seatid,email):
+    with SSHTunnelForwarder(
+            (ssh_host, ssh_port),
+            ssh_username=ssh_user,
+            ssh_pkey=mypkey,
+            remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+        conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+                passwd=sql_password, db=sql_main_database,
+                port=tunnel.local_bind_port)
+        cur=conn.cursor()
+        sql="insert into tickets(seat_id,slot_id,email) values(%s,%s,%s)"
+        val=(seatid,slotid,email)
+        print(val)
+        cur.execute(sql,val)
+        conn.commit()
+        return 1
+def quer(slotid,seatid,val='o'):
     with SSHTunnelForwarder(
             (ssh_host, ssh_port),
             ssh_username=ssh_user,
@@ -86,6 +102,7 @@ def quer(slotid,seatid,val):
         cur=conn.cursor()
         print("update seatdet set status='{0}' where slot_id={1} and seat_id={2}".format(val,slotid,seatid))
         cur.execute("update seatdet set status='{0}' where slot_id={1} and seat_id={2}".format(val,slotid,seatid))
+        
         conn.commit()
         return 1
 
@@ -277,7 +294,7 @@ class Payment:
                 flag = 0
                 dbv = product[7]
                 for i in dbv:
-                    if quer(i[2],i[0],i[1]):
+                    if (quer(i[2],i[0],i[1]) and quert(i[2],i[0],email)):
                         flag = 1
                 if flag == 1:
                     vp_start_gui_ticket_allocation(product[5],name,mem,email)

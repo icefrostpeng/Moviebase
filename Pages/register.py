@@ -5,7 +5,7 @@ from tkcalendar import Calendar, DateEntry
 from datetime import date
 from PIL import ImageTk, Image
 import PIL
-from reg import *
+from regd import *
 import pymysql
 import pymysql.cursors
 import paramiko
@@ -40,14 +40,14 @@ ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
 
-#converts the date into age
+
 def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
     return age
 
 
-def ins(emails, usern, pass1, pass2, addre, mobi, cal):
+def ins(emails, usern, pass1, pass2, addre, mobi, cal,var):
     email = emails.get()
     username = usern.get()
     passs1 = pass1.get()
@@ -56,7 +56,7 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal):
     mob = mobi.get()
 
     if len(email) != 0 and len(username) != 0 and len(passs1) != 0 and len(passs2) != 0 and len(addres) != 0 and len(
-            mob) != 0:
+            mob) != 0 and var.get()!=0:
         regex = '^[a-zA-Z0-9]+[\._]?[A-Za-z0-9]+[@]\w+[.]\w{2,3}$'
         if re.search(regex, email):
             reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
@@ -83,7 +83,7 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal):
                 else:
                     messagebox.showerror("Error", "Both passwords do not match")
             else:
-                messagebox.showerror("Error", "Enter a strong Password, Follow below suggestions for passswords\n1.Atleast one Upper case Charachter\n2.Atleast one Number\n3.Atleast one special Character")
+                messagebox.showerror("Error", "Enter a strong Password")
         else:
             messagebox.showerror("Error", "Invalid Email Id")
     else:
@@ -120,7 +120,7 @@ def destroy_Register():
 
 
 class Register:
-    def ageagreement(self, age):                     ###checks the age
+    def ageagreement(self, age):
         if age < 18:
             x = "I agree that my age is below 18"
             return x
@@ -281,23 +281,12 @@ class Register:
         self.mobileno_e.configure(foreground="#000000")
         self.mobileno_e.configure(insertbackground="black")
 
-        self.age_warning = tk.Label(top)
-        self.age_warning.place(relx=0.170, rely=0.81, height=21, width=100)
-        self.age_warning.configure(background="#000328")
-        # self.age_warning.configure(cursor="fleur")
-        self.age_warning.configure(disabledforeground="#a3a3a3")
-        self.age_warning.configure(foreground="#ffffff")
-        self.age_warning.configure(text='''I confirm''')
+        
 
         # dob=datetime.strptime(date_str2, '%m/%d/%y')
-        def sel():
-            selection = "You selected the option " + str(var.get())
-            self.label1 = tk.Label(top)
-            # self.label1.config(text=selection)
-
         var = IntVar()
-        self.checkAge = tk.Radiobutton(top, text="My age is above 18", foreground="red", variable=var, value=1, command=sel)
-        self.checkAge.place(relx=0.484, rely=0.781, relheight=0.051, relwidth=0.404)
+        self.checkAge = tk.Checkbutton(top, text="I confirm that all the above information is true to my knowledge",foreground="white",selectcolor="black", variable=var, onvalue=1, offvalue=0)
+        self.checkAge.place(relx=0.1, rely=0.79, relheight=0.051, relwidth=0.9)
         #self.checkAge.place(relx=0.484, rely=0.781, relheight=0.081, relwidth=0.403)
         self.checkAge.configure(activebackground="#ececec")
         self.checkAge.configure(activeforeground="#000000")
@@ -308,22 +297,11 @@ class Register:
         self.checkAge.configure(highlightcolor="black")
         self.checkAge.configure(justify='left')
 
-        self.checkAge1 = tk.Radiobutton(top, text="My age is below 18", foreground="red", variable=var, value=2,
-                                        command=sel)
-        self.checkAge1.place(relx=0.484, rely=0.820, relheight=0.051, relwidth=0.404)
-        self.checkAge1.configure(activebackground="#ececec")
-        self.checkAge1.configure(activeforeground="#000000")
-        self.checkAge1.configure(background="#000328")
-        self.checkAge1.configure(disabledforeground="#a3a3a3")
-        self.checkAge1.configure(cursor="hand2")
-        # self.checkAge.configure(foreground="#ffffff")
-        self.checkAge1.configure(highlightbackground="#d9d9d9")
-        self.checkAge1.configure(highlightcolor="black")
-        self.checkAge1.configure(justify='left')
+        
 
         # self.LabelAge=tk.Label(top,text=age)
 
-        self.Submit = tk.Button(top, command=lambda: ins(em, usern, pass1, pass2, ad, mob, self.cal))
+        self.Submit = tk.Button(top, command=lambda: ins(em, usern, pass1, pass2, ad, mob, self.cal,var))
         self.Submit.place(relx=0.300, rely=0.875, height=54, width=177)
         self.Submit.configure(activebackground="#ececec")
         self.Submit.configure(activeforeground="#000000")

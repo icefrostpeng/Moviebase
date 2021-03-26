@@ -70,7 +70,7 @@ def sub(window,l,slotid,name,mem,email,timing,tdate,cinemaNAd):
 				chkM=0
 				messagebox.showerror("Error", "Adult Movie and your age is Less than 18")
 			elif(age>18 and len(fin)>1):
-				messagebox.showinfo("Adult Movie", "You are booking an adult movie so please ensure all the Pals with you are 18+")
+				messagebox.showinfo("Adult Movie", "You are booking an adult movie so please ensure all the Pals with you are 18+\nAnd do carry Age Proofs of all the peoples")
 		if(chkM==1):
 			for i in fin:
 				if(i[1]=='v'):

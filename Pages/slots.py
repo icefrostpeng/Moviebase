@@ -59,12 +59,13 @@ def slotb(l,i,slotid,name,mem,email,cost,datess,top):
 	seats.creates(l,i,slotid,name,mem,email,cost,datess)
 def dele(m):
 	today=date.today()
+	mi={}
 	for i in m:
 		da=i.split('-')
 		dat=date(int(da[0]),int(da[1]),int(da[2]))
-		if(dat<today):
-			del m[i]
-	return m
+		if(dat>=today):
+			mi[i]=m[i]
+	return mi
 class Slots( memberbar.Memberbar, homebar.Homebar):
 	def ahead(self,l,name,mem,email,top):
 		
