@@ -27,6 +27,7 @@ from createuser import *
 from modifyusers import *
 from modifyseats import *
 from deltheater import *
+import addslot1
 
 def vp_start_guih():
     '''Starting point when module is the main routine.'''
@@ -36,7 +37,6 @@ def vp_start_guih():
     root.mainloop()
 from modifycinema import *
 from createcinema import *
-from createshow import *
 from deluser import *
 w = None
 def create_AdHome(rt, *args, **kwargs):
@@ -159,7 +159,7 @@ class AdHome:
             print('2')
         else:
             root.destroy()
-            vp_start_gui_createshow()
+            addslot1.vp_start_gui_add_slot()
             print("user works")
     def buttonsc(self):
         if flag==3:

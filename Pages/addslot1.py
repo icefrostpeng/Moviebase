@@ -80,7 +80,7 @@ def queryn(q):
 		return 1
 def back(top):
 	top.destroy()
-def vp_start_gui():
+def vp_start_gui_add_slot():
 	'''Starting point when module is the main routine.'''
 	global val, w, root
 	root = tk.Tk()
@@ -106,7 +106,7 @@ def destroy_findmovie():
 def adds(top,movieid):
         print(movieid)
         top.destroy()
-        createshow.vp_start_gui1(movieid)
+        createshow.vp_start_gui_createshow2(movieid)
 class findmovie():
 	
 		
