@@ -83,7 +83,7 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal):
                 else:
                     messagebox.showerror("Error", "Both passwords do not match")
             else:
-                messagebox.showerror("Error", "Enter a strong Password")
+                messagebox.showerror("Error", "Enter a strong Password, Follow below suggestions for passswords\n1.Atleast one Upper case Charachter\n2.Atleast one Number\n3.Atleast one special Character")
         else:
             messagebox.showerror("Error", "Invalid Email Id")
     else:

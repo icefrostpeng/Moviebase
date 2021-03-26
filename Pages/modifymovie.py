@@ -89,7 +89,7 @@ def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingc
             t=querys(movie_id, movname, descr, rating, cast, age_rating, genre, poster)
             if(t==1):
                 root.withdraw()
-                create_AdHome(root)
+                adhome.create_AdHome(root)
             else:
                 messagebox.showerror("UnSucess", "Could not find movie")
 
