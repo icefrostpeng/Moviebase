@@ -45,6 +45,8 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
+
+#paramiko 
 def query(q):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),
@@ -62,6 +64,8 @@ def query(q):
 		    l.append(list(i))
 		conn.close()
 		return l
+    
+    #gets Movies from the database
 def querys(q):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),
@@ -83,9 +87,13 @@ def querys(q):
 			dic[i[0]]=li
 			val+=1
 		return dic
+    
+    #gets all movies
 def data():
 		m=querys("select * from moviedet")
 		return m
+    
+    #gets list if shows to be shown to the user
 def bookT(name,mem,email,top):
 	global co,d
 	ky=[]
@@ -142,6 +150,9 @@ def bookT(name,mem,email,top):
 	top.destroy()
 	print(mov,dic,name,mem,email)
 	slots.vp_start_slot(mov,dic,name,mem,email,top)
+    
+    
+    
 def vp_start_gui1(name='XYZ',mem='a',email='singh@fg.c'):
 	'''Starting point when module is the main routine.'''
 	global val, w, root,d

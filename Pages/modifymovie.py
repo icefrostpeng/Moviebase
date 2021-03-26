@@ -73,6 +73,7 @@ def querys(movie_id,movname, descr, rating, cast, age_rating, genre, poster ):
         	print(e)
         	return 0
 
+#######################################Calling the query#############################################
 
 def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
     movie_id=movie_id1.get()
@@ -118,11 +119,7 @@ def destroy_AddMovie():
     w = None
 
 class AddMovie:
-
-
-            
-
-    
+                
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
@@ -392,6 +389,10 @@ class AddMovie:
         self.Get_info_b.configure(pady="0")
         self.Get_info_b.configure(text='''Get Info''')
         
+        
+        
+        
+        ##########################################################Fetch the information#################################################
     def querysd(self,movie):
         with SSHTunnelForwarder(
             	(ssh_host, ssh_port),

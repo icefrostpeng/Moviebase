@@ -40,7 +40,7 @@ ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
 
-
+#converts the date into age
 def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
@@ -120,7 +120,7 @@ def destroy_Register():
 
 
 class Register:
-    def ageagreement(self, age):
+    def ageagreement(self, age):                     ###checks the age
         if age < 18:
             x = "I agree that my age is below 18"
             return x

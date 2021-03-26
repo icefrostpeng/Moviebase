@@ -50,6 +50,7 @@ def vp_start_gui_create():
     root.mainloop()
 
 
+
 def querys(movname, descr, rating, cast, age_rating, genre, poster ):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
@@ -104,15 +105,7 @@ def  ins(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genre
         messagebox.showerror("Error", "Fields cannot be empty")
     root.destroy()
     adhome.vp_start_guih()
-def dummy(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genrecombo ):
-    movname=movname1.get()
-    descr=descr1.get()
-    rating=RatingSpinbox1.get()
-    cast=cast1.get()
-    age_rating=ageratingcombo.get()
-    poster=poster1.get()
-    genre=genrecombo.get()
-    print(movname, descr, rating, cast, age_rating, genre, poster)
+
 
 w = None
 def create_AddMovie(rt, *args, **kwargs):

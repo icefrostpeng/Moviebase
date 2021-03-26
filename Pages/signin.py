@@ -43,6 +43,9 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
+
+
+#############paramiko 
 def query(q):
     with SSHTunnelForwarder(
             (ssh_host, ssh_port),
@@ -55,6 +58,9 @@ def query(q):
         data = pd.read_sql_query(q, conn)
         conn.close()
         return data
+    
+    
+###############calls paramiko to check user details
 def login(ema,passw):
     print("1")
     df = query('select name,mem from User where email="{0}" and pswd="{1}"'.format(ema,passw))
@@ -73,7 +79,7 @@ def cal(root,em,pas):
         messagebox.showerror("Error", "Email or Password cannot be empty")
     else:
         passw=passw.encode()
-        passw=hashlib.sha256(passw).hexdigest()
+        passw=hashlib.sha256(passw).hexdigest()   ###########Hash Function
         print(passw)
         name,mem=login(ema,passw)
         if name!=0:
@@ -86,6 +92,8 @@ def cal(root,em,pas):
             messagebox.showerror("Error", "Invalid Credentails!!!")
             em.set("")
             pas.set("")
+            
+            
 def vp_start_gui():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -135,6 +143,8 @@ class Signin:
         top.configure(highlightbackground="#d9d9d9")
         top.configure(highlightcolor="black")
         top.resizable(False,False)
+
+
 
         global img
         img = ImageTk.PhotoImage(file="bg.png")
