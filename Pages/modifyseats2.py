@@ -119,8 +119,8 @@ def clicked(*args):
 		fin.remove([args[1],args[2],(args[0]+1)])
 	cou=str(count)
 	
-	seat+=str(j)+"\t"
-	st="Number of seats selected are : "+cou+"\nNew :"+seat
+	seat+=str(j+1)+"\t"
+	st="Number of seats selected are : "+cou+"\nNew Valid Seats:"+seat
 	strv.set(st)
 	print(fin)
 def creates(slotid):
@@ -138,7 +138,7 @@ def creates(slotid):
 	bla = Button(window,text = "Valid",bg='black', fg='#ffffff',width=7,height=1,disabledforeground="white",state=DISABLED,relief=FLAT).place(x=200,y=320)
 
 	strv=StringVar()
-	strv.set("Number of seats selected is : 0\nTotal cost: 0")
+	strv.set("Number of seats selected is : 0\n ")
 	print(strv)
 	wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic",justify="left").place(x=40,y=380)
 	
