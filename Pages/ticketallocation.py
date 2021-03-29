@@ -6,7 +6,7 @@
 #    Mar 24, 2021 12:06:02 PM IST  platform: Windows NT
 
 import sys
-import home
+import nhome
 try:
     import Tkinter as tk
 except ImportError:
