@@ -73,7 +73,7 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-def quert(slotid,seatid,email):
+def quert(slotid,seatid,email,seatn):
 	with SSHTunnelForwarder(
 		    (ssh_host, ssh_port),
 		    ssh_username=ssh_user,
@@ -83,8 +83,8 @@ def quert(slotid,seatid,email):
 		        passwd=sql_password, db=sql_main_database,
 		        port=tunnel.local_bind_port)
 		cur=conn.cursor()
-		sql="insert into tickets(seat_id,slot_id,email) values(%s,%s,%s)"
-		val=(seatid,slotid,email)
+		sql="insert into tickets(seat_id,slot_id,email,seat_number) values(%s,%s,%s,%s)"
+		val=(seatid,slotid,email,seatn)
 		print(val)
 		cur.execute(sql,val)
 		conn.commit()
@@ -336,8 +336,9 @@ class Payment:
 		        email_generator('T')
 		        flag = 0
 		        dbv = product[7]
-		        for i in dbv:
-		            if (quer(i[2],i[0],i[1]) and quert(i[2],i[0],email)):
+		        li=product[5].split(',')
+		        for n,i in enumerate(dbv):
+		            if (quer(i[2],i[0],i[1]) and quert(i[2],i[0],email,li[n])):
 		                flag = 1
 		        if flag == 1:
 		            vp_start_gui_ticket_allocation(product[5],name,mem,email)
