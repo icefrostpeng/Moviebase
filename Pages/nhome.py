@@ -74,38 +74,19 @@ def query():
 		tr=[]
 		for i in range(1,6):
 			
-			q1='select movie_name from moviedet where movie_id={0} and status="r"'.format(i)
+			q1='select movie_name,rating from moviedet where movie_id={0} and status="r"'.format(i)
 			cur.execute(q1)
 			arr = list(cur.fetchall())
-			l=""
-			for i in arr:
-				l=i[0]
-			v1=l
 			
-			#print(v1)
-			if v1=="":
-				continue
-			else:
-				tn.append(v1)
-		        #name.append(v1)
-			q2='select rating from moviedet where movie_id={0} and status="r"'.format(i)
-			cur.execute(q2)
-			arr = list(cur.fetchall())
-			l=""
 			for i in arr:
-				l=i[0]
-			v2=l
-			#print(v2)
-			if v2=="":
-				continue
-			else:
-				tr.append(v2)
-		        #rating.append(v2)
+				l=list(i)
+				tn.append(l[0])
+				tr.append(l[1])
 		global namess,ratings
 		namess=tn
 		ratings=tr
-		print(namess)
-		print(ratings)
+		#print(namess)
+		#print(ratings)
 	
 def datas():
 	global namess,ratings
