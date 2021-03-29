@@ -20,18 +20,18 @@ except ImportError:
 	import tkinter.ttk as ttk
 	py3 = True
 import slots
+import nhome
 from tkinter import *
 #from home import *
 
 #from searchbar import Searchbar
-from memberbar import Memberbar
-from homebar import Homebar
-from sidebar import Sidebar
+
 from tkinter import messagebox
 import pymysql
 import paramiko
 import pandas as pd
 from paramiko import SSHClient
+import payment
 from sshtunnel import SSHTunnelForwarder
 global co,mod,wil,flag
 flag=0
@@ -46,7 +46,7 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-def query(q):
+def query(q,fl=1):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),
 			ssh_username=ssh_user,
@@ -57,22 +57,63 @@ def query(q):
 				port=tunnel.local_bind_port)
 		cur=conn.cursor()
 		cur.execute(q)
-		arr=list(cur.fetchall())
-		l=[]
-		for i in arr:
-		    l.append(list(i))
-		conn.close()
-		return l
-def back(top):
+		if(fl==1):
+			arr=list(cur.fetchall())
+			l=[]
+			for i in arr:
+				l.append(list(i))
+			conn.close()
+			return l
+		elif(fl==2):
+			arr = list(cur.fetchall())
+			dic={}
+			val=1
+			for i in arr:
+				li=list(i[1:7])
+				a=str(val)+".jpeg"
+				li.insert(0,a)
+				dic[i[0]]=li
+				val+=1
+			return dic
+		else:
+			arr = list(cur.fetchall())
+			l=""
+			for i in arr:
+						l=i[0]
+			return l
+
+def button_functionality(mem):
+	if mem == 'Gold':
+		gold = False
+		platinum = True
+		diamond = True
+	elif mem == 'Platinum':
+		gold = False
+		platinum = False
+		diamond = True
+	elif mem == 'Diamond':
+		gold = False
+		platinum = False
+		diamond = False
+	else:
+		gold = True
+		platinum = True
+		diamond = True
+	return gold, platinum, diamond
+def back(name,mem,email,top):
 	top.destroy()
-def vp_start_gui(valu,name,mem,email,b=[[1, 'Mataji', 'this movie is about....', 5, ' Shahrukh khan,kajol', 'U', 'thriller', 'r', None], [3, 'Mata', 'Mata: Whole world', 5, None, 'U', 'Family', 'r', None]]):
+	nhome.vp_start_gui1(name,mem,email)
+	
+def vp_start_gui(valu,name,mem,email,b,names,rating):
 	'''Starting point when module is the main routine.'''
 	global val, w, root
 	root = tk.Tk()
-	top = Search (valu,name,mem,email,b,root)
+	print(names)
+	print(rating)
+	top = Search (valu,name,mem,email,b,names,rating,root)
 	root.mainloop()
 	print(b)
-def clicked(mov,name,mem,email,top):
+def clicked(mov,name,mem,email,top,names,rating):
 	print(mov,name,mem,email)
 	
 	ids=mov[0]
@@ -121,7 +162,7 @@ def clicked(mov,name,mem,email,top):
 	print(dic)
 	
 	top.destroy()
-	slots.vp_start_slot(mov,dic,name,mem,email,top)
+	slots.vp_start_slot(mov,dic,name,mem,email,top,names,rating)
 w = None
 def create_Search(rt, *args, **kwargs):
 	'''Starting point when module is imported by another module.
@@ -138,7 +179,7 @@ def destroy_Search():
 	w.destroy()
 	w = None
 
-class Search( Memberbar, Homebar):
+class Search():
 	def ahead(self,b,name,mem,email,top):
 		global co,mod,wil,flag
 		if(flag==0):
@@ -177,7 +218,7 @@ class Search( Memberbar, Homebar):
 					self.Description1.configure(text=b[j][2])
 					wil.append(self.Description1)
 					
-					self.Book_b = tk.Button(top,command=partial(clicked,b[j],name,mem,email,top))
+					self.Book_b = tk.Button(top,command=partial(clicked,b[j],name,mem,email,top,names,rating))
 					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
 					self.Book_b.configure(activebackground="#000040")
 					self.Book_b.configure(activeforeground="white")
@@ -237,7 +278,7 @@ class Search( Memberbar, Homebar):
 					self.Description1.configure(text=b[j][2])
 					wil.append(self.Description1)
 					
-					self.Book_b = tk.Button(top,command=partial(clicked,b[j],name,mem,email,top))
+					self.Book_b = tk.Button(top,command=partial(clicked,b[j],name,mem,email,top,names,rating))
 					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
 					self.Book_b.configure(activebackground="#000040")
 					self.Book_b.configure(activeforeground="white")
@@ -259,7 +300,7 @@ class Search( Memberbar, Homebar):
 			self.Page_list.configure(text=st)
 		return
 			
-	def __init__(self,valu,name,mem,email,b,top=None):
+	def __init__(self,valu,name,mem,email,b,names,rating,top=None):
 		print(b)
 		global mod,wil,flag
 		mod=len(b)/4
@@ -304,8 +345,8 @@ class Search( Memberbar, Homebar):
 		self.menubar = tk.Menu(top,font="TkMenuFont",bg=_bgcolor,fg=_fgcolor)
 		top.configure(menu = self.menubar)
 
-		self.Search_b = tk.Button(top,command=lambda:back(top) )
-		self.Search_b.place(relx=0.0, rely=0.0, height=44, width=100
+		self.Search_b = tk.Button(top,command=lambda:back(name,mem,email,top) )
+		self.Search_b.place(relx=0.609, rely=0.044, height=44, width=100
 		        , bordermode='ignore')
 		self.Search_b.configure(activebackground="#b3eaff")
 		self.Search_b.configure(activeforeground="#000000")
@@ -317,7 +358,7 @@ class Search( Memberbar, Homebar):
 		self.Search_b.configure(highlightbackground="#d9d9d9")
 		self.Search_b.configure(highlightcolor="black")
 		self.Search_b.configure(pady="0")
-		self.Search_b.configure(text='''Back''')
+		self.Search_b.configure(text='''BACK''')
 
 ################################################################Result instance############################################################
 		y=0.233
@@ -354,7 +395,7 @@ class Search( Memberbar, Homebar):
 					self.Description1.configure(text=b[i][2])
 					wil.append(self.Description1)
 					
-					self.Book_b = tk.Button(top,command=partial(clicked,b[i],name,mem,email,top))
+					self.Book_b = tk.Button(top,command=partial(clicked,b[i],name,mem,email,top,names,rating))
 					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
 					self.Book_b.configure(activebackground="#000040")
 					self.Book_b.configure(activeforeground="white")
@@ -399,7 +440,7 @@ class Search( Memberbar, Homebar):
 					self.Description1.configure(foreground="#bcfbfe")
 					self.Description1.configure(text=i[2])
 					
-					self.Book_b = tk.Button(top,command=partial(clicked,i,name,mem,email,top))
+					self.Book_b = tk.Button(top,command=partial(clicked,i,name,mem,email,top,names,rating))
 					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
 					self.Book_b.configure(activebackground="#000040")
 					self.Book_b.configure(activeforeground="white")
@@ -446,7 +487,7 @@ class Search( Memberbar, Homebar):
 ##############################################################################################################################################
 
 ##################################################################scroller########################################################
-		self.Previous = tk.Button(top,command=lambda:self.bac(b,name,mem,email,top))
+		self.Previous = tk.Button(top,command=lambda:self.bac(b,name,mem,email,top,names,rating))
 		self.Previous.place(relx=0.383, rely=0.933, height=24, width=47)
 		self.Previous.configure(activebackground="#ececec")
 		self.Previous.configure(activeforeground="#000000")
@@ -459,7 +500,7 @@ class Search( Memberbar, Homebar):
 		self.Previous.configure(pady="0")
 		self.Previous.configure(text='''<''')
 
-		self.Next = tk.Button(top,command=lambda:self.ahead(b,name,mem,email,top))
+		self.Next = tk.Button(top,command=lambda:self.ahead(b,name,mem,email,top,names,rating))
 		self.Next.place(relx=0.57, rely=0.933, height=24, width=47)
 		self.Next.configure(activebackground="#ececec")
 		self.Next.configure(activeforeground="#000000")
@@ -481,11 +522,200 @@ class Search( Memberbar, Homebar):
 		self.Page_list.configure(foreground="#b4eafe")
 		self.Page_list.configure(text='''1 of 4''')
 		
-		#Searchbar.__init__(self, top=None)
-		Memberbar.__init__(self,name, mem,email, top)
-		Homebar.__init__(self,name,mem, top)
-		Sidebar.__init__(self, top)
+		
 #####################################################################################################################################
+####################Membership Function##################################################
+		self.membership = mem
+		self.Membership_f = tk.LabelFrame(top)
+		self.Membership_f.place(relx=0.013, rely=0.219, relheight=0.516, relwidth=0.14)
+		self.Membership_f.configure(relief='groove')
+		self.Membership_f.configure(foreground="#edea67")
+		self.Membership_f.configure(background="#bfe2ff")
+		self.Membership_f.configure(highlightbackground="#f3fee2")
+		self.Membership_f.configure(highlightcolor="#4bc602")
+
+		self.TSeparator3 = ttk.Separator(top)
+		self.TSeparator3.place(relx=0.165, rely=0.168, relheight=0.845)
+		self.TSeparator3.configure(orient="vertical")
+
+		# redirect to payment
+		def button_click(product):
+		    top.destroy()
+		    action = 1
+		    payment.vp_start_gui_P(name, mem, product, email, action)
+
+
+		# membership status
+		gold, platinum, diamond = button_functionality(mem)
+
+		# Gold Button
+		prod_gold = ["Gold", 600]
+		self.Gold_b = tk.Button(self.Membership_f, command=lambda: button_click(prod_gold))
+		self.Gold_b.place(relx=0.056, rely=0.734, height=84, width=157, bordermode='ignore')
+		self.Gold_b.configure(activebackground="#f0df99")
+		self.Gold_b.configure(activeforeground="#000000")
+		self.Gold_b.configure(background="#ffda04")
+		self.Gold_b.configure(borderwidth="9")
+		self.Gold_b.configure(disabledforeground="#a3a3a3")
+		self.Gold_b.configure(font="-family {Segoe UI} -size 15")
+		self.Gold_b.configure(foreground="#000000")
+		self.Gold_b.configure(highlightbackground="#d9d9d9")
+		self.Gold_b.configure(highlightcolor="black")
+		self.Gold_b.configure(pady="0")
+		self.Gold_b.configure(text='Gold')
+		if gold:
+		    self.Gold_b["state"] = "normal"
+		else:
+		    self.Gold_b["state"] = "disabled"
+
+		# Platinum Button
+		prod_platinum = ["Platinum", 800]
+		self.Platinum_b = tk.Button(self.Membership_f, command=lambda: button_click(prod_platinum))
+		self.Platinum_b.place(relx=0.056, rely=0.452, height=84, width=157, bordermode='ignore')
+		self.Platinum_b.configure(activebackground="#707070")
+		self.Platinum_b.configure(activeforeground="white")
+		self.Platinum_b.configure(activeforeground="#000000")
+		self.Platinum_b.configure(background="#d8d8d8")
+		self.Platinum_b.configure(borderwidth="9")
+		self.Platinum_b.configure(disabledforeground="#a3a3a3")
+		self.Platinum_b.configure(font="-family {Segoe UI} -size 15")
+		self.Platinum_b.configure(foreground="#000000")
+		self.Platinum_b.configure(highlightbackground="#d9d9d9")
+		self.Platinum_b.configure(highlightcolor="black")
+		self.Platinum_b.configure(pady="0")
+		self.Platinum_b.configure(text='''Platinum''')
+		if platinum:
+		    self.Platinum_b["state"] = "normal"
+		else:
+		    self.Platinum_b["state"] = "disabled"
+
+		# Diamond Button
+		prod_diamond = ["Diamond", 1000]
+		self.Diamond_b = tk.Button(self.Membership_f, command=lambda: button_click(prod_diamond))
+		self.Diamond_b.place(relx=0.061, rely=0.169, height=84, width=157, bordermode='ignore')
+		self.Diamond_b.configure(activebackground="#d9fcff")
+		self.Diamond_b.configure(activeforeground="#7070fa")
+		self.Diamond_b.configure(background="#2de9f2")
+		self.Diamond_b.configure(borderwidth="9")
+		self.Diamond_b.configure(disabledforeground="#a3a3a3")
+		self.Diamond_b.configure(font="-family {Segoe UI} -size 15")
+		self.Diamond_b.configure(foreground="#000000")
+		self.Diamond_b.configure(highlightbackground="#d9d9d9")
+		self.Diamond_b.configure(highlightcolor="#e9f552")
+		self.Diamond_b.configure(highlightthickness="6")
+		self.Diamond_b.configure(pady="0")
+		self.Diamond_b.configure(text='''Diamond''')
+		if diamond:
+		    self.Diamond_b["state"] = "normal"
+		else:
+		    self.Diamond_b["state"] = "disabled"
+
+		# Label in membership block
+		self.Join_l = tk.Label(self.Membership_f)
+		self.Join_l.place(relx=0.056, rely=0.028, height=41, width=155, bordermode='ignore')
+		self.Join_l.configure(activebackground="#f9f9f9")
+		self.Join_l.configure(activeforeground="black")
+		self.Join_l.configure(background="#bfe2ff")
+		self.Join_l.configure(disabledforeground="#a3a3a3")
+		self.Join_l.configure(font="-family {Segoe UI} -size 12")
+		self.Join_l.configure(foreground="#000000")
+		self.Join_l.configure(highlightbackground="#d9d9d9")
+		self.Join_l.configure(highlightcolor="black")
+		self.Join_l.configure(text=f'Join our Membership plan!')
+		self.Join_l.configure(wraplength="150")
+##########################################################################################################################################
+####################Sidebar########################################################################
+		self.TSeparator4 = ttk.Separator(top)
+		self.TSeparator4.place(relx=0.818, rely=0.168,  relheight=0.835)
+		self.TSeparator4.configure(orient="vertical")
+
+
+		self.Listofmovies_f = tk.LabelFrame(top)
+		self.Listofmovies_f.place(relx=0.829, rely=0.157, relheight=0.831
+		        , relwidth=0.138)
+		self.Listofmovies_f.configure(relief='groove')
+		self.Listofmovies_f.configure(font="-family {Segoe UI} -size 17")
+		self.Listofmovies_f.configure(foreground="#000000")
+		self.Listofmovies_f.configure(text='''List of Movies''')
+		self.Listofmovies_f.configure(background="#d7eeff")
+		self.Listofmovies_f.configure(highlightbackground="#f0f0f0f0f0f0")
+		self.Listofmovies_f.configure(highlightcolor="#646464646464")
+
+		self.page_id = tk.Label(self.Listofmovies_f)
+		self.page_id.place(relx=0.04, rely=0.947, height=21, width=166
+		        , bordermode='ignore')
+		self.page_id.configure(activebackground="#f9f9f9")
+		self.page_id.configure(activeforeground="black")
+		self.page_id.configure(background="#000040")
+		self.page_id.configure(borderwidth="10")
+		self.page_id.configure(disabledforeground="#a3a3a3")
+		self.page_id.configure(font="-family {Segoe UI} -size 13")
+		self.page_id.configure(foreground="#ffffff")
+		self.page_id.configure(highlightbackground="#d9d9d9")
+		self.page_id.configure(highlightcolor="black")
+		self.page_id.configure(text='''1 of 2''')
+
+		namem, rating = names,rating
+		y=0.07
+		for i in range(0,len(namem)):
+		                self.Movie1_b = tk.Button(self.Listofmovies_f)
+		                self.Movie1_b.place(relx=0.056, rely=y, height=74, width=157, bordermode='ignore')
+		                self.Movie1_b.configure(activebackground="#ececec")
+		                self.Movie1_b.configure(activeforeground="#000000")
+		                self.Movie1_b.configure(anchor='nw')
+		                self.Movie1_b.configure(background="#d7eeff")
+		                self.Movie1_b.configure(disabledforeground="#a3a3a3")
+		                self.Movie1_b.configure(font="-family {Segoe UI} -size 12")
+		                self.Movie1_b.configure(foreground="#000000")
+		                self.Movie1_b.configure(highlightbackground="#d9d9d9")
+		                self.Movie1_b.configure(highlightcolor="black")
+		                self.Movie1_b.configure(pady="0")
+		                self.Movie1_b.configure(text='''{0} \n\nRating: {1}/5'''.format(namem[i],rating[i]))
+		                self.Movie1_b.configure(wraplength="150")
+		                y+=0.14
+#####################################################################################################################################
+#####################################HOME BAR###################################################
+		self.Home_f = tk.LabelFrame(top)
+		self.Home_f.place(relx=0.023, rely=0.029, relheight=0.093, relwidth=0.50)
+		self.Home_f.configure(relief='groove')
+		self.Home_f.configure(foreground="#000000")
+		self.Home_f.configure(background="#e8e8ff")
+		self.Home_f.configure(highlightbackground="#d9d9d9")
+		self.Home_f.configure(highlightcolor="black")
+
+		self.home_inner_f = tk.Frame(self.Home_f)
+		self.home_inner_f.place(relx=0.017, rely=0.109, relheight=0.797, relwidth=0.959, bordermode='ignore')
+		self.home_inner_f.configure(relief='groove')
+		self.home_inner_f.configure(borderwidth="2")
+		self.home_inner_f.configure(relief="groove")
+		self.home_inner_f.configure(background="#b3eaff")
+		self.home_inner_f.configure(highlightbackground="#d9d9d9")
+		self.home_inner_f.configure(highlightcolor="black")
+
+		self.Home_b = tk.Button(self.home_inner_f)
+		self.Home_b.place(relx=0.025, rely=0.0, height=54, width=77)
+		self.Home_b.configure(activebackground="#ececec")
+		self.Home_b.configure(activeforeground="#000000")
+		self.Home_b.configure(background="#000040")
+		self.Home_b.configure(disabledforeground="#a3a3a3")
+		self.Home_b.configure(font="-family {Segoe UI} -size 12")
+		self.Home_b.configure(foreground="#ffffff")
+		self.Home_b.configure(highlightbackground="#d9d9d9")
+		self.Home_b.configure(highlightcolor="black")
+		self.Home_b.configure(pady="0")
+		self.Home_b.configure(text='''Home''')
+
+		self.Member_l = tk.Label(self.home_inner_f)
+		self.Member_l.place(relx=0.262, rely=0.137, height=34, width=352)
+		self.Member_l.configure(activebackground="#b3eaff")
+		self.Member_l.configure(activeforeground="black")
+		self.Member_l.configure(background="#b3eaff")
+		self.Member_l.configure(disabledforeground="#a3a3a3")
+		self.Member_l.configure(font="-family {Segoe UI} -size 12")
+		self.Member_l.configure(foreground="#000000")
+		self.Member_l.configure(highlightbackground="#d9d9d9")
+		self.Member_l.configure(highlightcolor="black")
+		self.Member_l.configure(text=f'Member status {name} has {mem} Membership')
 
 if __name__ == '__main__':
     vp_start_gui(0,'sris','Gold','srish@gh.co')
