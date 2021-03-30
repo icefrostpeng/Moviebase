@@ -65,7 +65,7 @@ def vp_start_gui_createshow2(movie_id):
     global val, w, root, movie
     movie=movie_id
     root = tk.Tk()
-    top = AddShow (root)
+    top = AddShow (movieid,root)
     root.mainloop()
 
 w = None
@@ -200,7 +200,7 @@ def querys2(theater_name):
 '''Validate and create user'''
 ######################################################### 
 
-def  ins(theater_name1, time1,showdate1, cost1):
+def  ins(theater_name1, time1,showdate1, cost1,movieid):
     print(theater_name1, time1,showdate1, cost1)
     theater_name=theater_name1.get()
     time= time1.get()
@@ -220,7 +220,7 @@ def  ins(theater_name1, time1,showdate1, cost1):
                     result=querys2(theater_name)
                     if result:
                         theater_id, capacity=result                        
-                        movie_id="24"
+                        movie_id=movieid
                         t,slot_id=querys(theater_id, time, showdate, str(cost), movie_id)
                         if t==1:
                             z=seats(slot_id, capacity)
@@ -244,7 +244,7 @@ def  ins(theater_name1, time1,showdate1, cost1):
         messagebox.showerror("Error", "Fields cannot be empty")
 
 class AddShow:
-    def __init__(self, top=None):
+    def __init__(self,movieid, top=None):
         '''This class configures and populates the toplevel window.
            top is the toplevel containing window.'''
         _bgcolor = '#d9d9d9'  # X11 color: 'gray85'
@@ -400,7 +400,7 @@ class AddShow:
         
         
 
-        self.CreateShow_b = tk.Button(top, command=lambda: ins(cname, showtime,self.cal, cost))
+        self.CreateShow_b = tk.Button(top, command=lambda: ins(cname, showtime,self.cal, cost,movieid))
         self.CreateShow_b.place(relx=0.594, rely=0.7, height=84, width=207)
         self.CreateShow_b.configure(activebackground="#ececec")
         self.CreateShow_b.configure(activeforeground="#000000")
