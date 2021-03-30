@@ -6,7 +6,7 @@
 #    Mar 24, 2021 12:19:14 PM IST  platform: Windows NT
 
 import sys
-import home
+import nhome
 
 try:
     import Tkinter as tk
@@ -115,7 +115,7 @@ class Membership:
         # function to return to home
         def button_home():
             top.destroy()
-            home.vp_start_gui1(name, mem, email)
+            nhome.vp_start_gui1(name, mem, email)
 
         # Home button
         self.Continue_b = tk.Button(self.Movie1, command=button_home)
