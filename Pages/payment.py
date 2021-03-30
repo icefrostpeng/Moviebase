@@ -287,18 +287,18 @@ class Payment:
 		self.Product_name.configure(foreground="#bcfbfe")
 		self.Product_name.configure(highlightbackground="#d9d9d9")
 		self.Product_name.configure(highlightcolor="black")
-        if product[0]=='Gold':
-        
-            self.Product_name.configure(text=f'{product[0]}\n You will get 10% discount')
-        elif product[0]=='Platinum':
-        
-            self.Product_name.configure(text=f'{product[0]}\n You will get 15% discount')
-        elif product[0]=='Diamond':
-        
-            self.Product_name.configure(text=f'{product[0]}\n You will get 20% discount')
-        else:
-        
-            self.Product_name.configure(text=f'{product[0]}')        
+		if product[0]=='Gold':
+
+			self.Product_name.configure(text=f'{product[0]}\n You will get 10% discount')
+		elif product[0]=='Platinum':
+
+			self.Product_name.configure(text=f'{product[0]}\n You will get 15% discount')
+		elif product[0]=='Diamond':
+
+			self.Product_name.configure(text=f'{product[0]}\n You will get 20% discount')
+		else:
+
+			self.Product_name.configure(text=f'{product[0]}')
 
 		# Cost label
 		self.Cost_l = tk.Label(self.Frame_f)
