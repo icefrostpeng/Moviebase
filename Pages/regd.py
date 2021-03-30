@@ -51,32 +51,32 @@ ssh_port = 22
 
 
 def querys(email, name, age, dob, addr, phno, pass1):
-	with SSHTunnelForwarder(
+	with SSHTunnelForwarder( #ssh tunnel initiation
 			(ssh_host, ssh_port),
 			ssh_username=ssh_user,
 			ssh_pkey=mypkey,
 			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
 		try:
-			conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+			conn = pymysql.connect(host='127.0.0.1', user=sql_username, #connect to db
 								   passwd=sql_password, db=sql_main_database,
 								   port=tunnel.local_bind_port)
 			cur = conn.cursor()
-			sql = "INSERT INTO User (email,name,age,dob,addr,phno,pswd) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-			val = (email, name, age, dob, addr, phno, pass1)
-			cur.execute(sql, val)
+			sql = "INSERT INTO User (email,name,age,dob,addr,phno,pswd) VALUES (%s, %s, %s, %s, %s, %s, %s)" #insert query
+			val = (email, name, age, dob, addr, phno, pass1) #bind values
+			cur.execute(sql, val) #execute insert
 			# cur.execute(q)
-			conn.commit()
+			conn.commit() #commit i.e save changes to db
 			cur.execute("select * from User")
 			result = cur.fetchone()
 			print(result)
 			# data = pd.read_sql_query(q, conn)
 			conn.close()
 			print("sucess")
-			return 1
+			return 1 #return 1 if daata inserted successfully
 		except Exception as e:
 			print(e)
-			return 0
-
+			return 0 # 0 incase of error
+ 
 
 # ! /usr/bin/env python
 #  -*- coding: utf-8 -*-
@@ -93,7 +93,7 @@ def querys(email, name, age, dob, addr, phno, pass1):
 def vp_start_gui_reg(data):
 	'''Starting point when module is the main routine.'''
 	global val, w, root
-	root = tk.Tk()
+	root = tk.Tk() 
 	top = RegOTP(data, root)
 	root.mainloop()
 
@@ -102,7 +102,7 @@ w = None
 global start
 start=time.time()
 global count
-count=120
+count=120 #timer set to 2min
 
 def create_RegOTP(rt, *args, **kwargs):
 	'''Starting point when module is imported by another module.
@@ -146,12 +146,12 @@ class RegOTP:
 		f.write(creds)
 		f.close()
 
-		pswd = pswd.encode()
+		pswd = pswd.encode() #hashing the password before storing
 		pswd = hashlib.sha256(pswd).hexdigest()
 		print(pswd)
 
 		def random_with_N_digits():
-			return randint(100000, 999999)
+			return randint(100000, 999999) #random integer as otp
 
 		def verify():
 			global start,count
@@ -160,29 +160,12 @@ class RegOTP:
 			print(end)
 			t = format(end - start)  # calculate the difference between end and start timer
 			print(float(t))  # print the time in seconds
-			if float(t) >= 160 or count==0:
-				messagebox.showinfo("Time out", "Session Expired ...Time out Please regenerate OTP")
+			if float(t) >= 160 or count==0: #if count is 0 then 2min are over
+				messagebox.showinfo("Time out", "Session Expired ...Time out Please regenerate OTP") #show timout msg
 				root.destroy()
-				register.vp_start_register()
+				register.vp_start_register() #navigate the user back to registration page
 			else:
-				on_click()
-
-		"""def countdown(t,var):
-
-			while t:
-				mins, secs = divmod(t, 60)
-				timer = '{:02d}:{:02d}'.format(mins, secs)
-				var.set("timer= "+timer)
-				print(timer, end="\r")
-				time.sleep(1)
-				t -= 1"""
-
-			#print('Fire in the hole!!')
-
-
-
-
-
+				on_click() #else if the user enters otp before 2min then register the user by saving data in db
 
 
 		def email_generator(name):
@@ -223,7 +206,7 @@ class RegOTP:
 			return otp
 
 		def send_mail(sender_email, password, rec_email, message):
-			server = smtplib.SMTP('smtp.gmail.com', 587)
+			server = smtplib.SMTP('smtp.gmail.com', 587) #sending mail using smtp
 			server.starttls()
 			server.login(sender_email, password)
 			server.sendmail(sender_email, rec_email, message)
@@ -263,32 +246,32 @@ class RegOTP:
 
 		def on_click():
 			global count
-			user_otp = self.OTP_e.get()
-			if user_otp == otp:
+			user_otp = self.OTP_e.get() #get the user entered otp
+			if user_otp == otp: #check if it is saame as that which was send
 				'''print(email,name,age,dob,addr,phno,pswd)
 				pswd=pswd.encode()
 				pswd=hashlib.sha256(pswd).hexdigest()
 				print(pswd)'''
-				t = querys(email, name, age, dob, addr, phno, pswd)
-				count=0
-				if t == 1:
+				t = querys(email, name, age, dob, addr, phno, pswd) #if yes save the user details to db
+				count=0 #decrement count to 0 to stop the timer
+				if t == 1: #if details is successfully saved in db
 					print('Login Success from email!')
 					root.destroy()
-					signin.vp_start_gui()
+					signin.vp_start_gui() #navigate user to signin page and ask for credentails
 
 
 				else:
-					print(f'failure from email')
+					print(f'failure from email') #incase if any error occurs while saving data in db like same email is entered again
 					root.destroy()
 					register.vp_start_register()
 
 			else:
-				messagebox.showinfo("Failure", "Invalid OTP!\n Try again")
+				messagebox.showinfo("Failure", "Invalid OTP!\n Try again") #if invalid otp is entered
 				root.destroy()
 				register.vp_start_register()
 				print('Invalid OTP')
 
-		self.Submit = tk.Button(top, command=verify)
+		self.Submit = tk.Button(top, command=verify) #submit button
 		self.Submit.place(relx=0.302, rely=0.705, height=54, width=207)
 		self.Submit.configure(activebackground="#ececec")
 		self.Submit.configure(activeforeground="#000000")
@@ -315,8 +298,8 @@ class RegOTP:
 
 		var=StringVar()
 		var.set("timer= 2:00")
-		def countdown(top):
-			global count
+		def countdown(top): #timer code
+			global count #count which wil keep track of time
 			self.Label3 = tk.Label(top)
 			self.Label3.place(relx=0.302, rely=0.295, height=60, width=194)
 			self.Label3.configure(activebackground="#000040")
@@ -328,15 +311,15 @@ class RegOTP:
 			self.Label3.configure(foreground="#ffffff")
 			mins, secs = divmod(count, 60)
 			timer = '{:02d}:{:02d}'.format(mins, secs)
-			self.Label3.configure(text="Timer= "+timer)
-			count=count-1
+			self.Label3.configure(text="Timer= "+timer) #update label based on time
+			count=count-1 #decrement timer
 		#self.Label3.configure(text='''Enter OTP from Email''')
-			if count>0:
-				top.after(1000,countdown,top)
+			if count>0: # if timer is not 0
+				top.after(1000,countdown,top) #call the function to update the timer after 1s
 			else:
-				self.Label3.configure(text="Timer= 0:00")
+				self.Label3.configure(text="Timer= 0:00") #else display timer as 0 in gui
 		global count
-		count=120
+		count=120 #initialize timer to 2min
 		countdown(top)
 
 
