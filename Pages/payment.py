@@ -477,7 +477,8 @@ class Payment:
 
 		    if action == 'O':
 		        otp = str(random_with_N_digits())
-		        body = f' Thanks for choosing TheatreBuzz. Your One Time Password for confirming registration is \n OTP - {otp}.\n Please enter it within 1 minute to avoid session expiry.'
+		        body = f' Thanks for choosing TheatreBuzz. Your One Time Password for confirming registration is \n OTP - {otp}.\n' \
+					   f' Please enter it within 1 minute to avoid session expiry.'
 		        message = f'Subject: {subject}\n\n{body}'
 		        send_mail(sender_email, password, rec_email, message)
 		        user_otp = str(input('Enter your OTP: '))
