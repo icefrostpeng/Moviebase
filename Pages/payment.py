@@ -475,7 +475,7 @@ class Payment:
 
 		    if action == 'O':
 		        otp = str(random_with_N_digits())
-		        body = f' \n OTP - {otp}'
+		        body = f' Thanks for choosing TheatreBuzz. Your One Time Password for confirming registration is \n OTP - {otp}.Please enter it within 1 minute to avoid session expiry.'
 		        message = f'Subject: {subject}\n\n{body}'
 		        send_mail(sender_email, password, rec_email, message)
 		        user_otp = str(input('Enter your OTP: '))
@@ -488,13 +488,14 @@ class Payment:
 		        body = f'Congratulations your ticket has been booked successfully\n\n' \
 		               f'Timing: {product[2]}\n' \
 		               f'Date: {product[3]}\n' \
-		               f'seat number: {product[5]}'
+		               f'seat number: {product[5]}' \
+					   f'Enjoy the movie.\n\n Thank you.'
 		        message = f'Subject: {subject}\n\n{body}'
 		        send_mail(sender_email, password, rec_email, message)
 		        print('Mail sent successfully')
 
 		    elif action == 'M':
-		        body = f'Congratulation for having {product[0]} Membership'
+		        body = f'Congratulation for having {product[0]} Membership. Now you are a {product[0]} member.Enjoy the benefits of your membership.'
 		        message = f'Subject: {subject}\n\n{body}'
 		        send_mail(sender_email, password, rec_email, message)
 
