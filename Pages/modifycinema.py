@@ -83,8 +83,9 @@ def destroy_AddMovie():
     w = None
     
 #########################################################
-'''Query to insert user into userdet'''
+'''Query to update the theater row with the new details passed to it'''
 #########################################################
+
 def querys(theater_id,cname, city, caddress, capacity):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
@@ -109,7 +110,9 @@ def querys(theater_id,cname, city, caddress, capacity):
         	print(e)
         	return 0
 
-
+#########################################################
+'''Validate and Execute the Query'''
+#########################################################
 def  ins(theater_id1,cname1, city1, caddress1, capacity1):
     theater_id=theater_id1.get()
     cname=cname1.get()
@@ -133,7 +136,9 @@ def  ins(theater_id1,cname1, city1, caddress1, capacity1):
 
 
 
-
+#########################################################
+''' Tkinter Page'''
+#########################################################
 class AddMovie:
 
     def __init__(self, top=None):
@@ -330,7 +335,11 @@ class AddMovie:
         self.Get_info_b.configure(highlightcolor="black")
         self.Get_info_b.configure(pady="0")
         self.Get_info_b.configure(text='''Get Info''')
+    
         
+#########################################################
+#''' Query to get the information of the theater'''
+#########################################################
     def querysd(self,cinema):
         with SSHTunnelForwarder(
             	(ssh_host, ssh_port),
@@ -354,7 +363,9 @@ class AddMovie:
             except Exception as e:
             	print(e)
             	return None
-    
+    #########################################################
+#''' Executes the query and assigns the variables of the class'''
+#########################################################
     def getinfo(self):        						
 
                 cinema=self.cname.get()

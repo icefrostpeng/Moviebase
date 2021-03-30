@@ -5,6 +5,12 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 04:20:35 PM IST  platform: Windows NT
 
+#Called by adhome
+#Redirects to adhome
+
+#########################################################
+'''Importing Packages'''
+#########################################################
 from functools import partial
 import sys
 from PIL import ImageTk, Image
@@ -21,15 +27,17 @@ except ImportError:
 	import tkinter.ttk as ttk
 	py3 = True
 from tkinter import *
-#from home import *
 
-#from Deletemoviebar import Deletemoviebar
-
+import adhome
 import pymysql
 import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
+
+#########################################################
+'''Declaring Variables'''
+#########################################################
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 sql_hostname = '127.0.0.1'
 sql_username = 'root'
@@ -39,8 +47,12 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-import adhome
 
+
+
+#########################################################
+'''Page Functions'''
+#########################################################
 def vp_start_gui_mod():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -48,7 +60,25 @@ def vp_start_gui_mod():
     top = AddMovie (root)
     root.mainloop()
 
+w = None
+def create_AddMovie(rt, *args, **kwargs):
+    '''Starting point when module is imported by another module.
+       Correct form of call: 'create_AddUser(root, *args, **kwargs)' .'''
+    global w, w_win, root
+    #rt = root
+    root = rt
+    w = tk.Toplevel (root)
+    top = AddMovie (w)
+    return (w, top)
 
+def destroy_AddMovie():
+    global w
+    w.destroy()
+    w = None
+
+#########################################################
+'''Query to update the movie details'''
+#########################################################
 def querys(movie_id,movname, descr, rating, cast, age_rating, genre, poster ):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
@@ -102,22 +132,9 @@ def  ins(movie_id1, movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingc
     adhome.vp_start_guih()
 
 
-w = None
-def create_AddMovie(rt, *args, **kwargs):
-    '''Starting point when module is imported by another module.
-       Correct form of call: 'create_AddUser(root, *args, **kwargs)' .'''
-    global w, w_win, root
-    #rt = root
-    root = rt
-    w = tk.Toplevel (root)
-    top = AddMovie (w)
-    return (w, top)
-
-def destroy_AddMovie():
-    global w
-    w.destroy()
-    w = None
-
+#########################################################
+''' Tkinter Page'''
+#########################################################
 class AddMovie:
                 
     def __init__(self, top=None):
