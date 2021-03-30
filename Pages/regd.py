@@ -24,6 +24,7 @@ from email.mime.multipart import MIMEMultipart
 # from register import *
 
 import hashlib
+import logging
 
 try:
 	import Tkinter as tk
@@ -49,6 +50,8 @@ ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
 
+logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.warning('regd.py initiated')
 
 def querys(email, name, age, dob, addr, phno, pass1):
 	with SSHTunnelForwarder( #ssh tunnel initiation
@@ -263,11 +266,15 @@ class RegOTP:
 				else:
 					print(f'failure from email') #incase if any error occurs while saving data in db like same email is entered again
 					root.destroy()
+					logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+					logging.warning('Couldnt register provided information in the database')
 					register.vp_start_register()
 
 			else:
 				messagebox.showinfo("Failure", "Invalid OTP!\n Try again") #if invalid otp is entered
 				root.destroy()
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning('OTP mismatch, Invalid OTP entered')
 				register.vp_start_register()
 				print('Invalid OTP')
 
@@ -332,6 +339,9 @@ class RegOTP:
 		self.OTP_e.configure(font="-family {Leelawadee UI Semilight} -size 23")
 		self.OTP_e.configure(foreground="#000000")
 		self.OTP_e.configure(insertbackground="black")
+
+		logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+		logging.warning('regd.py GUI created')
 
 
 if __name__ == '__main__':

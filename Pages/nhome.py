@@ -29,12 +29,16 @@ except ImportError:
 	py3 = True
 
  
+import logging
 
 import pymysql
 import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
+
+logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.warning('nhome.py initiated')
 
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 sql_hostname = '127.0.0.1'
@@ -783,6 +787,9 @@ class Home():
 		self.Member_l.configure(highlightbackground="#d9d9d9")
 		self.Member_l.configure(highlightcolor="black")
 		self.Member_l.configure(text=f'Member status {name} has {mem} Membership')
+
+		logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+		logging.warning('nhome.py GUI created')
 		
 
 if __name__ == '__main__':
