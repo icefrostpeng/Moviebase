@@ -1,3 +1,8 @@
+
+
+#########################################################
+'''Importing Packages'''
+#########################################################
 from tkinter import Tk, Canvas
 from tkinter import *
 import pymysql
@@ -9,6 +14,10 @@ from tkinter import messagebox
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import adhome
+
+#########################################################
+'''Declaring Variables'''
+#########################################################
 global li,count,strv,cosm,dcost,seat
 cosm = 0
 seat=''
@@ -25,6 +34,10 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
+
+#########################################################
+'''Query to Update seat status'''
+#########################################################
 def quer(slotid,seatid,val):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),
@@ -53,6 +66,9 @@ def quera(email):
 		arr = list(cur.fetchall())
 		cur.close()
 		return int(arr[0][0])
+    #########################################################
+'''Query to Update seat status'''
+#########################################################
 def query(slotid):
 	with SSHTunnelForwarder(
 			(ssh_host, ssh_port),

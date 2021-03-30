@@ -12,6 +12,10 @@ Created on Thu Mar 25 22:02:56 2021
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 04:20:35 PM IST  platform: Windows NT
 
+#########################################################
+'''Importing Packages'''
+#########################################################
+
 from functools import partial
 import sys
 from datetime import date
@@ -30,15 +34,18 @@ except ImportError:
 	import tkinter.ttk as ttk
 	py3 = True
 from tkinter import *
-#from home import *
-
-#from Deletemoviebar import Deletemoviebar
 
 import pymysql
 import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
+from adhome import *
+
+#########################################################
+'''Declaring Variables'''
+#########################################################
+
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 sql_hostname = '127.0.0.1'
 sql_username = 'root'
@@ -48,8 +55,10 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-from adhome import *
 
+#########################################################
+'''Page Functions'''
+#########################################################
 def vp_start_gui_modifyusers():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -60,7 +69,9 @@ def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
     return age
-
+#########################################################
+'''Query to Update user data into userdet'''
+#########################################################
 def querys(em,name,age,dob,addr,phno,pswd):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
@@ -85,7 +96,9 @@ def querys(em,name,age,dob,addr,phno,pswd):
         	print(e)
         	return 0
 
-
+#########################################################
+'''Validate and update user'''
+#########################################################
 def  ins(emails,usern,pass1,addre,mobi,cal):
     email=emails.get()
     username=usern.get()
@@ -147,7 +160,9 @@ def destroy_AddMovie():
     global w
     w.destroy()
     w = None
-
+#########################################################
+''' Tkinter Page'''
+#########################################################
 class AddMovie:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -343,6 +358,12 @@ class AddMovie:
         self.Get_info_b.configure(highlightcolor="black")
         self.Get_info_b.configure(pady="0")
         self.Get_info_b.configure(text='''Get Info''')
+        
+        
+        
+#########################################################
+#''' Get user info and assign variables'''
+#########################################################
         
     def querysd(self,user):
         with SSHTunnelForwarder(
