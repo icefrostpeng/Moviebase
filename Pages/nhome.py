@@ -59,7 +59,7 @@ def query():
 				port=tunnel.local_bind_port)
 		cur=conn.cursor()
 		
-		cur.execute("select * from moviedet")
+		cur.execute("select * from moviedet") #get all movie details present in databse
 		arr = list(cur.fetchall())
 		dic={}
 		val=1
@@ -69,12 +69,12 @@ def query():
 			li.insert(0,a)
 			dic[i[0]]=li
 			val+=1
-		movidic=dic #creating global dictionary
+		movidic=dic #creating global dictionary of movie details 
 		tn=[]
 		tr=[]
 		for i in range(1,6):
 			
-			q1='select movie_name,rating from moviedet where movie_id={0} and status="r"'.format(i)
+			q1='select movie_name,rating from moviedet where movie_id={0} and status="r"'.format(i) #movie rating and name for sidebar
 			cur.execute(q1)
 			arr = list(cur.fetchall())
 			
@@ -84,7 +84,7 @@ def query():
 				tr.append(l[1])
 		global namess,ratings
 		namess=tn
-		ratings=tr
+		ratings=tr #saving both in global variables
 		#print(namess)
 		#print(ratings)
 	
@@ -115,7 +115,7 @@ def data():
 	query()
 	m=movidic
 	return m
-def bookT(name,mem,email,top):
+def bookT(name,mem,email,top): #function alled when user tries to book ticket using the movie list in slidebar
 	global co,d,namess,ratings
 	ky=[]
 	for i in d.keys():
@@ -123,6 +123,7 @@ def bookT(name,mem,email,top):
 	print(d[ky[co]])
 	print("yess")
 	dic={}
+	#get the slotdetails along with the theatre details of the movie which the user selected
 	m=queryse(" select theaterdet.theater_id,theaterdet.theater_name,theaterdet.city,theaterdet.theater_add,slotdet.slot_id,slotdet.timing,slotdet.cost,slotdet.dates from theaterdet,slotdet where movie_id={0} and slotdet.theater_id=theaterdet.theater_id order by slotdet.dates".format(ky[co]))
 	le=0
 	l=[]
@@ -164,17 +165,17 @@ def bookT(name,mem,email,top):
 			else:
 				dic[m[i][7]]=[m[i][:7]]
 			break
-	print(dic)
+	print(dic) #getting the list of slot and thater details based on the date 
 	mov=d[ky[co]]
 	mov=mov[1:]
 	mov.insert(0,ky[co])
 	top.destroy()
 	print(mov,dic,name,mem,email)
-	slots.vp_start_slot(mov,dic,name,mem,email,top,namess,ratings)
-def history(name,mem,email,names,rating,root):
+	slots.vp_start_slot(mov,dic,name,mem,email,top,namess,ratings) #calling slot booking gui
+def history(name,mem,email,names,rating,root): #when history button is clicked
 	root.destroy()
 	print(rating)
-	cancelticket.vp_start_gui(name,mem,email,names,rating)
+	cancelticket.vp_start_gui(name,mem,email,names,rating) #call cancel button gui
 def vp_start_gui1(name='XYZ',mem='Gold',email='singhsilentsrishti@gmail.com'):
 	'''Starting point when module is the main routine.'''
 	global val, w, root,d
@@ -199,35 +200,35 @@ def destroy_Home():
 	global w
 	w.destroy()
 	w = None
-def search(var,name,mem,email, top):
+def search(var,name,mem,email, top): #when the search button is clicked
 	global namess,ratings
 	val=var.get()
-	if (len(val)!=0):
-		a="select * from moviedet where movie_name LIKE '{0}%'".format(val)
+	if (len(val)!=0): #check if user has entered something to search
+		a="select * from moviedet where movie_name LIKE '{0}%'".format(val) #check if the entered value for searching is a movie
 		print (a)
 		b=queryse(a)
-		if(len(b)!=0):
+		if(len(b)!=0): #if yes
 		    top.destroy()
 		    #print(b)
-		    search2.vp_start_gui(0,name,mem,email,b,namess,ratings)
+		    search2.vp_start_gui(0,name,mem,email,b,namess,ratings) #then call search2 with starting parameter as 0 indicating its a movie
 
-		else:
-		    a="select * from theaterdet where theater_name='{0}%'".format(val)
+		else: #else if its not a movie
+		    a="select * from theaterdet where theater_name='{0}%'".format(val) #check if the entered value is a theatre
 		    print (a)
 		    b=queryse(a)
-		    if(len(b)!=0):
+		    if(len(b)!=0): #if yes
 		        top.destroy()
 		        #print(b)
-		        search2.vp_start_gui(1,name,mem,email,b,namess,ratings)
+		        search2.vp_start_gui(1,name,mem,email,b,namess,ratings) #call search2 with 1 as first parameter indicating if it as theatre
 
-		    else:
+		    else: #else conclude a wrong search
 		        messagebox.showerror("Error", "No Movie or Theatre found!!!")
 
-	else:
+	else: #if not
 		messagebox.showerror("Error", "Enter something")
 
 
-def button_functionality(mem):
+def button_functionality(mem): #based on membership status of user disable the buttons
 	if mem == 'Gold':
 		gold = False
 		platinum = True
@@ -247,19 +248,20 @@ def button_functionality(mem):
 	return gold, platinum, diamond
 class Home():
 	global to
-	def ahead(self,top):
-		global co
-		co=(co+1)%5
+	def ahead(self,top): # called when '>' button is clicked from the  slideshow bar 
+		global co #global variable used for indicating the navigation bar below
+		co=(co+1)%5 #incrementing the value
 		ky=[]
 		for i in d.keys():
-			ky.append(i)
+			ky.append(i)#storing all the keys of dic
 		print(ky)
 		print(d[ky[co]])
 		print(d[ky[co]][0])
-		img = ImageTk.PhotoImage(PIL.Image.open(d[ky[co]][0]).resize((560, 277), PIL.Image.ANTIALIAS))
+		img = ImageTk.PhotoImage(PIL.Image.open(d[ky[co]][0]).resize((560, 277), PIL.Image.ANTIALIAS)) #setting new image
 		self.Movie_image = tk.Label(top,image = img)
 		self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
 		self.Movie_image=img
+		#changing information of the rest of the labels 
 		st="Description : \n"+d[ky[co]][2]
 		self.Description_l.configure(text=st)
 		strr="Rating : \n"+str(d[ky[co]][3])+"/5"
@@ -275,20 +277,21 @@ class Home():
 		self.Genre_l.configure(text=stg)
 		self.Label9.configure(text=d[ky[co]][5])
 		return
-	def bac(self,top):
+	def bac(self,top): # when < button is clicked from slideshow
 		global co
 		ky=[]
 		for i in d.keys():
 			ky.append(i)
-		if(co==0):
-		    print(co)
+		if(co==0): #checking if the counter value is 0
+		    print(co) #if yes then  dont decrement it further
 		else:
-		    co-=1
+		    co-=1 #else decrement it
 		    print(co)
-		img = ImageTk.PhotoImage(PIL.Image.open(d[ky[co]][0]).resize((560, 277), PIL.Image.ANTIALIAS))
+		img = ImageTk.PhotoImage(PIL.Image.open(d[ky[co]][0]).resize((560, 277), PIL.Image.ANTIALIAS)) #setting new image
 		self.Movie_image = tk.Label(top,image = img)
 		self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
 		self.Movie_image=img
+		#and rest f the labels according to new values
 		st="Description : \n"+d[ky[co]][2]
 		self.Description_l.configure(text=st)
 		strr="Rating : \n"+str(d[ky[co]][3])+"/5"
@@ -347,7 +350,7 @@ class Home():
 		global d
 		global to,co
 		to=top
-		img = ImageTk.PhotoImage(PIL.Image.open(d[1][0]).resize((560, 277), PIL.Image.ANTIALIAS))
+		img = ImageTk.PhotoImage(PIL.Image.open(d[1][0]).resize((560, 277), PIL.Image.ANTIALIAS)) #setting frist image at display
 		self.Movie_image = tk.Label(top,image = img)        
 		self.Movie_image.place(relx=0.202, rely=0.286, height=277, width=560)
 		self.Movie_image=img
