@@ -125,7 +125,7 @@ def  ins(theater_id1,cname1, city1, caddress1, capacity1):
             t=querys(theater_id, cname, city, caddress, capacity)
             if(t==1):
                 root.withdraw()
-                create_AdHome(root)
+                adhome.create_AdHome(root)
             else:
                 messagebox.showerror("UnSucess", "Could not find Theater")
 
