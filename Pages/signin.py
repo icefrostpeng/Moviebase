@@ -44,17 +44,27 @@ ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
 def query(q):
-    with SSHTunnelForwarder(
-            (ssh_host, ssh_port),
-            ssh_username=ssh_user,
-            ssh_pkey=mypkey,
-            remote_bind_address=(sql_hostname, sql_port)) as tunnel:
-        conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-                passwd=sql_password, db=sql_main_database,
-                port=tunnel.local_bind_port)
-        data = pd.read_sql_query(q, conn)
-        conn.close()
-        return data
+	try:
+		with SSHTunnelForwarder(
+				(ssh_host, ssh_port),
+				ssh_username=ssh_user,
+				ssh_pkey=mypkey,
+				remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+			try:
+				conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+						passwd=sql_password, db=sql_main_database,
+						port=tunnel.local_bind_port)
+				data = pd.read_sql_query(q, conn)
+				conn.close()
+				return data
+			except:
+				data=[]
+				# enter the excetion in log as dtabase error
+				return data
+	except:
+		data=[]
+		# enter the excetion in log
+		return data
 def login(ema,passw):
     print("1")
     df = query('select name,mem from User where email="{0}" and pswd="{1}"'.format(ema,passw))

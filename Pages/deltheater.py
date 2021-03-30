@@ -69,14 +69,19 @@ def query(q):
 				port=tunnel.local_bind_port)
 		cur=conn.cursor()
 		cur.execute(q)
+		conn.commit()
 		result=cur.fetchone()
 		conn.commit()
 		conn.close()
 		return result
+<<<<<<< HEAD
+	
+=======
 
 #########################################################
 '''Page Functions'''
 #########################################################
+>>>>>>> cbd95a219a06c9ce7ef816ffcddfb4e151e0d291
 def vp_start_gui_deltheater():
 	'''Starting point when module is the main routine.'''
 	global val, w, root
@@ -100,10 +105,13 @@ def destroy_delcinema():
 	w.destroy()
 	w = None
 	
+<<<<<<< HEAD
+=======
     
 #########################################################
 '''Validates and deletes entry'''
 #########################################################    
+>>>>>>> cbd95a219a06c9ce7ef816ffcddfb4e151e0d291
 def delete_theater(theater):
 	tname=theater.get()
 	try:
@@ -116,9 +124,13 @@ def delete_theater(theater):
 	root.destroy()
 	adhome.vp_start_guih()
 	
+<<<<<<< HEAD
+
+=======
 #########################################################
 ''' Tkinter Page'''
 #########################################################
+>>>>>>> cbd95a219a06c9ce7ef816ffcddfb4e151e0d291
 class delcinema:
 	def __init__(self, top=None):
 		'''This class configures and populates the toplevel window.
@@ -130,12 +142,20 @@ class delcinema:
 		_ana2color = '#ececec' # Closest X11 color: 'gray92'
 		self.style = ttk.Style()
 		if sys.platform == "win32":
+<<<<<<< HEAD
+		    self.style.theme_use('winnative')
+=======
 			self.style.theme_use('winnative')
+>>>>>>> cbd95a219a06c9ce7ef816ffcddfb4e151e0d291
 		self.style.configure('.',background=_bgcolor)
 		self.style.configure('.',foreground=_fgcolor)
 		self.style.configure('.',font="TkDefaultFont")
 		self.style.map('.',background=
+<<<<<<< HEAD
+		    [('selected', _compcolor), ('active',_ana2color)])
+=======
 			[('selected', _compcolor), ('active',_ana2color)])
+>>>>>>> cbd95a219a06c9ce7ef816ffcddfb4e151e0d291
 
 		top.geometry("1280x686+280+126")
 		top.minsize(120, 1)
