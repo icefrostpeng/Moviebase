@@ -4,6 +4,7 @@ from random import randint
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 from PIL import ImageTk, Image
+from tkinter import *
 import PIL
 import smtplib
 from random import randint
@@ -14,6 +15,7 @@ import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import re
+import time
 import register
 import signin
 from email.mime.text import MIMEText
@@ -50,30 +52,30 @@ ssh_port = 22
 
 def querys(email, name, age, dob, addr, phno, pass1):
 	with SSHTunnelForwarder(
-		    (ssh_host, ssh_port),
-		    ssh_username=ssh_user,
-		    ssh_pkey=mypkey,
-		    remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+			(ssh_host, ssh_port),
+			ssh_username=ssh_user,
+			ssh_pkey=mypkey,
+			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
 		try:
-		    conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-		                           passwd=sql_password, db=sql_main_database,
-		                           port=tunnel.local_bind_port)
-		    cur = conn.cursor()
-		    sql = "INSERT INTO User (email,name,age,dob,addr,phno,pswd) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-		    val = (email, name, age, dob, addr, phno, pass1)
-		    cur.execute(sql, val)
-		    # cur.execute(q)
-		    conn.commit()
-		    cur.execute("select * from User")
-		    result = cur.fetchone()
-		    print(result)
-		    # data = pd.read_sql_query(q, conn)
-		    conn.close()
-		    print("sucess")
-		    return 1
+			conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+								   passwd=sql_password, db=sql_main_database,
+								   port=tunnel.local_bind_port)
+			cur = conn.cursor()
+			sql = "INSERT INTO User (email,name,age,dob,addr,phno,pswd) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+			val = (email, name, age, dob, addr, phno, pass1)
+			cur.execute(sql, val)
+			# cur.execute(q)
+			conn.commit()
+			cur.execute("select * from User")
+			result = cur.fetchone()
+			print(result)
+			# data = pd.read_sql_query(q, conn)
+			conn.close()
+			print("sucess")
+			return 1
 		except Exception as e:
-		    print(e)
-		    return 0
+			print(e)
+			return 0
 
 
 # ! /usr/bin/env python
@@ -97,7 +99,10 @@ def vp_start_gui_reg(data):
 
 
 w = None
-
+global start
+start=time.time()
+global count
+count=120
 
 def create_RegOTP(rt, *args, **kwargs):
 	'''Starting point when module is imported by another module.
@@ -136,17 +141,49 @@ class RegOTP:
 		phno = data[5]
 		pswd = data[6]
 
-		f=open("credentials.txt","a")
-		creds=" \n " +email+" : "+pswd
+		f = open("credentials.txt", "a")
+		creds = " \n " + email + " : " + pswd
 		f.write(creds)
 		f.close()
 
-		pswd=pswd.encode()
-		pswd=hashlib.sha256(pswd).hexdigest()
+		pswd = pswd.encode()
+		pswd = hashlib.sha256(pswd).hexdigest()
 		print(pswd)
 
 		def random_with_N_digits():
-		    return randint(100000, 999999)
+			return randint(100000, 999999)
+
+		def verify():
+			global start,count
+			print(start)
+			end = time.time()
+			print(end)
+			t = format(end - start)  # calculate the difference between end and start timer
+			print(float(t))  # print the time in seconds
+			if float(t) >= 160 or count==0:
+				messagebox.showinfo("Time out", "Session Expired ...Time out Please regenerate OTP")
+				root.destroy()
+				register.vp_start_register()
+			else:
+				on_click()
+
+		"""def countdown(t,var):
+
+			while t:
+				mins, secs = divmod(t, 60)
+				timer = '{:02d}:{:02d}'.format(mins, secs)
+				var.set("timer= "+timer)
+				print(timer, end="\r")
+				time.sleep(1)
+				t -= 1"""
+
+			#print('Fire in the hole!!')
+
+
+
+
+
+
 
 		def email_generator(name):
 			sender_email = "rushiwatpal123@gmail.com"
@@ -159,7 +196,7 @@ class RegOTP:
 			message["To"] = rec_email
 			otp = str(random_with_N_digits())
 			# Create the plain-text and HTML version of your message
-			
+
 			html = """\
 			<html>
 			  <body>
@@ -172,10 +209,10 @@ class RegOTP:
 				<p style='color:DodgerBlue'>The Theatre Buzz Team </p></p>
 			  </body>
 			</html>
-			""".format(name,otp)
+			""".format(name, otp)
 
 			# Turn these into plain/html MIMEText objects
-			
+
 			part2 = MIMEText(html, "html")
 
 			# Add HTML/plain-text parts to MIMEMultipart message
@@ -186,10 +223,10 @@ class RegOTP:
 			return otp
 
 		def send_mail(sender_email, password, rec_email, message):
-		    server = smtplib.SMTP('smtp.gmail.com', 587)
-		    server.starttls()
-		    server.login(sender_email, password)
-		    server.sendmail(sender_email, rec_email, message)
+			server = smtplib.SMTP('smtp.gmail.com', 587)
+			server.starttls()
+			server.login(sender_email, password)
+			server.sendmail(sender_email, rec_email, message)
 
 		otp = email_generator(name)
 
@@ -210,7 +247,7 @@ class RegOTP:
 		self.Background = img
 
 		self.Label1 = tk.Label(top)
-		self.Label1.place(relx=0.08, rely=-0.019, height=222, width=424)
+		self.Label1.place(relx=0.08, rely=-0.019, height=150, width=424)
 		self.Label1.configure(activebackground="#f9f9f9")
 		self.Label1.configure(activeforeground="black")
 		self.Label1.configure(background="#000328")
@@ -222,32 +259,36 @@ class RegOTP:
 		self.Label1.configure(text='''Please check your email to Confirm your registration''')
 		self.Label1.configure(wraplength="300")
 
+
+
 		def on_click():
-		    user_otp = self.OTP_e.get()
-		    if user_otp == otp:
-		        '''print(email,name,age,dob,addr,phno,pswd)
-		        pswd=pswd.encode()
-		        pswd=hashlib.sha256(pswd).hexdigest()
-		        print(pswd)'''
-		        t = querys(email, name, age, dob, addr, phno, pswd)
-		        if t == 1:
-		            print('Login Success from email!')
-		            root.destroy()
-		            signin.vp_start_gui()
+			global count
+			user_otp = self.OTP_e.get()
+			if user_otp == otp:
+				'''print(email,name,age,dob,addr,phno,pswd)
+				pswd=pswd.encode()
+				pswd=hashlib.sha256(pswd).hexdigest()
+				print(pswd)'''
+				t = querys(email, name, age, dob, addr, phno, pswd)
+				count=0
+				if t == 1:
+					print('Login Success from email!')
+					root.destroy()
+					signin.vp_start_gui()
 
 
-		        else:
-		            print(f'failure from email')
-		            root.destroy()
-		            register.vp_start_register()
+				else:
+					print(f'failure from email')
+					root.destroy()
+					register.vp_start_register()
 
-		    else:
-		        messagebox.showinfo("Failure", "Invalid OTP!\n Try again")
-		        root.destroy()
-		        register.vp_start_register()
-		        print('Invalid OTP')
+			else:
+				messagebox.showinfo("Failure", "Invalid OTP!\n Try again")
+				root.destroy()
+				register.vp_start_register()
+				print('Invalid OTP')
 
-		self.Submit = tk.Button(top, command=on_click)
+		self.Submit = tk.Button(top, command=verify)
 		self.Submit.place(relx=0.302, rely=0.705, height=54, width=207)
 		self.Submit.configure(activebackground="#ececec")
 		self.Submit.configure(activeforeground="#000000")
@@ -262,7 +303,7 @@ class RegOTP:
 		self.Submit.configure(text='''Confirm Registration''')
 
 		self.Label2 = tk.Label(top)
-		self.Label2.place(relx=0.302, rely=0.305, height=81, width=194)
+		self.Label2.place(relx=0.302, rely=0.400, height=60, width=194)
 		self.Label2.configure(activebackground="#000040")
 		self.Label2.configure(activeforeground="white")
 		self.Label2.configure(activeforeground="#000000")
@@ -272,10 +313,38 @@ class RegOTP:
 		self.Label2.configure(foreground="#ffffff")
 		self.Label2.configure(text='''Enter OTP from Email''')
 
+		var=StringVar()
+		var.set("timer= 2:00")
+		def countdown(top):
+			global count
+			self.Label3 = tk.Label(top)
+			self.Label3.place(relx=0.302, rely=0.295, height=60, width=194)
+			self.Label3.configure(activebackground="#000040")
+			self.Label3.configure(activeforeground="white")
+			self.Label3.configure(activeforeground="#000000")
+			self.Label3.configure(background="#000328")
+			self.Label3.configure(disabledforeground="#a3a3a3")
+			self.Label3.configure(font="-family {Segoe UI} -size 14")
+			self.Label3.configure(foreground="#ffffff")
+			mins, secs = divmod(count, 60)
+			timer = '{:02d}:{:02d}'.format(mins, secs)
+			self.Label3.configure(text="Timer= "+timer)
+			count=count-1
+		#self.Label3.configure(text='''Enter OTP from Email''')
+			if count>0:
+				top.after(1000,countdown,top)
+			else:
+				self.Label3.configure(text="Timer= 0:00")
+		global count
+		count=120
+		countdown(top)
+
+
+
 		self.OTP_e = tk.Entry(top)
-		self.OTP_e.place(relx=0.322, rely=0.476, height=70, relwidth=0.37)
+		self.OTP_e.place(relx=0.322, rely=0.520, height=70, relwidth=0.37)
 		self.OTP_e.configure(background="white")
-	 #   self.OTP_e.configure(cursor="fleur")
+		#   self.OTP_e.configure(cursor="fleur")
 		self.OTP_e.configure(disabledforeground="#a3a3a3")
 		self.OTP_e.configure(font="-family {Leelawadee UI Semilight} -size 23")
 		self.OTP_e.configure(foreground="#000000")
@@ -284,5 +353,6 @@ class RegOTP:
 
 if __name__ == '__main__':
 	vp_start_gui_reg()
+
 
 
