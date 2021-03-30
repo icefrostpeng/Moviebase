@@ -42,12 +42,13 @@ ssh_port = 22
 
 
 def calculateAge(birthDate):
-    today = date.today()
-    age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+    today = date.today() #check date on which the user is trying to register
+    age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day)) #calculate age with refernce to current date
     return age
 
 
 def ins(emails, usern, pass1, pass2, addre, mobi, cal,var):
+	#storing all textbox values in variables
     email = emails.get()
     username = usern.get()
     passs1 = pass1.get()
@@ -56,30 +57,30 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal,var):
     mob = mobi.get()
 
     if len(email) != 0 and len(username) != 0 and len(passs1) != 0 and len(passs2) != 0 and len(addres) != 0 and len(
-            mob) != 0 and var.get()!=0:
+            mob) != 0 and var.get()!=0: #check if user has entered all fields
         regex = '^[a-zA-Z0-9]+[\._]?[A-Za-z0-9]+[@]\w+[.]\w{2,3}$'
-        if re.search(regex, email):
-            reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$"
+        if re.search(regex, email): #check if email entered is in correct format i.e xyz@abc.com
+            reg = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{6,20}$" 
             pat = re.compile(reg)
-            if re.search(pat, passs1):
-                if passs1 == passs2:
+            if re.search(pat, passs1): #check if password entered by user is strong enough i.e with one upper case one lower case,one no.and one spcl char
+                if passs1 == passs2: #both the passwords entered are same
                     Pattern = re.compile("(0/91)?[7-9][0-9]{9}")
-                    if Pattern.match(mob) and len(mob) == 10:
+                    if Pattern.match(mob) and len(mob) == 10: # check if mobile number is valid or not
                         dob = cal.get_date()
-                        age = str(calculateAge(cal.get_date()))
+                        age = str(calculateAge(cal.get_date())) # calculate the useres age based on dob 
                         dob = str(dob)
                         try:
                             print(email, username, age, dob, addres, mob, passs1)
                             pass_value = [email, username, age, dob, addres, mob, passs1]
 
                             
-                            root.destroy()
+                            root.destroy() #destroy current page
 
-                            vp_start_gui_reg(pass_value)
+                            vp_start_gui_reg(pass_value) # pass values to the next otp page
                         except Exception as e:
                             print(e)
                     else:
-                        messagebox.showerror("Error", "Mobile Number Invalid")
+                        messagebox.showerror("Error", "Mobile Number Invalid") #show error accordingly
                 else:
                     messagebox.showerror("Error", "Both passwords do not match")
             else:
@@ -147,7 +148,7 @@ class Register:
 
         top.resizable(False, False)
         global img
-        img = ImageTk.PhotoImage(file="bg.png")
+        img = ImageTk.PhotoImage(file="bg.png") #setting the bg color
         self.Background = tk.Label(top, image=img)
         self.Background.place(relx=0, rely=0, height=1000, width=1500)
         self.Background = img
@@ -162,7 +163,7 @@ class Register:
         self.email_l.configure(padx="6")
         self.email_l.configure(text='''Enter your email id:''')
 
-        em = tk.StringVar()
+        em = tk.StringVar() #email textbox
         self.email_e = tk.Entry(top, textvariable=em)
         self.email_e.place(relx=0.163, rely=0.150, height=20, relwidth=0.551)
         self.email_e.configure(background="white")
@@ -172,7 +173,7 @@ class Register:
         self.email_e.configure(insertbackground="black")
 
         usern = tk.StringVar()
-        self.username_e = tk.Entry(top, textvariable=usern)
+        self.username_e = tk.Entry(top, textvariable=usern) #username textbox
         self.username_e.place(relx=0.163, rely=0.250, height=20, relwidth=0.551)
         self.username_e.configure(background="white")
         # self.username_e.configure(cursor="fleur")
@@ -202,10 +203,10 @@ class Register:
         self.password_l.configure(text='''Enter password:''')
 
         pass1 = tk.StringVar()
-        self.password_e = tk.Entry(top, textvariable=pass1)
+        self.password_e = tk.Entry(top, textvariable=pass1) #password1
         self.password_e.place(relx=0.163, rely=0.350, height=20, relwidth=0.551)
         self.password_e.configure(background="white")
-        self.password_e.configure(show="*")
+        self.password_e.configure(show="*") #hide the passwords
         self.password_e.configure(disabledforeground="#a3a3a3")
         self.password_e.configure(font="TkFixedFont")
         self.password_e.configure(foreground="#000000")
@@ -222,7 +223,7 @@ class Register:
         self.confirm_l.configure(text='''Confirm Password:''')
 
         pass2 = tk.StringVar()
-        self.confirm_e = tk.Entry(top, textvariable=pass2)
+        self.confirm_e = tk.Entry(top, textvariable=pass2) #confirm password textbox
         self.confirm_e.place(relx=0.163, rely=0.450, height=20, relwidth=0.551)
         self.confirm_e.configure(background="white")
         self.confirm_e.configure(show="*")
@@ -232,7 +233,7 @@ class Register:
         self.confirm_e.configure(insertbackground="black")
 
         self.dob = tk.Label(top)
-        self.dob.place(relx=0.163, rely=0.500, height=31, width=171)
+        self.dob.place(relx=0.163, rely=0.500, height=31, width=171) #dob
         self.dob.configure(anchor='w')
         self.dob.configure(background="#000328")
         self.dob.configure(disabledforeground="#a3a3a3")
@@ -253,7 +254,7 @@ class Register:
         self.address_l.configure(text='''Enter Address''')
 
         ad = tk.StringVar()
-        self.address_e = tk.Entry(top, textvariable=ad)
+        self.address_e = tk.Entry(top, textvariable=ad) #address
         self.address_e.place(relx=0.163, rely=0.650, height=20, relwidth=0.551)
         self.address_e.configure(background="white")
         # self.address_e.configure(cursor="fleur")
@@ -263,7 +264,7 @@ class Register:
         self.address_e.configure(insertbackground="black")
 
         self.mobileno_l = tk.Label(top)
-        self.mobileno_l.place(relx=0.163, rely=0.700, height=31, width=185)
+        self.mobileno_l.place(relx=0.163, rely=0.700, height=31, width=185) 
         self.mobileno_l.configure(anchor='w')
         self.mobileno_l.configure(background="#000328")
         self.mobileno_l.configure(disabledforeground="#a3a3a3")
@@ -272,7 +273,7 @@ class Register:
         self.mobileno_l.configure(text='''Enter your mobile number''')
 
         mob = tk.StringVar()
-        self.mobileno_e = tk.Entry(top, textvariable=mob)
+        self.mobileno_e = tk.Entry(top, textvariable=mob) #mobile number
         self.mobileno_e.place(relx=0.163, rely=0.750, height=20, relwidth=0.551)
         self.mobileno_e.configure(background="white")
         # self.mobileno_e.configure(cursor="fleur")
@@ -284,7 +285,7 @@ class Register:
         
 
         # dob=datetime.strptime(date_str2, '%m/%d/%y')
-        var = IntVar()
+        var = IntVar() #confirming information
         self.checkAge = tk.Checkbutton(top, text="I confirm that all the above information is true to my knowledge",foreground="white",selectcolor="black", variable=var, onvalue=1, offvalue=0)
         self.checkAge.place(relx=0.1, rely=0.79, relheight=0.051, relwidth=0.9)
         #self.checkAge.place(relx=0.484, rely=0.781, relheight=0.081, relwidth=0.403)
