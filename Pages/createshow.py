@@ -229,7 +229,7 @@ def  ins(theater_name1, time1,showdate1, cost1,movieid):
                             messagebox.showerror("Error", "Could not add a slot")
                         if(t==1):
                             messagebox.showinfo("Success", "Show Creation successfull")
-                            root.destriy()
+                            root.destroy()
                             adhome.vp_start_guih()
                         else:
                             messagebox.showerror("UnSucess", "Show Creation Unsuccessfull")
