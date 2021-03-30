@@ -65,7 +65,7 @@ def vp_start_gui_createshow2(movie_id):
     global val, w, root, movie
     movie=movie_id
     root = tk.Tk()
-    top = AddShow (movieid,root)
+    top = AddShow (movie_id,root)
     root.mainloop()
 
 w = None
