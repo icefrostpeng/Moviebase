@@ -14,6 +14,7 @@ co=0
 global d,to
 import payment
 import search2
+import cancelticket
 from tkinter import *
 try:
 	import Tkinter as tk
@@ -73,33 +74,14 @@ def query():
 		tr=[]
 		for i in range(1,6):
 			
-			q1='select movie_name from moviedet where movie_id={0} and status="r"'.format(i)
+			q1='select movie_name,rating from moviedet where movie_id={0} and status="r"'.format(i)
 			cur.execute(q1)
 			arr = list(cur.fetchall())
-			l=""
-			for i in arr:
-				l=i[0]
-			v1=l
 			
-			#print(v1)
-			if v1=="":
-				continue
-			else:
-				tn.append(v1)
-		        #name.append(v1)
-			q2='select rating from moviedet where movie_id={0} and status="r"'.format(i)
-			cur.execute(q1)
-			arr = list(cur.fetchall())
-			l=""
 			for i in arr:
-				l=i[0]
-			v2=l
-			#print(v2)
-			if v2=="":
-				continue
-			else:
-				tr.append(v2)
-		        #rating.append(v2)
+				l=list(i)
+				tn.append(l[0])
+				tr.append(l[1])
 		global namess,ratings
 		namess=tn
 		ratings=tr
@@ -189,6 +171,10 @@ def bookT(name,mem,email,top):
 	top.destroy()
 	print(mov,dic,name,mem,email)
 	slots.vp_start_slot(mov,dic,name,mem,email,top,namess,ratings)
+def history(name,mem,email,names,rating,root):
+	root.destroy()
+	print(rating)
+	cancelticket.vp_start_gui(name,mem,email,names,rating)
 def vp_start_gui1(name='XYZ',mem='Gold',email='singhsilentsrishti@gmail.com'):
 	'''Starting point when module is the main routine.'''
 	global val, w, root,d
@@ -769,9 +755,9 @@ class Home():
 		self.home_inner_f.configure(background="#b3eaff")
 		self.home_inner_f.configure(highlightbackground="#d9d9d9")
 		self.home_inner_f.configure(highlightcolor="black")
-
-		self.Home_b = tk.Button(self.home_inner_f)
-		self.Home_b.place(relx=0.017, rely=0.0, height=70, width=110)
+		names, rating = datas()
+		self.Home_b = tk.Button(self.home_inner_f,command=lambda:history(name,mem,email,names,rating,top))
+		self.Home_b.place(relx=0.025, rely=0.0, height=57, width=110)
 		self.Home_b.configure(activebackground="#ececec")
 		self.Home_b.configure(activeforeground="#000000")
 		self.Home_b.configure(background="#000040")

@@ -6,7 +6,7 @@
 #    Mar 24, 2021 12:06:02 PM IST  platform: Windows NT
 
 import sys
-import home
+import nhome
 try:
     import Tkinter as tk
 except ImportError:
@@ -117,7 +117,7 @@ class Ticket:
         def on_click_home():
             print(f'from final {name} {mem} {email}')
             top.destroy()
-            home.vp_start_gui1(name, mem, email)
+            nhome.vp_start_gui1(name, mem, email)
 
         self.Continue_b = tk.Button(self.Movie1, command=on_click_home)
         self.Continue_b.place(relx=0.629, rely=0.8, height=44, width=227)
