@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Mar 25 23:01:22 2021
-
 @author: Elton
 """
 
@@ -42,7 +41,10 @@ import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
-
+global co,mod,wil,flag
+flag=1
+wil=[]
+co=0
 #########################################################
 '''Declaring Variables'''
 #########################################################
@@ -127,7 +129,7 @@ def destroy_findmovie():
  	w.destroy()
  	w = None
 
-def adds(top,movieid):
+def addslot(top,movieid):
 		print(movieid)
 		top.destroy()
 		createshow.vp_start_gui_createshow2(movieid)
@@ -137,6 +139,132 @@ def adds(top,movieid):
 ''' Tkinter Page'''
 #########################################################
 class findmovie():
+	def ahead(self,b,top):
+		#print("a")
+		global co,mod,wil,flag
+		if(flag==0):
+			co=(co+1)%mod
+			print(co)
+			for i in wil:
+				i.destroy()
+			wil=[]
+			y=0.1
+			yim=0.095
+			yib=0.32
+			for i in range(5):
+				j=(i+5)*co
+				#print(j)
+				if(j<(len(b))):
+					self.Movie1 = tk.Frame(top)
+					self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
+					self.Movie1.configure(relief='groove')
+					self.Movie1.configure(borderwidth="2")
+					self.Movie1.configure(relief="groove")
+					self.Movie1.configure(background="#00002b")
+					wil.append(self.Movie1)
+					self.Image1 = tk.Label(self.Movie1)
+					self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
+					self.Image1.configure(background="#d9d9d9")
+					self.Image1.configure(disabledforeground="#a3a3a3")
+					self.Image1.configure(foreground="#000000")
+					self.Image1.configure(text=b[j][1])
+					wil.append(self.Image1)
+					self.Description1 = tk.Label(self.Movie1,wraplength=400)
+					self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
+					self.Description1.configure(anchor='nw')
+					self.Description1.configure(background="#00002b")
+					self.Description1.configure(cursor="fleur")
+					self.Description1.configure(disabledforeground="#a3a3a3")
+					self.Description1.configure(font="-family {Segoe UI} -size 12")
+					self.Description1.configure(foreground="#bcfbfe")
+					self.Description1.configure(text=b[j][2])
+					wil.append(self.Description1)
+					
+					self.Book_b = tk.Button(top,command=partial(addslot,top,b[j][0]))
+					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
+					self.Book_b.configure(activebackground="#000040")
+					self.Book_b.configure(activeforeground="white")
+					self.Book_b.configure(activeforeground="#ffffff")
+					self.Book_b.configure(background="#b3eaff")
+					self.Book_b.configure(disabledforeground="#a3a3a3")
+					self.Book_b.configure(cursor="hand2")
+					self.Book_b.configure(font="-family {Segoe UI} -size 14")
+					self.Book_b.configure(foreground="#000000")
+					self.Book_b.configure(highlightbackground="#d9d9d9")
+					self.Book_b.configure(highlightcolor="black")
+					self.Book_b.configure(pady="0")
+					self.Book_b.configure(text='''Add Slot!''')
+					wil.append(self.Book_b)
+					y+=0.15
+					yim+=0.03
+					yib+=0.15
+			st=str(co+1)+" of 4"
+			self.Page_list.configure(text=st)
+		return
+	def bac(self,b,top):
+		#print("back")
+		global co,mod,wil,flag
+		if(flag==0):
+			if(co!=0):
+				co-=1
+			for i in wil:
+				i.destroy()
+			wil=[]
+			y=0.1
+			yim=0.095
+			yib=0.32
+			for i in range(5):
+				if(co!=0):
+					j=(i+5)*co
+				else:
+					j=i
+				if(j<(len(b))):
+					self.Movie1 = tk.Frame(top)
+					self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
+					self.Movie1.configure(relief='groove')
+					self.Movie1.configure(borderwidth="2")
+					self.Movie1.configure(relief="groove")
+					self.Movie1.configure(background="#00002b")
+					wil.append(self.Movie1)
+					self.Image1 = tk.Label(self.Movie1)
+					self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
+					self.Image1.configure(background="#d9d9d9")
+					self.Image1.configure(disabledforeground="#a3a3a3")
+					self.Image1.configure(foreground="#000000")
+					self.Image1.configure(text=b[j][1])
+					wil.append(self.Image1)
+					self.Description1 = tk.Label(self.Movie1,wraplength=400)
+					self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
+					self.Description1.configure(anchor='nw')
+					self.Description1.configure(background="#00002b")
+					self.Description1.configure(cursor="fleur")
+					self.Description1.configure(disabledforeground="#a3a3a3")
+					self.Description1.configure(font="-family {Segoe UI} -size 12")
+					self.Description1.configure(foreground="#bcfbfe")
+					self.Description1.configure(text=b[j][2])
+					wil.append(self.Description1)
+					
+					self.Book_b = tk.Button(top,command=partial(addslot,top,b[j][0]))
+					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
+					self.Book_b.configure(activebackground="#000040")
+					self.Book_b.configure(activeforeground="white")
+					self.Book_b.configure(activeforeground="#ffffff")
+					self.Book_b.configure(background="#b3eaff")
+					self.Book_b.configure(disabledforeground="#a3a3a3")
+					self.Book_b.configure(cursor="hand2")
+					self.Book_b.configure(font="-family {Segoe UI} -size 14")
+					self.Book_b.configure(foreground="#000000")
+					self.Book_b.configure(highlightbackground="#d9d9d9")
+					self.Book_b.configure(highlightcolor="black")
+					self.Book_b.configure(pady="0")
+					self.Book_b.configure(text='''Add slot!''')
+					wil.append(self.Book_b)
+					y+=0.15
+					yim+=0.03
+					yib+=0.15
+			st=str(co+1)+" of 4"
+			self.Page_list.configure(text=st)
+		return
 	def __init__(self,b,top=None):
 		print(b)
 		'''This class configures and populates the toplevel window.
@@ -191,55 +319,112 @@ class findmovie():
 		self.findmovie_b.configure(text='''Back''')
 
 ################################################################Result instance############################################################
+		global mod,wil,flag
+		mod=len(b)/4
+		print(len(b))
+		if(len(b)%4==0):
+			mod=int(len(b)/4)
+		else:
+			if(isinstance(mod,int)):
+				mod=int(mod)
+			elif(isinstance(mod,float)):
+				mod=int(mod)+1
+		print(mod)
 		y=0.1
 		yim=0.095
 		yib=0.32
-		for i in b:
- 			self.Movie1 = tk.Frame(top)
- 			self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
- 			self.Movie1.configure(relief='groove')
- 			self.Movie1.configure(borderwidth="2")
- 			self.Movie1.configure(relief="groove")
- 			self.Movie1.configure(background="#00002b")
- 			self.Image1 = tk.Label(self.Movie1)
- 			self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
- 			self.Image1.configure(background="#d9d9d9")
- 			self.Image1.configure(disabledforeground="#a3a3a3")
- 			self.Image1.configure(foreground="#000000")
- 			self.Image1.configure(text=i[1])
+		if(len(b)>5):
+			for i in range(5):
+				flag=0
+				self.Movie1 = tk.Frame(top)
+				self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
+				self.Movie1.configure(relief='groove')
+				self.Movie1.configure(borderwidth="2")
+				self.Movie1.configure(relief="groove")
+				self.Movie1.configure(background="#00002b")
+				wil.append(self.Movie1)
+				self.Image1 = tk.Label(self.Movie1)
+				self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
+				self.Image1.configure(background="#d9d9d9")
+				self.Image1.configure(disabledforeground="#a3a3a3")
+				self.Image1.configure(foreground="#000000")
+				self.Image1.configure(text=b[i][1])
+				wil.append(self.Image1)
+				self.Description1 = tk.Label(self.Movie1,wraplength=400,justify="left")
+				self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
+				self.Description1.configure(anchor='nw')
+				self.Description1.configure(background="#00002b")
+				self.Description1.configure(cursor="fleur")
+				self.Description1.configure(disabledforeground="#a3a3a3")
+				self.Description1.configure(font="-family {Segoe UI} -size 12")
+				self.Description1.configure(foreground="#bcfbfe")
+				self.Description1.configure(text=b[i][2])
+				wil.append(self.Description1)
+				self.Book_b = tk.Button(top,command=partial(addslot,top,b[i][0]))
+				self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
+				self.Book_b.configure(activebackground="#000040")
+				self.Book_b.configure(activeforeground="white")
+				self.Book_b.configure(activeforeground="#ffffff")
+				self.Book_b.configure(background="#b3eaff")
+				self.Book_b.configure(disabledforeground="#a3a3a3")
+				self.Book_b.configure(cursor="hand2")
+				self.Book_b.configure(font="-family {Segoe UI} -size 14")
+				self.Book_b.configure(foreground="#000000")
+				self.Book_b.configure(highlightbackground="#d9d9d9")
+				self.Book_b.configure(highlightcolor="black")
+				self.Book_b.configure(pady="0")
+				self.Book_b.configure(text='''Add Slot''')
+				wil.append(self.Book_b)
+				y+=0.15
+				yim+=0.03
+				yib+=0.15
+		else:
+			for i in b:
+				self.Movie1 = tk.Frame(top)
+				self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
+				self.Movie1.configure(relief='groove')
+				self.Movie1.configure(borderwidth="2")
+				self.Movie1.configure(relief="groove")
+				self.Movie1.configure(background="#00002b")
+				self.Image1 = tk.Label(self.Movie1)
+				self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
+				self.Image1.configure(background="#d9d9d9")
+				self.Image1.configure(disabledforeground="#a3a3a3")
+				self.Image1.configure(foreground="#000000")
+				self.Image1.configure(text=i[1])
 
- 			self.Description1 = tk.Label(self.Movie1)
- 			self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
- 			self.Description1.configure(anchor='nw')
- 			self.Description1.configure(background="#00002b")
- 			self.Description1.configure(cursor="fleur")
- 			self.Description1.configure(disabledforeground="#a3a3a3")
- 			self.Description1.configure(font="-family {Segoe UI} -size 12")
- 			self.Description1.configure(foreground="#bcfbfe")
- 			self.Description1.configure(text=i[2])
-				
- 			self.Book_b = tk.Button(top,command=partial(adds,top,i[0]))
- 			self.Book_b.place(relx=0.60, rely=y+0.02, height=54, width=177)
- 			self.Book_b.configure(activebackground="#000040")
- 			self.Book_b.configure(activeforeground="white")
- 			self.Book_b.configure(activeforeground="#ffffff")
- 			self.Book_b.configure(background="#b3eaff")
- 			self.Book_b.configure(disabledforeground="#a3a3a3")
- 			self.Book_b.configure(cursor="hand2")
- 			self.Book_b.configure(font="-family {Segoe UI} -size 14")
- 			self.Book_b.configure(foreground="#000000")
- 			self.Book_b.configure(highlightbackground="#d9d9d9")
- 			self.Book_b.configure(highlightcolor="black")
- 			self.Book_b.configure(pady="0")
- 			self.Book_b.configure(text='''Select Movie''')
- 			y+=0.15
- 			yim+=0.03
- 			yib+=0.15
+				self.Description1 = tk.Label(self.Movie1,wraplength=400,justify="left")
+				self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
+				self.Description1.configure(anchor='nw')
+				self.Description1.configure(background="#00002b")
+				self.Description1.configure(cursor="fleur")
+				self.Description1.configure(disabledforeground="#a3a3a3")
+				self.Description1.configure(font="-family {Segoe UI} -size 12")
+				self.Description1.configure(foreground="#bcfbfe")
+				self.Description1.configure(text=i[2])
+					
+				self.Book_b = tk.Button(top,command=partial(addslot,top,i[0]))
+				self.Book_b.place(relx=0.60, rely=y+0.02, height=54, width=177)
+				self.Book_b.configure(activebackground="#000040")
+				self.Book_b.configure(activeforeground="white")
+				self.Book_b.configure(activeforeground="#ffffff")
+				self.Book_b.configure(background="#b3eaff")
+				self.Book_b.configure(disabledforeground="#a3a3a3")
+				self.Book_b.configure(cursor="hand2")
+				self.Book_b.configure(font="-family {Segoe UI} -size 14")
+				self.Book_b.configure(foreground="#000000")
+				self.Book_b.configure(highlightbackground="#d9d9d9")
+				self.Book_b.configure(highlightcolor="black")
+				self.Book_b.configure(pady="0")
+				self.Book_b.configure(text='''Add Slot''')
+				y+=0.15
+				yim+=0.03
+				yib+=0.15
 		
 ##############################################################################################################################################
 
 ##################################################################scroller########################################################
-		self.Previous = tk.Button(top)
+		self.Previous = tk.Button(top,command=lambda:self.bac(b,top))
 		self.Previous.place(relx=0.383, rely=0.933, height=24, width=47)
 		self.Previous.configure(activebackground="#ececec")
 		self.Previous.configure(activeforeground="#000000")
@@ -252,7 +437,7 @@ class findmovie():
 		self.Previous.configure(pady="0")
 		self.Previous.configure(text='''<''')
 
-		self.Next = tk.Button(top)
+		self.Next = tk.Button(top,command=lambda:self.ahead(b,top))
 		self.Next.place(relx=0.57, rely=0.933, height=24, width=47)
 		self.Next.configure(activebackground="#ececec")
 		self.Next.configure(activeforeground="#000000")
@@ -279,6 +464,4 @@ class findmovie():
 #####################################################################################################################################
 
 if __name__ == '__main__':
- 	vp_start_gui()
-
-
+ 	vp_start_gui_add_slot()
