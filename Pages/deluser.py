@@ -6,8 +6,12 @@
 #    Mar 24, 2021 05:09:10 PM IST  platform: Windows NT
 
 
-#
+#called by adhome
+#redirects to adhome
 
+#########################################################
+'''Importing Packages'''
+#########################################################
 from functools import partial
 from tkinter import messagebox
 import sys
@@ -35,6 +39,10 @@ import paramiko
 import pandas as pd
 from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
+
+#########################################################
+'''Declaring Variables'''
+#########################################################
 global co,mod,wil,flag
 flag=1
 wil=[]
@@ -48,21 +56,11 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-def query(q):
-	with SSHTunnelForwarder(
-			(ssh_host, ssh_port),
-			ssh_username=ssh_user,
-			ssh_pkey=mypkey,
-			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
-		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
-				passwd=sql_password, db=sql_main_database,
-				port=tunnel.local_bind_port)
-		cur=conn.cursor()
-		cur.execute(q)
-		result=cur.fetchone()
-		conn.close()
-		return result
-    
+
+
+#########################################################
+'''Page Functions'''
+#########################################################
 def vp_start_gui_deluser():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -86,6 +84,28 @@ def destroy_deluser():
     w.destroy()
     w = None
     
+#########################################################
+'''Query to execute the string query passed'''
+#########################################################
+def query(q):
+	with SSHTunnelForwarder(
+			(ssh_host, ssh_port),
+			ssh_username=ssh_user,
+			ssh_pkey=mypkey,
+			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+				passwd=sql_password, db=sql_main_database,
+				port=tunnel.local_bind_port)
+		cur=conn.cursor()
+		cur.execute(q)
+		result=cur.fetchone()
+		conn.close()
+		return result
+
+
+#########################################################
+'''Validates and deletes user'''
+#########################################################
 def delete_user(user):
     tname=user.get()
     try:
@@ -99,6 +119,10 @@ def delete_user(user):
     adhome.vp_start_guih()
     
 
+
+#########################################################
+''' Tkinter Page'''
+#########################################################
 class deluser:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
