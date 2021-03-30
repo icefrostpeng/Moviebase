@@ -5,6 +5,19 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 03:21:31 PM IST  platform: Windows NT
 
+
+#Used to Create and Add a user to the database
+
+
+#Called from: Adhome
+
+#Redirects to: Adhome
+
+
+#########################################################
+'''Importing Packages'''
+#########################################################
+
 import sys
 from tkcalendar import Calendar,DateEntry
 from datetime import date
@@ -24,7 +37,34 @@ try:
 except ImportError:
     import tkinter.ttk as ttk
     py3 = True
+    
+import pymysql
+import pymysql.cursors
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
+import re
+import adhome
+from tkinter import messagebox
 
+#########################################################
+'''Declaring Variables'''
+#########################################################
+
+sql_hostname = '127.0.0.1'
+mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
+sql_username = 'root'
+sql_password = 'Srishtisingh@12'
+sql_main_database = 'movie'
+sql_port = 3306
+ssh_host = '34.229.131.207'
+ssh_user = 'ec2-user'
+ssh_port = 22
+
+#########################################################
+'''Page Functions'''
+#########################################################
 
 def vp_start_gui_createuser():
     '''Starting point when module is the main routine.'''
@@ -44,32 +84,16 @@ def create_AddUser(rt, *args, **kwargs):
     top = AddUser (w)
     return (w, top)
 
-
-import pymysql
-import pymysql.cursors
-import paramiko
-import pandas as pd
-from paramiko import SSHClient
-from sshtunnel import SSHTunnelForwarder
-import re
-import adhome
-from tkinter import messagebox
-
-sql_hostname = '127.0.0.1'
-mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
-sql_username = 'root'
-sql_password = 'Srishtisingh@12'
-sql_main_database = 'movie'
-sql_port = 3306
-ssh_host = '34.229.131.207'
-ssh_user = 'ec2-user'
-ssh_port = 22
-
 def destroy_AddUser():
     global w
     w.destroy()
     w = None
+    
+    
 
+#########################################################
+'''Query to insert user into userdet'''
+#########################################################
 def querys(email,name,age,dob,addr,phno,pass1):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
@@ -99,7 +123,12 @@ def calculateAge(birthDate):
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
     return age
 
-def  ins(emails,usern,pass1,addre,mobi,cal):
+
+#########################################################
+'''Validate and Insert User'''
+#########################################################
+
+def  insert_user(emails,usern,pass1,addre,mobi,cal):
     email=emails.get()
     username=usern.get()
     passs1=pass1.get()
@@ -128,7 +157,7 @@ def  ins(emails,usern,pass1,addre,mobi,cal):
                             if(t==1):
                                 messagebox.showinfo("Sucess", "Registration successfull")
                                 root.withdraw()
-                                create_AdHome(root)
+                                adhome.create_AdHome(root)
                                 
                             else:
                                 messagebox.showerror("UnSucess", "Registration Unsuccessfull")
@@ -147,6 +176,11 @@ def  ins(emails,usern,pass1,addre,mobi,cal):
         messagebox.showerror("Error", "Fields cannot be empty")
     print(age)
 
+
+
+#########################################################
+''' Tkinter Page'''
+#########################################################
 class AddUser:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
@@ -199,13 +233,6 @@ class AddUser:
         self.Logo_image.place(relx=0.172, rely=0.015, height=92, width=124)
         self.Logo_image.configure(image=img)
         self.Logo_image=img
-
-        '''self.Logo_image = tk.Label(top)
-        self.Logo_image.place(relx=0.234, rely=0.029, height=92, width=124)
-        self.Logo_image.configure(background="#d9d9d9")
-        self.Logo_image.configure(disabledforeground="#a3a3a3")
-        self.Logo_image.configure(foreground="#000000")
-        self.Logo_image.configure(text=''Label'')'''
 
         self.Title_l = tk.Label(top)
         self.Title_l.place(relx=0.359, rely=0.044, height=61, width=372)
@@ -310,7 +337,7 @@ class AddUser:
         self.dob_l.configure(foreground="#ffffff")
         self.dob_l.configure(text='''Enter user Date of Bith''')
 
-        self.Createuser_b = tk.Button(top,command= lambda: ins(em,usern,pass1,ad,mob,self.cal))
+        self.Createuser_b = tk.Button(top,command= lambda: insert_user(em,usern,pass1,ad,mob,self.cal))
         self.Createuser_b.place(relx=0.594, rely=0.7, height=84, width=207)
         self.Createuser_b.configure(activebackground="#ececec")
         self.Createuser_b.configure(activeforeground="#000000")
