@@ -11,6 +11,11 @@ from functools import partial
 #from searchbar import Searchbar
 import payment
 import nhome
+import pymysql
+import paramiko
+import pandas as pd
+from paramiko import SSHClient
+from sshtunnel import SSHTunnelForwarder
 global dic,mod,co,wil
 from datetime import date
 try:
@@ -25,6 +30,17 @@ try:
 except ImportError:
 	import tkinter.ttk as ttk
 	py3 = True
+mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
+# if you want to use ssh password use - ssh_password='your ssh password', bellow
+
+sql_hostname = '127.0.0.1'
+sql_username = 'root'
+sql_password = 'Srishtisingh@12'
+sql_main_database = 'movie'
+sql_port = 3306
+ssh_host = '34.229.131.207'
+ssh_user = 'ec2-user'
+ssh_port = 22
 def back(name,mem,email,top):
 	top.destroy()
 	nhome.vp_start_gui1(name,mem,email)
@@ -74,6 +90,58 @@ def slotb(l,i,slotid,name,mem,email,cost,datess,top):
 	print(l)
 	
 	seats.creates(l,i,slotid,name,mem,email,cost,datess)
+def queri(q1,q2):
+	
+	try:
+		
+		with SSHTunnelForwarder(
+				(ssh_host, ssh_port),
+				ssh_username=ssh_user,
+				ssh_pkey=mypkey,
+				remote_bind_address=(sql_hostname, sql_port)) as tunnel:
+			try:
+				conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+						passwd=sql_password, db=sql_main_database,
+						port=tunnel.local_bind_port)
+				cur=conn.cursor()
+				cur.execute(q1)
+				#print(q1)
+				arr=list(cur.fetchall())
+				l=[]
+				#print(arr)
+				for i in arr:
+					l.append(list(i))
+				#print(l)
+				cur.execute(q2)
+				arr=list(cur.fetchall())
+				for i in arr:
+					l.append(list(i))
+				conn.close()
+				#print(l)
+				return l
+			except Exception as e:
+				data=[]
+				print(e)
+				# enter the excetion in log as dtabase error
+				return data
+	except Exception as e:
+		data=[]
+		print(e)
+		# enter the excetion in log
+		return data
+def getcolor(slotid):
+	q1="select count(*) from seatdet where slot_id={0} and status='v'".format(slotid)
+	q2="select count(*) from seatdet where slot_id={0} and status='o'".format(slotid)
+	#print(q1,q2)
+	l=queri(q1,q2)
+	valid=l[0][0]
+	occupied=l[1][0]
+	if(valid==0):
+		return "#b90000"
+	elif(valid>occupied):
+		return "#00d200"
+	else:
+		return "#ffff80"
 def dele(m):
 	today=date.today()
 	mi={}
@@ -87,7 +155,6 @@ class Slots():
 	def ahead(self,l,name,mem,email,top):
 		
 		global co,dic,mod,wil
-		print("yes")
 		co=(co+1)%mod
 		ky=[]
 		for i in dic:
@@ -95,7 +162,6 @@ class Slots():
 		lst=dic[ky[co]]
 		da=ky[co].split("-")
 		das=da[2]+"/"+da[1]
-		print(das)
 		self.strd.set(das)
 		dy=0.1
 		ty=0.364
@@ -103,7 +169,7 @@ class Slots():
 			i.destroy()
 		wil=[]
 		for i in lst:
-			print(i)
+			#print(i)
 			self.Movie1 = tk.Frame(top)
 			self.Movie1.place(relx=0.18, rely=ty, relheight=0.137, relwidth=0.621)
 			self.Movie1.configure(relief='groove')
@@ -129,12 +195,14 @@ class Slots():
 			self.Description1.configure(text=ste)
 			wil.append(self.Description1)
 			
+			
+			colo=getcolor(i[4])
 			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
 			self.Book_b.place(relx=0.60, rely=ty+0.02, height=54, width=177)
 			self.Book_b.configure(activebackground="#000040")
 			self.Book_b.configure(activeforeground="white")
 			self.Book_b.configure(activeforeground="#ffffff")
-			self.Book_b.configure(background="#b3eaff")
+			self.Book_b.configure(background=colo)
 			self.Book_b.configure(disabledforeground="#a3a3a3")
 			self.Book_b.configure(cursor="hand2")
 			self.Book_b.configure(font="-family {Segoe UI} -size 14")
@@ -156,7 +224,7 @@ class Slots():
 		lst=dic[ky[co]]
 		da=ky[co].split("-")
 		das=da[2]+"/"+da[1]
-		print(das)
+		#print(das)
 		self.strd.set(das)
 		dy=0.1
 		ty=0.364
@@ -164,7 +232,7 @@ class Slots():
 			i.destroy()
 		wil=[]
 		for i in lst:
-			print(i)
+			#print(i)
 			self.Movie1 = tk.Frame(top)
 			self.Movie1.place(relx=0.18, rely=ty, relheight=0.137, relwidth=0.621)
 			self.Movie1.configure(relief='groove')
@@ -190,12 +258,13 @@ class Slots():
 			self.Description1.configure(text=ste)
 			wil.append(self.Description1)
 			
+			colo=getcolor(i[4])
 			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
 			self.Book_b.place(relx=0.60, rely=ty+0.02, height=54, width=177)
 			self.Book_b.configure(activebackground="#000040")
 			self.Book_b.configure(activeforeground="white")
 			self.Book_b.configure(activeforeground="#ffffff")
-			self.Book_b.configure(background="#b3eaff")
+			self.Book_b.configure(background=colo)
 			self.Book_b.configure(disabledforeground="#a3a3a3")
 			self.Book_b.configure(cursor="hand2")
 			self.Book_b.configure(font="-family {Segoe UI} -size 14")
@@ -211,8 +280,7 @@ class Slots():
 		co=0
 		m=dele(m)
 		dic=m
-		print("here")
-		print(m)
+		#print(m)
 		mod=len(m)
 		'''This class configures and populates the toplevel window.
 		   top is the toplevel containing window.'''
@@ -313,13 +381,13 @@ class Slots():
 				break
 		if(len(g)==0):
 			key=next(iter(m))
-			print(key)
+			#print(key)
 			da=key.split('-')
 			dat=date(int(da[0]),int(da[1]),int(da[2]))
 			
 			g=m[key]
 			das=da[2]+"/"+da[1]
-		print(g)
+		#print(g)
 		#st=today.strftime("%d")+"/"+today.strftime("%m")
 		self.Label2 = tk.Label(top)
 		self.Label2.place(relx=0.461, rely=0.248, height=51, width=74)
@@ -386,13 +454,13 @@ class Slots():
 			self.Description1.configure(text=ste)
 			wil.append(self.Description1)
 			
-			
+			colo=getcolor(i[4])
 			self.Book_b = tk.Button(top,command=partial(slotb,l,i,i[4],name,mem,email,i[6],das,top))
 			self.Book_b.place(relx=0.60, rely=ty+0.02, height=54, width=177)
 			self.Book_b.configure(activebackground="#000040")
 			self.Book_b.configure(activeforeground="white")
 			self.Book_b.configure(activeforeground="#ffffff")
-			self.Book_b.configure(background="#b3eaff")
+			self.Book_b.configure(background=colo)
 			self.Book_b.configure(disabledforeground="#a3a3a3")
 			self.Book_b.configure(cursor="hand2")
 			self.Book_b.configure(font="-family {Segoe UI} -size 14")
