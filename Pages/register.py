@@ -14,6 +14,7 @@ from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 import re
 
+import logging
 
 try:
     import Tkinter as tk
@@ -40,6 +41,8 @@ ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
 
+logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.warning('register.py initiated')
 
 def calculateAge(birthDate):
     today = date.today() #check date on which the user is trying to register
@@ -78,17 +81,29 @@ def ins(emails, usern, pass1, pass2, addre, mobi, cal,var):
 
                             vp_start_gui_reg(pass_value) # pass values to the next otp page
                         except Exception as e:
+                            logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+                            logging.warning('Couldnt load OTP page')
                             print(e)
                     else:
                         messagebox.showerror("Error", "Mobile Number Invalid") #show error accordingly
+                        logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+                        logging.warning('Entered invalid mobile Number')
                 else:
                     messagebox.showerror("Error", "Both passwords do not match")
+                    logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+                    logging.warning('Passwords in both the fields do not match')
             else:
                 messagebox.showerror("Error", "Enter a strong Password")
+                logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+                logging.warning('User hasnt chosen a strong password')
         else:
             messagebox.showerror("Error", "Invalid Email Id")
+            logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+            logging.warning('Invalid Email')
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
+        logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+        logging.warning('Fields are empty')
     return
 
 
@@ -316,6 +331,9 @@ class Register:
         self.Submit.configure(highlightcolor="black")
         self.Submit.configure(pady="0")
         self.Submit.configure(text='Register')
+
+        logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+        logging.warning('register.py GUI created')
 
 
 if __name__ == '__main__':
