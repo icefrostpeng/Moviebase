@@ -14,6 +14,7 @@ from PIL import ImageTk, Image
 import PIL
 
 import hashlib
+import logging
 
 import sys
 
@@ -31,6 +32,8 @@ except ImportError:
     import tkinter.ttk as ttk
     py3 = True
 
+logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logging.warning('Signin.py initiated')
 
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 # if you want to use ssh password use - ssh_password='your ssh password', bellow
@@ -54,21 +57,31 @@ def query(q):
 				conn = pymysql.connect(host='127.0.0.1', user=sql_username,
 						passwd=sql_password, db=sql_main_database,
 						port=tunnel.local_bind_port)
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning('Connection made to the MYSQL server and the database')
 				data = pd.read_sql_query(q, conn)
 				conn.close()
 				return data
 			except:
 				data=[]
 				# enter the excetion in log as dtabase error
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - WARNING - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning('Connection to MYSQL server/DB couldnt be established')
 				return data
 	except:
 		data=[]
 		# enter the excetion in log
+		logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - WARNING - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+		logging.warning('SSH Tunnel couldnt be created')
 		return data
 def login(ema,passw):
     print("1")
+    '''logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - DEBUG - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.warning('1')'''
     df = query('select name,mem from User where email="{0}" and pswd="{1}"'.format(ema,passw))
     print(df)
+    '''logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - DEBUG - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    logging.warning(df)'''
     if(df.empty):
         return 0,0
     else:
@@ -81,6 +94,8 @@ def cal(root,em,pas):
     passw=pas.get()
     if len(ema)==0 or len(passw)==0:
         messagebox.showerror("Error", "Email or Password cannot be empty")
+        logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - WARNING - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+        logging.warning('Email or Password fields are empty')
     else:
         passw=passw.encode()
         passw=hashlib.sha256(passw).hexdigest()
@@ -89,11 +104,15 @@ def cal(root,em,pas):
         if name!=0:
             if mem is None:
                 mem='None'
+            logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+            logging.warning('Signin successful for '+str(ema))
             root.destroy()
             print(f'from sign in {name} {mem} {ema}')
             vp_start_gui1(name,mem,ema)
         else:
             messagebox.showerror("Error", "Invalid Credentails!!!")
+            logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - WARNING - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+            logging.warning('Signin unsuccessful for '+str(ema))
             em.set("")
             pas.set("")
 def vp_start_gui():
@@ -253,6 +272,9 @@ class Signin:
         self.Submit.configure(highlightcolor="black")
         self.Submit.configure(pady="0")
         self.Submit.configure(text='Sign In')
+
+        logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+        logging.warning('Signin.py GUI created')
 
 if __name__ == '__main__':
     vp_start_gui()
