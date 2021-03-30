@@ -47,17 +47,17 @@ ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
 def query(q,fl=1):
-	with SSHTunnelForwarder(
+	with SSHTunnelForwarder( #create a sshtunnelforwader
 			(ssh_host, ssh_port),
 			ssh_username=ssh_user,
 			ssh_pkey=mypkey,
 			remote_bind_address=(sql_hostname, sql_port)) as tunnel:
-		conn = pymysql.connect(host='127.0.0.1', user=sql_username,
+		conn = pymysql.connect(host='127.0.0.1', user=sql_username, #connect to db present in remote machine
 				passwd=sql_password, db=sql_main_database,
 				port=tunnel.local_bind_port)
 		cur=conn.cursor()
-		cur.execute(q)
-		if(fl==1):
+		cur.execute(q) #execute the query
+		if(fl==1): #based on flag values return the result in different formats
 			arr=list(cur.fetchall())
 			l=[]
 			for i in arr:
@@ -100,7 +100,7 @@ def button_functionality(mem):
 		platinum = True
 		diamond = True
 	return gold, platinum, diamond
-def back(name,mem,email,top):
+def back(name,mem,email,top): #if home button is clicked
 	top.destroy()
 	nhome.vp_start_gui1(name,mem,email)
 	
@@ -118,12 +118,14 @@ def clicked(mov,name,mem,email,top,names,rating):
 	
 	ids=mov[0]
 	dic={}
+	#fetch slot and theatredetails based on the choice of user
 	m=query(" select theaterdet.theater_id,theaterdet.theater_name,theaterdet.city,theaterdet.theater_add,slotdet.slot_id,slotdet.timing,slotdet.cost,slotdet.dates from theaterdet,slotdet where movie_id={0} and slotdet.theater_id=theaterdet.theater_id order by slotdet.dates".format(ids))
 	le=0
 	l=[]
 	i=0
 	print(len(m))
 	print(m)
+	#converting it into a dictionary with date as key so different show timing and thatre for a movie will be displayed in same page
 	while(i!=(len(m))):
 		print(i)
 		if(m[i][7]==m[i+1][7]):
@@ -180,12 +182,12 @@ def destroy_Search():
 	w = None
 
 class Search():
-	def ahead(self,b,name,mem,email,top):
+	def ahead(self,b,name,mem,email,top): #navigation bar for moving ahead
 		global co,mod,wil,flag
 		if(flag==0):
 			co=(co+1)%mod
 			for i in wil:
-				i.destroy()
+				i.destroy() #destroy all previous widgets created
 			wil=[]
 			y=0.233
 			yim=0.095
@@ -199,7 +201,7 @@ class Search():
 					self.Movie1.configure(borderwidth="2")
 					self.Movie1.configure(relief="groove")
 					self.Movie1.configure(background="#00002b")
-					wil.append(self.Movie1)
+					wil.append(self.Movie1) #append new widgets 
 					self.Image1 = tk.Label(self.Movie1)
 					self.Image1.place(relx=0.025, rely=yim, height=73, width=135)
 					self.Image1.configure(background="#d9d9d9")
@@ -236,10 +238,10 @@ class Search():
 					y+=0.15
 					yim+=0.03
 					yib+=0.15
-			st=str(co+1)+" of 4"
+			st=str(co+1)+" of "+str(mod)
 			self.Page_list.configure(text=st)
 		return
-	def bac(self,b,name,mem,email,top):
+	def bac(self,b,name,mem,email,top): #navigation bar for moving behind
 		global co,mod,wil,flag
 		if(flag==0):
 			if(co!=0):
@@ -296,14 +298,14 @@ class Search():
 					y+=0.15
 					yim+=0.03
 					yib+=0.15
-			st=str(co+1)+" of 4"
+			st=str(co+1)+" of "+str(mod)
 			self.Page_list.configure(text=st)
 		return
 			
 	def __init__(self,valu,name,mem,email,b,names,rating,top=None):
 		print(b)
 		global mod,wil,flag
-		mod=len(b)/4
+		mod=len(b)/4 #calculating maximum number of navbar movements based on size of list to be displayed
 		if(isinstance(mod,int)):
 			mod=int(mod)
 		elif(isinstance(mod,float)):
@@ -364,8 +366,8 @@ class Search():
 		y=0.233
 		yim=0.095
 		yib=0.32
-		if(valu==0):
-			if(len(b)>4):
+		if(valu==0): #if 0 it indicates search value is movie
+			if(len(b)>4): #4 being the maximum numbr of frames we cn fit in so checking it with lenght of list
 				print(mod)
 				for i in range(4):
 					self.Movie1 = tk.Frame(top)
@@ -414,7 +416,7 @@ class Search():
 					yim+=0.03
 					yib+=0.15
 			else:
-				flag=1
+				flag=1 #if the number of output to be displayed is 4
 				for i in b:
 					self.Movie1 = tk.Frame(top)
 					self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
@@ -457,7 +459,7 @@ class Search():
 					y+=0.15
 					yim+=0.03
 					yib+=0.15
-		else:
+		else: #incase theatre was searched
 			for i in b:
 				self.Movie1 = tk.Frame(top)
 				self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
