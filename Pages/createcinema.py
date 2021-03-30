@@ -5,6 +5,11 @@
 #  in conjunction with Tcl version 8.6
 #    Mar 24, 2021 04:29:51 PM IST  platform: Windows NT
 
+
+
+#########################################################
+'''Importing Packages'''
+#########################################################
 import sys
 
 try:
@@ -30,7 +35,9 @@ import re
 
 from adhome import *
 
-
+#########################################################
+'''Declaring Variables'''
+#########################################################
 sql_hostname = '127.0.0.1'
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 sql_username = 'root'
@@ -43,7 +50,9 @@ ssh_port = 22
 
 
 
-
+#########################################################
+'''Query to get new theater id and insert a new row in theaterdet'''
+#########################################################
 def querys(cname,city,caddress,capacity):
     with SSHTunnelForwarder(
         	(ssh_host, ssh_port),
@@ -55,7 +64,7 @@ def querys(cname,city,caddress,capacity):
         			passwd=sql_password, db=sql_main_database,
         			port=tunnel.local_bind_port)
             cur=conn.cursor()
-            cur.execute("select theater_id from theaterdet ORDER BY theater_id DESC LIMIT 1")
+            cur.execute("select theater_id from theaterdet ORDER BY theater_id DESC LIMIT 1") #Gets latest theaterid
             theater_id=cur.fetchone()
             theater_id=theater_id[0]+1
             sql = "INSERT INTO theaterdet (theater_id,theater_name,city,theater_add, capacity) VALUES (%s, %s, %s, %s, %s)"
@@ -73,7 +82,9 @@ def querys(cname,city,caddress,capacity):
 
 
 
-
+#########################################################
+'''Calls, vaidates and performs the query'''
+#########################################################
 
 def  ins(name, cityname, address, capacity_s):
     cname=name.get()
@@ -96,6 +107,9 @@ def  ins(name, cityname, address, capacity_s):
     else:
         messagebox.showerror("Error", "Fields cannot be empty")
 
+#########################################################
+'''Page Functions'''
+#########################################################
 def vp_start_gui_createcinema():
     '''Starting point when module is the main routine.'''
     global val, w, root
@@ -119,6 +133,10 @@ def destroy_AddCinema():
     w.destroy()
     w = None
 
+
+#########################################################
+''' Tkinter Page'''
+#########################################################
 class AddCinema:
     def __init__(self, top=None):
         '''This class configures and populates the toplevel window.
