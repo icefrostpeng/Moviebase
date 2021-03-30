@@ -71,7 +71,7 @@ def sub(window,l,slotid,name,mem,email,timing,tdate,cinemaNAd): #fucntion called
 				chkM=0
 				messagebox.showerror("Error", "Adult Movie and your age is Less than 18")
 				window.destroy()
-				nhome.vp_start_gui1(name, mem, email) 3send user back to home page
+				nhome.vp_start_gui1(name, mem, email) #send user back to home page
 			elif(age>18 and len(fin)>1): #if user is above 18 but is booking more than one ticket
 				messagebox.showinfo("Adult Movie", "You are booking an adult movie so please ensure all the Pals with you are 18+\nAnd do carry Age Proofs of all the peoples")
 		if(chkM==1):
