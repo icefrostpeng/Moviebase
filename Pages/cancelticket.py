@@ -8,6 +8,7 @@ from functools import partial
 import sys
 from PIL import ImageTk, Image
 import PIL
+import smtplib
 try:
 	import Tkinter as tk
 except ImportError:
@@ -181,6 +182,26 @@ def vp_start_gui(name,mem,email,names,rating):
 	b=fetchdata(email)
 	top = Search (name,mem,email,b,names,rating,root)
 	root.mainloop()
+
+def emailgen(email):
+	print("xxx")
+	print(email)
+	sender_email = "rushiwatpal123@gmail.com"
+	rec_email = email
+	password = 'Rushi@12345'
+	subject = 'Theatre Buzz'
+	body = f' Your tickets have been cancelled successfully. The payment will be refunded in 3-4 working days.\n'\
+			f'Thanks for using Theater Buzz.Keep using TheaterBuzz'\
+			f'Have a great day.'
+	message = f'Subject: {subject}\n\n{body}'
+	send_mail(sender_email, password, rec_email, message)
+
+def send_mail(sender_email, password, rec_email, message):
+	server = smtplib.SMTP('smtp.gmail.com', 587)
+	server.starttls()
+	server.login(sender_email, password)
+	server.sendmail(sender_email, rec_email, message)
+
 def clicked(mov,name,mem,email,names,rating,top):
 	dates=mov[5]
 	seatid=mov[0]
@@ -197,6 +218,7 @@ def clicked(mov,name,mem,email,names,rating,top):
 			fl=queryu(q,q2)
 			if(fl==1):
 				messagebox.showinfo("Tickets Cancelled","Ticket cancelled successfully \n You will receive refund within 3-4 business days")
+				emailgen(email)
 				top.destroy()
 				vp_start_gui(name,mem,email,names,rating)
 			else:
@@ -221,6 +243,7 @@ def destroy_Search():
 	w = None
 
 class Search():
+
 	def ahead(self,b,name,mem,email,names,rating,top):
 		global co,mod,wil,flag
 		if(flag==0):
@@ -252,7 +275,7 @@ class Search():
 					self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
 					self.Description1.configure(anchor='nw')
 					self.Description1.configure(background="#00002b")
-					self.Description1.configure(cursor="fleur")
+					#self.Description1.configure(cursor="fleur")
 					self.Description1.configure(disabledforeground="#a3a3a3")
 					self.Description1.configure(font="-family {Segoe UI} -size 12")
 					self.Description1.configure(foreground="#bcfbfe")
@@ -313,7 +336,7 @@ class Search():
 					self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
 					self.Description1.configure(anchor='nw')
 					self.Description1.configure(background="#00002b")
-					self.Description1.configure(cursor="fleur")
+					#self.Description1.configure(cursor="fleur")
 					self.Description1.configure(disabledforeground="#a3a3a3")
 					self.Description1.configure(font="-family {Segoe UI} -size 12")
 					self.Description1.configure(foreground="#bcfbfe")
@@ -416,7 +439,7 @@ class Search():
 				self.Description1.place(relx=0.239, rely=yim, height=73, width=573)
 				self.Description1.configure(anchor='nw')
 				self.Description1.configure(background="#00002b")
-				self.Description1.configure(cursor="fleur")
+				#self.Description1.configure(cursor="fleur")
 				self.Description1.configure(disabledforeground="#a3a3a3")
 				self.Description1.configure(font="-family {Segoe UI} -size 12")
 				self.Description1.configure(foreground="#bcfbfe")
