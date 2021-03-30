@@ -41,10 +41,10 @@ sql_port = 3306
 ssh_host = '34.229.131.207'
 ssh_user = 'ec2-user'
 ssh_port = 22
-def back(name,mem,email,top):
+def back(name,mem,email,top): #if hme button is clicked
 	top.destroy()
 	nhome.vp_start_gui1(name,mem,email)
-def button_functionality(mem):
+def button_functionality(mem): #based on current membership disable a button
 	if mem == 'Gold':
 		gold = False
 		platinum = True
@@ -89,7 +89,7 @@ def slotb(l,i,slotid,name,mem,email,cost,datess,top):
 	print("check :")
 	print(l)
 	
-	seats.creates(l,i,slotid,name,mem,email,cost,datess)
+	seats.creates(l,i,slotid,name,mem,email,cost,datess)#based on the slot selected go to seats to display available seats
 def queri(q1,q2):
 	
 	try:
@@ -104,7 +104,7 @@ def queri(q1,q2):
 						passwd=sql_password, db=sql_main_database,
 						port=tunnel.local_bind_port)
 				cur=conn.cursor()
-				cur.execute(q1)
+				cur.execute(q1) #get count of valid seats
 				#print(q1)
 				arr=list(cur.fetchall())
 				l=[]
@@ -112,7 +112,7 @@ def queri(q1,q2):
 				for i in arr:
 					l.append(list(i))
 				#print(l)
-				cur.execute(q2)
+				cur.execute(q2) #get count of booked seats
 				arr=list(cur.fetchall())
 				for i in arr:
 					l.append(list(i))
@@ -136,13 +136,14 @@ def getcolor(slotid):
 	l=queri(q1,q2)
 	valid=l[0][0]
 	occupied=l[1][0]
-	if(valid==0):
+	if(valid==0):#if there's no valid seats left return b90000 as color of button
 		return "#b90000"
-	elif(valid>occupied):
+	elif(valid>occupied):#if more seats are available than booked seats
 		return "#00d200"
 	else:
-		return "#ffff80"
-def dele(m):
+		return "#ffff80" #else if there are more occupied seats
+def dele(m): #deleting the dictionary entries based on previous dates
+	
 	today=date.today()
 	mi={}
 	for i in m:
@@ -152,7 +153,7 @@ def dele(m):
 			mi[i]=m[i]
 	return mi
 class Slots():
-	def ahead(self,l,name,mem,email,top):
+	def ahead(self,l,name,mem,email,top): #navigation bar for dates
 		
 		global co,dic,mod,wil
 		co=(co+1)%mod
@@ -160,15 +161,15 @@ class Slots():
 		for i in dic:
 			ky.append(i)
 		lst=dic[ky[co]]
-		da=ky[co].split("-")
+		da=ky[co].split("-")#display next date
 		das=da[2]+"/"+da[1]
 		self.strd.set(das)
 		dy=0.1
 		ty=0.364
-		for i in wil:
+		for i in wil:#destroy previous widgets
 			i.destroy()
 		wil=[]
-		for i in lst:
+		for i in lst:#display details according to new date
 			#print(i)
 			self.Movie1 = tk.Frame(top)
 			self.Movie1.place(relx=0.18, rely=ty, relheight=0.137, relwidth=0.621)
@@ -222,7 +223,7 @@ class Slots():
 		for i in dic:
 			ky.append(i)
 		lst=dic[ky[co]]
-		da=ky[co].split("-")
+		da=ky[co].split("-")#display previous date
 		das=da[2]+"/"+da[1]
 		#print(das)
 		self.strd.set(das)
@@ -278,7 +279,7 @@ class Slots():
 	def __init__(self, l,m,name,mem,email,top,names,ratings):
 		global dic,mod,co,wil
 		co=0
-		m=dele(m)
+		m=dele(m)#delete previous date data
 		dic=m
 		#print(m)
 		mod=len(m)
@@ -376,10 +377,10 @@ class Slots():
 			da=i.split('-')
 			dat=date(int(da[0]),int(da[1]),int(da[2]))
 			if(dat==today):
-				g=m[i]
+				g=m[i]#set g to curret date data
 				das=da[2]+"/"+da[1]
 				break
-		if(len(g)==0):
+		if(len(g)==0):#if the movie is not been released then set g to the first show data of that movie
 			key=next(iter(m))
 			#print(key)
 			da=key.split('-')
@@ -427,7 +428,7 @@ class Slots():
 		dy=0.1
 		ty=0.364
 		wil=[]
-		for i in g:
+		for i in g:#display value of the data fixed
 			print(i)
 			self.Movie1 = tk.Frame(top)
 			self.Movie1.place(relx=0.18, rely=ty, relheight=0.137, relwidth=0.621)
