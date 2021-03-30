@@ -1,3 +1,4 @@
+# imports
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 from PIL import ImageTk, Image
@@ -43,6 +44,7 @@ from tkinter import messagebox
 #    Mar 24, 2021 10:33:09 AM IST  platform: Windows NT
 
 #####################################
+# connection to ssh
 sql_hostname = '127.0.0.1'
 mypkey = paramiko.RSAKey.from_private_key_file('dem.pem')
 sql_username = 'root'
@@ -303,6 +305,7 @@ class Payment:
 		self.Cost_value.configure(highlightcolor="black")
 		self.Cost_value.configure(text=product[1])
 
+		# function for Pay button clicked
 		def button_clicked(membership):
 			# for membership request
 			if membership[1] == 1:
@@ -332,7 +335,7 @@ class Payment:
 					vp_start_gui_ticket_allocation(product[5],name,mem,email)
 
 
-
+		# Function for cancel button
 		def button_home():
 			top.destroy()
 			nhome.vp_start_gui1(name, mem, email)
@@ -425,6 +428,7 @@ class Payment:
 		self.home_inner_f.configure(highlightbackground="#d9d9d9")
 		self.home_inner_f.configure(highlightcolor="black")
 
+		# Home button
 		self.Home_b = tk.Button(self.home_inner_f)
 		self.Home_b.place(relx=0.025, rely=0.0, height=54, width=77)
 		self.Home_b.configure(activebackground="#ececec")
@@ -465,6 +469,7 @@ class Payment:
 			password = 'Rushi@12345'
 			subject = 'Theatre Buzz'
 
+			# for otp generation
 			if action == 'O':
 				otp = str(random_with_N_digits())
 				body = f' Thanks for choosing TheatreBuzz. Your One Time Password for confirming registration is \n OTP - {otp}.\n' \
@@ -477,6 +482,7 @@ class Payment:
 				else:
 					print('Invalid OTP')
 
+			# for ticket confirmation
 			elif action == 'T':
 				body = f'Congratulations your ticket has been booked successfully\n\n' \
 					   f'Timing: {product[2]}\n' \
@@ -487,6 +493,7 @@ class Payment:
 				send_mail(sender_email, password, rec_email, message)
 				print('Mail sent successfully')
 
+			# for membership confirmation
 			elif action == 'M':
 				body = f'Congratulation for having {product[0]} Membership. Now you are a {product[0]} member.Enjoy the benefits of your membership.'
 				message = f'Subject: {subject}\n\n{body}'
