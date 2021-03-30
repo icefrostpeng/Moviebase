@@ -75,6 +75,11 @@ def query(q):
 		conn.close()
 		return result
 
+<<<<<<< HEAD
+=======
+	
+
+>>>>>>> 6221fef9bf08e7b8eef25b35970de04d789be35d
 
 #########################################################
 '''Page Functions'''
@@ -104,7 +109,11 @@ def destroy_delcinema():
 	w = None
 	
 
+<<<<<<< HEAD
     
+=======
+	
+>>>>>>> 6221fef9bf08e7b8eef25b35970de04d789be35d
 #########################################################
 '''Validates and deletes entry'''
 #########################################################    
@@ -122,6 +131,11 @@ def delete_theater(theater):
 	adhome.vp_start_guih()
 	
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 6221fef9bf08e7b8eef25b35970de04d789be35d
 #########################################################
 ''' Tkinter Page'''
 #########################################################
@@ -136,6 +150,16 @@ class delcinema:
 		_ana1color = '#d9d9d9' # X11 color: 'gray85'
 		_ana2color = '#ececec' # Closest X11 color: 'gray92'
 		self.style = ttk.Style()
+<<<<<<< HEAD
+=======
+
+		self.style.configure('.',background=_bgcolor)
+		self.style.configure('.',foreground=_fgcolor)
+		self.style.configure('.',font="TkDefaultFont")
+		self.style.map('.',background=
+		    [('selected', _compcolor), ('active',_ana2color)]
+			[('selected', _compcolor), ('active',_ana2color)])
+>>>>>>> 6221fef9bf08e7b8eef25b35970de04d789be35d
 
 		top.geometry("1280x686+280+126")
 		top.minsize(120, 1)
