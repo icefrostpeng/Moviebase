@@ -142,9 +142,7 @@ class delcinema:
 		self.style.configure('.',background=_bgcolor)
 		self.style.configure('.',foreground=_fgcolor)
 		self.style.configure('.',font="TkDefaultFont")
-		self.style.map('.',background=
-		    [('selected', _compcolor), ('active',_ana2color)]
-			[('selected', _compcolor), ('active',_ana2color)])
+		self.style.map('.',background=[('selected', _compcolor), ('active',_ana2color)])
 
 
 		top.geometry("1280x686+280+126")
