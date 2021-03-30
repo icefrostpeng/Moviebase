@@ -89,6 +89,8 @@ def query():
 		global namess,ratings
 		namess=tn
 		ratings=tr #saving both in global variables
+		logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+		logging.warning(str(namess)+' '+str(ratings))
 		#print(namess)
 		#print(ratings)
 	
@@ -125,6 +127,8 @@ def bookT(name,mem,email,top): #function alled when user tries to book ticket us
 	for i in d.keys():
 		ky.append(i)
 	print(d[ky[co]])
+	logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+	logging.warning(d[ky[co]])
 	print("yess")
 	dic={}
 	#get the slotdetails along with the theatre details of the movie which the user selected
@@ -133,6 +137,8 @@ def bookT(name,mem,email,top): #function alled when user tries to book ticket us
 	l=[]
 	i=0
 	print(len(m))
+	logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+	logging.warning(str(len(m)))
 	print(m)
 	while(i!=(len(m))):
 		print(i)
@@ -141,9 +147,13 @@ def bookT(name,mem,email,top): #function alled when user tries to book ticket us
 				li=dic[m[i][7]]
 				nd={}
 				print(li)
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning(str(li))
 				li.append(m[i][:7])
 				nd[m[i][7]]=li
 				print(li)
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning(str(li))
 				dic.update(nd)
 			else:
 				dic[m[i][7]]=[m[i][:7]]
@@ -152,9 +162,13 @@ def bookT(name,mem,email,top): #function alled when user tries to book ticket us
 				li=dic[m[i][7]]
 				nd={}
 				print(li)
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning(str(li))
 				li.append(m[i][:7])
 				nd[m[i][7]]=li
 				print(li)
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning(str(li))
 				dic.update(nd)
 			else:
 				dic[m[i][7]]=[m[i][:7]]
@@ -169,7 +183,9 @@ def bookT(name,mem,email,top): #function alled when user tries to book ticket us
 			else:
 				dic[m[i][7]]=[m[i][:7]]
 			break
-	print(dic) #getting the list of slot and thater details based on the date 
+	print(dic) #getting the list of slot and thater details based on the date
+	logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+	logging.warning(str(dic))
 	mov=d[ky[co]]
 	mov=mov[1:]
 	mov.insert(0,ky[co])
@@ -179,6 +195,8 @@ def bookT(name,mem,email,top): #function alled when user tries to book ticket us
 def history(name,mem,email,names,rating,root): #when history button is clicked
 	root.destroy()
 	print(rating)
+	logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+	logging.warning(str(rating))
 	cancelticket.vp_start_gui(name,mem,email,names,rating) #call cancel button gui
 def vp_start_gui1(name='XYZ',mem='Gold',email='singhsilentsrishti@gmail.com'):
 	'''Starting point when module is the main routine.'''
@@ -186,6 +204,8 @@ def vp_start_gui1(name='XYZ',mem='Gold',email='singhsilentsrishti@gmail.com'):
 	root = tk.Tk()
 	d=data()
 	print(d)
+	logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+	logging.warning(str(d))
 	top = Home (name,mem,email,root)
 	root.mainloop()
 
