@@ -255,6 +255,8 @@ class RegOTP:
 				pswd=pswd.encode()
 				pswd=hashlib.sha256(pswd).hexdigest()
 				print(pswd)'''
+				logging.basicConfig(filename='logfile.log', filemode='a', format='%(asctime)s - %(name)s - INFO - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+				logging.warning(str(email)+' is verified by OTP')
 				t = querys(email, name, age, dob, addr, phno, pswd) #if yes save the user details to db
 				count=0 #decrement count to 0 to stop the timer
 				if t == 1: #if details is successfully saved in db
