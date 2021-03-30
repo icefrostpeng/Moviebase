@@ -14,6 +14,7 @@
 '''Importing Packages'''
 #########################################################
 import sys
+import adhome
 from tkcalendar import Calendar,DateEntry
 from datetime import date
 from PIL import ImageTk, Image
@@ -228,8 +229,8 @@ def  ins(theater_name1, time1,showdate1, cost1,movieid):
                             messagebox.showerror("Error", "Could not add a slot")
                         if(t==1):
                             messagebox.showinfo("Success", "Show Creation successfull")
-                            root.withdraw()
-                            create_AdHome(root)
+                            root.destriy()
+                            adhome.vp_start_guih()
                         else:
                             messagebox.showerror("UnSucess", "Show Creation Unsuccessfull")
                     else:
