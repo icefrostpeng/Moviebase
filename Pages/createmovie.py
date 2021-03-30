@@ -95,7 +95,7 @@ def  ins(movname1, descr1, cast1, poster1, RatingSpinbox1, ageratingcombo, genre
             if(t==1):
                 messagebox.showinfo("Sucess", "Registration successfull")
                 root.withdraw()
-                create_AdHome(root)
+                adhome.create_AdHome(root)
             else:
                 messagebox.showerror("UnSucess", "Registration Unsuccessfull")
 

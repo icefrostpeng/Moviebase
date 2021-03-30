@@ -128,7 +128,7 @@ def  ins(emails,usern,pass1,addre,mobi,cal):
                             if(t==1):
                                 messagebox.showinfo("Sucess", "Registration successfull")
                                 root.withdraw()
-                                create_AdHome(root)
+                                adhome.create_AdHome(root)
                                 
                             else:
                                 messagebox.showerror("UnSucess", "Registration Unsuccessfull")

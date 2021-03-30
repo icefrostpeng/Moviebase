@@ -59,7 +59,7 @@ with open("E:/Python/Project/Pages/register.py","w") as f:
     f.writelines(new)
 
 #%%
-with open("E:/Python/Project/Moviebase/Pages/createshow.py") as f:
+with open("E:/Python/Project/Moviebase/Pages/home.py") as f:
     lines = f.readlines()
 
 lines # ['This is the first line.\n', 'This is the second line.\n']
@@ -80,11 +80,11 @@ for line in lines:
             temp+="    "
         else:
             break
-    new.append(line)
+    new.append(temp+line)
         
     
 
-with open("E:/Python/Project/Moviebase/Pages/createshow.py","w") as f:
+with open("E:/Python/Project/Moviebase/Pages/home.py","w") as f:
     f.writelines(new)
 
 

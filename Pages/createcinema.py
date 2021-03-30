@@ -87,7 +87,7 @@ def  ins(name, cityname, address, capacity_s):
             if(t==1):
                 messagebox.showinfo("Success", "Cinema Creation successfull")
                 root.withdraw()
-                create_AdHome(root)
+                adhome.create_AdHome(root)
             else:
                 messagebox.showerror("UnSucess", "Cinema Creation Unsuccessfull")
 
