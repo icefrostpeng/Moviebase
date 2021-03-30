@@ -129,7 +129,7 @@ class Deletemovie():
 			yib=0.32
 			for i in range(5):
 				j=(i+5)*co
-				if(j<(len(b)-1)):
+				if(j<(len(b))):
 					self.Movie1 = tk.Frame(top)
 					self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
 					self.Movie1.configure(relief='groove')
@@ -155,7 +155,7 @@ class Deletemovie():
 					self.Description1.configure(text=b[j][2])
 					wil.append(self.Description1)
 					
-					self.Book_b = tk.Button(top,command=partial(dele,top,b[i][0]))
+					self.Book_b = tk.Button(top,command=partial(dele,top,b[j][0]))
 					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
 					self.Book_b.configure(activebackground="#000040")
 					self.Book_b.configure(activeforeground="white")
@@ -193,7 +193,7 @@ class Deletemovie():
 					j=(i+5)*co
 				else:
 					j=i
-				if(j<(len(b)-1)):
+				if(j<(len(b))):
 					self.Movie1 = tk.Frame(top)
 					self.Movie1.place(relx=0.18, rely=y, relheight=0.138, relwidth=0.621)
 					self.Movie1.configure(relief='groove')
@@ -219,7 +219,7 @@ class Deletemovie():
 					self.Description1.configure(text=b[j][2])
 					wil.append(self.Description1)
 					
-					self.Book_b = tk.Button(top,command=partial(dele,top,b[i][0]))
+					self.Book_b = tk.Button(top,command=partial(dele,top,b[j][0]))
 					self.Book_b.place(relx=0.65, rely=y+0.02, height=54, width=177)
 					self.Book_b.configure(activebackground="#000040")
 					self.Book_b.configure(activeforeground="white")
