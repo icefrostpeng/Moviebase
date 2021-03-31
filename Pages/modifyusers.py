@@ -42,6 +42,8 @@ from paramiko import SSHClient
 from sshtunnel import SSHTunnelForwarder
 from adhome import *
 
+import hashlib
+
 #########################################################
 '''Declaring Variables'''
 #########################################################
