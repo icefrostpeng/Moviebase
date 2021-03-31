@@ -105,7 +105,9 @@ def sub(window,l,slotid,name,mem,email,timing,tdate,cinemaNAd): #fucntion called
 
 		payment.vp_start_gui_P(name, mem, prod, email,action) #display payment page
 
-
+def backh(window,name,mem,email):
+	window.destroy()
+	nhome.vp_start_gui1(name,mem,email)
 #call Payment function vaiables : totalcost=cosm discounted cost=dcost seat number = sts(in string as 12,13) parameters of function ssub has name,mem,email,timing,tdate
 def clicked(*args): #called when user selects a seat
 	global li,count,strv,fin,cosm,dcost
@@ -161,6 +163,8 @@ def creates(l,di,slotid,name,mem,email,cost,tdate):
 	wel=Label(window,textvariable=strv,font = "Helvetica 16 bold italic",justify="left").place(x=40,y=380)
 	cinemaNAd=di[1]+", "+di[3]+", "+di[2]
 	b=Button(window,command=lambda: sub(window,l,slotid,name,mem,email,di[5],tdate,cinemaNAd),text = "Payment",bg='#0052cc', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=100,y=480)
+	b1=Button(window,command=lambda: backh(window,name,mem,email),text = "Back",bg='#0034dd', fg='#ffffff',width=8,height=2,relief=RAISED).place(x=300,y=480)
+	
 	#display the seating arrangements
 	#c.bind('<Button-1>', clicked)
 	for key,value in dic.items():
